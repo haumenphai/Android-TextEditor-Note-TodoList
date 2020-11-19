@@ -2,13 +2,21 @@ package promax.dohaumen.text_edittor_mvvm
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import android.widget.Toast
 import com.google.android.material.bottomnavigation.BottomNavigationView
+import promax.dohaumen.text_edittor_mvvm.data.FileTextDao
+import promax.dohaumen.text_edittor_mvvm.data.FileTextDatabase
 import promax.dohaumen.text_edittor_mvvm.databinding.ActivityMainBinding
+//import promax.dohaumen.text_edittor_mvvm.databinding.ActivityMainBinding
 import promax.dohaumen.text_edittor_mvvm.models.FileText
 import promax.dohaumen.text_edittor_mvvm.views.HomeFragment
 import promax.dohaumen.text_edittor_mvvm.views.ListFileFragment
 import promax.dohaumen.text_edittor_mvvm.views.SettingFragment
+
+//import promax.dohaumen.text_edittor_mvvm.views.HomeFragment
+//import promax.dohaumen.text_edittor_mvvm.views.ListFileFragment
+//import promax.dohaumen.text_edittor_mvvm.views.SettingFragment
 
 class MainActivity : AppCompatActivity() {
     lateinit var b: ActivityMainBinding
@@ -33,10 +41,6 @@ class MainActivity : AppCompatActivity() {
 
             true
         }
-
-
-//        Toast.makeText(this, FileTextDatabase.INSTANCE.dao().getListText().get(0).name
-//            , Toast.LENGTH_SHORT).show()
 
 
     }
