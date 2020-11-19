@@ -14,9 +14,6 @@ import promax.dohaumen.text_edittor_mvvm.views.HomeFragment
 import promax.dohaumen.text_edittor_mvvm.views.ListFileFragment
 import promax.dohaumen.text_edittor_mvvm.views.SettingFragment
 
-//import promax.dohaumen.text_edittor_mvvm.views.HomeFragment
-//import promax.dohaumen.text_edittor_mvvm.views.ListFileFragment
-//import promax.dohaumen.text_edittor_mvvm.views.SettingFragment
 
 class MainActivity : AppCompatActivity() {
     lateinit var b: ActivityMainBinding
