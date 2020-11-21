@@ -1,16 +1,16 @@
 package promax.dohaumen.text_edittor_mvvm.views.fragment
 
 import android.app.AlertDialog
-import android.app.Dialog
 import android.content.DialogInterface
 import android.os.Bundle
+import android.util.Log
 import android.view.*
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
-import promax.dohaumen.text_edittor_mvvm.MainActivity
+import com.google.android.material.snackbar.Snackbar
+import promax.dohaumen.text_edittor_mvvm.views.activity.MainActivity
 import promax.dohaumen.text_edittor_mvvm.R
-import promax.dohaumen.text_edittor_mvvm.databinding.DialogAddNewFileBinding
 import promax.dohaumen.text_edittor_mvvm.databinding.FragmentHomeBinding
 import promax.dohaumen.text_edittor_mvvm.viewmodel.HomeFragmentViewModel
 import promax.dohaumen.text_edittor_mvvm.views.DialogAddFile
@@ -32,14 +32,19 @@ class HomeFragment: Fragment() {
         mainActivity = activity as MainActivity
 
         viewModel = ViewModelProvider(this).get(HomeFragmentViewModel::class.java)
+
+        return b.root
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
         viewModel.getTextTemp().observeForever {
             b.editHome.setText(it)
         }
+        viewModel.isEditTextEnable().observeForever { isEditHometEnable ->
+            b.editHome.isEnabled = isEditHometEnable
 
-        viewModel.isEditTextEnable().observeForever { editTextEnable ->
-            b.editHome.isEnabled = editTextEnable
-
-            if (editTextEnable) {
+            if (isEditHometEnable) {
                 menu?.findItem(R.id.menu_edit)?.setIcon(R.drawable.ic_edit)
                 Toast.makeText(mainActivity, "editing...", Toast.LENGTH_SHORT).show()
             } else {
@@ -47,9 +52,10 @@ class HomeFragment: Fragment() {
             }
         }
 
-
-        return b.root
     }
+
+
+
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
         inflater.inflate(R.menu.home_fragment_menu, menu)
@@ -102,6 +108,8 @@ class HomeFragment: Fragment() {
         super.onStop()
         viewModel.saveTextTemp(b.editHome.text.toString())
     }
+
+
 
 
 }

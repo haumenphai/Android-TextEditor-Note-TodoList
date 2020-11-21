@@ -1,24 +1,27 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/layout_root"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/color_edit">
+    tools:context=".views.activity.ViewFileActivity"
+    android:background="@color/color_edit"
+    >
 
     <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        >
         <EditText
-            android:id="@+id/edit_home"
+            android:id="@+id/edit_view_file"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:background="@drawable/bg_edittext_full_secreen"
             android:gravity="left"
-            android:hint="write here..."
             android:inputType="textNoSuggestions|textMultiLine"
             android:textColor="@color/black"
+            android:hint="content null, write here..."
             />
     </ScrollView>
-
 
 </RelativeLayout>

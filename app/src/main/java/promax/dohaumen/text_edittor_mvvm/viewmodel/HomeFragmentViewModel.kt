@@ -28,9 +28,6 @@ class HomeFragmentViewModel: ViewModel() {
     }
 
     lateinit var onSaveFileTextComple:(mess: String, isSuccess: Boolean) -> Unit
-
-
-
     fun saveFileText(fileName: String, content: String) {
         if (fileName.isEmpty()) {
             onSaveFileTextComple("Tên file không được để trống!", false)

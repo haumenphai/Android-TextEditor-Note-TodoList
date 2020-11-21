@@ -10,9 +10,12 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.Text_Edittor_MVVM">
-        <activity android:name=".MainActivity"
+        <activity android:name=".views.activity.ViewFileActivity"
             android:windowSoftInputMode="adjustPan"
-            >
+            ></activity>
+        <activity
+            android:name=".views.activity.MainActivity"
+            android:windowSoftInputMode="adjustPan">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

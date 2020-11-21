@@ -5,7 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import promax.dohaumen.text_edittor_mvvm.MainActivity
+import promax.dohaumen.text_edittor_mvvm.views.activity.MainActivity
 import promax.dohaumen.text_edittor_mvvm.databinding.FragmentListFileBinding
 import promax.dohaumen.text_edittor_mvvm.databinding.FragmentSettingBinding
 
