@@ -1,4 +1,4 @@
-package promax.dohaumen.text_edittor_mvvm.views
+package promax.dohaumen.text_edittor_mvvm.views.fragment
 
 import android.os.Bundle
 import android.view.LayoutInflater
