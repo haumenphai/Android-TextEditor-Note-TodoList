@@ -1,10 +1,12 @@
 package promax.dohaumen.text_edittor_mvvm.adapter
 
 import android.annotation.SuppressLint
+import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
+import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 import promax.dohaumen.text_edittor_mvvm.R
 import promax.dohaumen.text_edittor_mvvm.databinding.ItemFileTextBinding
@@ -13,6 +15,7 @@ import promax.dohaumen.text_edittor_mvvm.models.FileText
 
 class FileTextAdapter: RecyclerView.Adapter<FileTextAdapter.Holder>() {
     private var list: List<FileText> = mutableListOf()
+    private lateinit var context: Context
 
     lateinit var onClickITem:(fileText: FileText) -> Unit
     lateinit var onLongClickITem:(fileText: FileText) -> Unit
@@ -22,10 +25,30 @@ class FileTextAdapter: RecyclerView.Adapter<FileTextAdapter.Holder>() {
         notifyDataSetChanged()
     }
 
+    fun setSwapCheckItem(fileText: FileText) {
+        fileText.isCheck = !fileText.isCheck
+        notifyDataSetChanged()
+    }
+
+    fun getListChecked() = list.filter { fileText -> fileText.isCheck }
+
+    fun setCheckAll() = list.forEach { fileText ->
+        run {
+            fileText.isCheck = true;
+            notifyDataSetChanged()
+        }
+    }
+    fun unCheckAll() = list.forEach { fileText ->
+        run {
+            fileText.isCheck = false
+            notifyDataSetChanged()
+        }
+    }
 
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): Holder {
         val view = LayoutInflater.from(parent.context).inflate(R.layout.item_file_text, parent, false)
+        context = parent.context
         return Holder(view)
     }
 
@@ -34,6 +57,12 @@ class FileTextAdapter: RecyclerView.Adapter<FileTextAdapter.Holder>() {
         holder.b.tvName.text = fileText.name
         holder.b.tvDate.text = fileText.date
         holder.b.tvSTT.text  = "${position+1}"
+
+        if (fileText.isCheck) {
+            holder.b.background.setBackgroundColor(ContextCompat.getColor(context, R.color.red_500))
+        } else {
+            holder.b.background.setBackgroundResource(R.drawable.rippler_brow)
+        }
 
     }
 
@@ -46,7 +75,7 @@ class FileTextAdapter: RecyclerView.Adapter<FileTextAdapter.Holder>() {
                 onClickITem(list[adapterPosition])
             }
             b.background.setOnLongClickListener {
-                onClickITem(list[adapterPosition])
+                onLongClickITem(list[adapterPosition])
                 true
             }
         }

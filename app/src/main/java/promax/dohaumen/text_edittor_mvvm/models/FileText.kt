@@ -11,8 +11,12 @@ class FileText : Parcelable {
     @PrimaryKey(autoGenerate = true)
     var id: Int = 0
     var name: String = ""
-    var content: String =""
-    var date: String =""
+    var content: String = ""
+    var date: String =   ""
+    var lastEditedDate: String = ""
+
+    @Ignore
+    var isCheck = false
 
 
     constructor() {}
@@ -23,6 +27,7 @@ class FileText : Parcelable {
         this.date = date
     }
 
+    @Ignore
     constructor(parcel: Parcel) : this() {
         id = parcel.readInt()
         name = parcel.readString().toString()

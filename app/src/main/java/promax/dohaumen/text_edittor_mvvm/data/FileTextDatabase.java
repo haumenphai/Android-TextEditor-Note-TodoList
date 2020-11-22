@@ -16,7 +16,7 @@ import java.util.List;
 import promax.dohaumen.text_edittor_mvvm.MyApplication;
 import promax.dohaumen.text_edittor_mvvm.models.FileText;
 
-@Database(entities = FileText.class, version = 1)
+@Database(entities = FileText.class, version = 2)
 public abstract class FileTextDatabase extends RoomDatabase {
     public abstract FileTextDao dao();
 
@@ -24,8 +24,9 @@ public abstract class FileTextDatabase extends RoomDatabase {
 
     public static FileTextDatabase getINSTANCE() {
         if (INSTANCE == null) {
-            INSTANCE = Room.databaseBuilder(MyApplication.context, FileTextDatabase.class, "database_text")
+            INSTANCE = Room.databaseBuilder(MyApplication.Companion.getContext(), FileTextDatabase.class, "database_text")
                     .allowMainThreadQueries()
+                    .fallbackToDestructiveMigration()
                     .addCallback(romCallback)
                     .build();
         }

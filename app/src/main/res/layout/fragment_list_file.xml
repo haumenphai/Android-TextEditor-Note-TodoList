@@ -11,4 +11,13 @@
         tools:listitem="@layout/item_file_text"
         />
 
+    <include
+        android:id="@+id/layout_action"
+        layout="@layout/layout_action_list_file_text"
+        android:layout_width="80dp"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_centerVertical="true"
+       />
+
 </RelativeLayout>
