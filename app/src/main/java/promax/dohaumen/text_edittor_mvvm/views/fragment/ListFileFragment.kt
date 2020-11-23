@@ -11,8 +11,13 @@ import android.view.*
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.material.snackbar.Snackbar
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import promax.dohaumen.text_edittor_mvvm.views.activity.MainActivity
 import promax.dohaumen.text_edittor_mvvm.R
 import promax.dohaumen.text_edittor_mvvm.views.activity.ViewFileActivity
@@ -69,7 +74,9 @@ class ListFileFragment: Fragment() {
             }
 
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
-                adapter.setList(searchFileText(viewModel.getListFileText().value!!, b.editSearch.text.toString()))
+                lifecycleScope.launch {
+                    adapter.setList(searchFileText(viewModel.getListFileText().value!!, b.editSearch.text.toString()))
+                }
             }
 
             override fun afterTextChanged(s: Editable?) {

@@ -1,5 +1,7 @@
 package promax.dohaumen.text_edittor_mvvm.helper
 
+import android.util.Log
+import kotlinx.coroutines.delay
 import promax.dohaumen.text_edittor_mvvm.models.FileText
 import promax.hmp.dev.heler.StringHelper
 import java.util.*
@@ -19,7 +21,7 @@ fun getTuVietTat(s: String):String {
 
 
 
-fun searchFileText(list: List<FileText>, keySearch: String): List<FileText> {
+suspend fun searchFileText(list: List<FileText>, keySearch: String): List<FileText> {
     val result = ArrayList<FileText>()
 
     for (i in 0..list.size-1) {
@@ -32,4 +34,11 @@ fun searchFileText(list: List<FileText>, keySearch: String): List<FileText> {
         }
     }
     return result
+}
+
+suspend fun testCroutine(): String {
+    for (i in 0..10_000_000_000) {
+
+    }
+    return "Comple"
 }

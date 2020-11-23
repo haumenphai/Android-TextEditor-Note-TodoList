@@ -24,4 +24,9 @@ class ExampleUnitTest {
         val dateResult = simpleDateFormat.format(date)
         println(dateResult)
     }
+
+    @Test
+    fun test2() {
+
+    }
 }
