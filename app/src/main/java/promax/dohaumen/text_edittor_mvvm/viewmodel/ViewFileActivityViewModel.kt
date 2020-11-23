@@ -3,33 +3,27 @@ package promax.dohaumen.text_edittor_mvvm.viewmodel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import promax.dohaumen.text_edittor_mvvm.data.FileTextDatabase
+import promax.dohaumen.text_edittor_mvvm.data.FileTextRes
 import promax.dohaumen.text_edittor_mvvm.data.sharef.HomeFragmentData
 import promax.dohaumen.text_edittor_mvvm.helper.getCurrentDate
 import promax.dohaumen.text_edittor_mvvm.models.FileText
 
-class HomeFragmentViewModel: ViewModel() {
-    private var textTemp: MutableLiveData<String> = MutableLiveData()
+class ViewFileActivityViewModel: ViewModel() {
     private var textSize: MutableLiveData<Int> = MutableLiveData()
     private var isEditTextEnable: MutableLiveData<Boolean> = MutableLiveData()
 
+    lateinit var fileText: FileText
+
     init {
-        textTemp.value  = HomeFragmentData.getTextTemp()
         textSize.value  = HomeFragmentData.getTextSize()
         isEditTextEnable.value = false
     }
-
-    fun getTextTemp(): LiveData<String> = textTemp
-    fun deleteTextTemp() { textTemp.value = ""}
-    fun saveTextTemp(text: String) = HomeFragmentData.setTextTemp(text)
 
     fun isEditTextEnable(): LiveData<Boolean> = isEditTextEnable
 
     fun setItemEditEnableClick() {
         isEditTextEnable.value = !isEditTextEnable.value!!
     }
-
-
 
     fun getTextSize(): LiveData<Int> = textSize
     fun saveTextSize() = HomeFragmentData.setTextSize(textSize.value!!)
@@ -44,24 +38,9 @@ class HomeFragmentViewModel: ViewModel() {
         onTextSizeChangeComple(textSize.value!!)
     }
 
-
-
-    lateinit var onSaveFileTextComple:(mess: String, isSuccess: Boolean) -> Unit
-    fun saveFileText(fileName: String, content: String) {
-        if (fileName.isEmpty()) {
-            onSaveFileTextComple("Tên file không được để trống!", false)
-        } else {
-            val fileText = FileText(fileName, content, "fake date")
-            fileText.date = getCurrentDate()
-            fileText.lastEditedDate = fileText.date
-            FileTextDatabase.getINSTANCE().dao().insert(fileText)
-            onSaveFileTextComple("Lưu file thành công", true)
-        }
+    fun saveFileText(newContent: String) {
+        fileText.content = newContent
+        FileTextRes.update(fileText)
     }
-
-
-
-
-
 
 }

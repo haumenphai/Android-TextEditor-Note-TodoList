@@ -135,8 +135,8 @@ class ListFileFragment: Fragment() {
                 .setTitle("Thông tin")
                 .setMessage("Tên file: ${fileText.name}\n" +
                             "Nội dung: ${demSoTu(fileText.content)} từ, ${fileText.content.length} kí tự\n" +
-                            "Ngày tạo: ${fileText.date}\n" +
-                            "Ngày chỉnh sửa gần nhất: ${fileText.lastEditedDate}")
+                            "Ngày tạo: \n \t${fileText.date}\n" +
+                            "Ngày chỉnh sửa gần nhất: \n \t${fileText.lastEditedDate}")
                 .setNegativeButton("Ok") {s,s1 ->}
                 .show()
         }

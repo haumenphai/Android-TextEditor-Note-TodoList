@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_marginLeft="60dp"
+    android:layout_marginRight="60dp"
+    android:padding="10dp"
+    android:layout_gravity="center"
+    >
+
+    <TextView
+        android:id="@+id/tv_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="19sp"
+        android:textColor="@color/black"
+        android:text="Setting"
+        android:layout_centerHorizontal="true"
+        />
+
+    <TextView
+        android:id="@+id/tv_1"
+        android:layout_width="wrap_content"
+        android:layout_height="40dp"
+        android:text="Text Size:"
+        android:textColor="@color/black"
+        android:textSize="16sp"
+        android:gravity="center"
+        android:layout_below="@id/tv_title"
+        />
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/tv_title"
+        android:layout_toRightOf="@id/tv_1"
+        >
+        <TextView
+            android:id="@+id/tv_text_size"
+            android:layout_width="wrap_content"
+            android:layout_height="40dp"
+            android:text="20sp"
+            android:textColor="@color/black"
+            android:gravity="center"
+            android:layout_toLeftOf="@id/img_tang"
+            android:layout_marginRight="20dp"
+            />
+
+        <ImageView
+            android:id="@+id/img_giam"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:src="@drawable/ic_giam"
+            app:tint="@color/black"
+            android:layout_toLeftOf="@id/tv_text_size"
+            android:layout_marginRight="20dp"
+            android:background="@drawable/rippler_white_blue"
+            />
+
+        <ImageView
+            android:id="@+id/img_tang"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:src="@drawable/ic_tang"
+            app:tint="@color/black"
+            android:layout_alignParentRight="true"
+            android:background="@drawable/rippler_white_blue"
+            />
+    </RelativeLayout>
+
+    <View
+        android:id="@+id/line_1"
+        android:layout_width="match_parent"
+        android:layout_height="0.5dp"
+        android:background="@color/black"
+        android:layout_below="@id/tv_1"
+        />
+
+    <TextView
+        android:id="@+id/tv_chu_de"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Chủ đề: "
+        android:textSize="16sp"
+        android:textColor="@color/black"
+        android:layout_below="@id/line_1"
+        android:layout_marginTop="10dp"
+    />
+
+    <Button
+        android:id="@+id/btn_ok"
+        android:layout_width="wrap_content"
+        android:layout_height="40dp"
+        app:backgroundTint="@null"
+        android:background="@drawable/bg_button"
+        android:text="OK"
+        android:textColor="@color/black"
+        android:layout_below="@id/tv_chu_de"
+        android:layout_marginTop="10dp"
+        android:layout_alignParentRight="true"
+
+        />
+
+
+</RelativeLayout>

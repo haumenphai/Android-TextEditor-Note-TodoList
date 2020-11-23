@@ -25,6 +25,7 @@ class FileText : Parcelable {
         this.name = name
         this.content = content
         this.date = date
+        this.lastEditedDate = date
     }
 
     @Ignore

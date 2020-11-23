@@ -3,17 +3,16 @@ package promax.dohaumen.text_edittor_mvvm.views.fragment
 import android.app.AlertDialog
 import android.content.DialogInterface
 import android.os.Bundle
-import android.util.Log
 import android.view.*
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
-import com.google.android.material.snackbar.Snackbar
 import promax.dohaumen.text_edittor_mvvm.views.activity.MainActivity
 import promax.dohaumen.text_edittor_mvvm.R
 import promax.dohaumen.text_edittor_mvvm.databinding.FragmentHomeBinding
 import promax.dohaumen.text_edittor_mvvm.viewmodel.HomeFragmentViewModel
 import promax.dohaumen.text_edittor_mvvm.views.DialogAddFile
+import promax.dohaumen.text_edittor_mvvm.views.DialogSettingEditView
 import promax.hmp.dev.utils.HandleUI
 
 class HomeFragment: Fragment() {
@@ -38,6 +37,7 @@ class HomeFragment: Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
         viewModel.getTextTemp().observeForever {
             b.editHome.setText(it)
         }
@@ -50,6 +50,9 @@ class HomeFragment: Fragment() {
             } else {
                 menu?.findItem(R.id.menu_edit)?.setIcon(R.drawable.ic_edit_gray)
             }
+        }
+        viewModel.getTextSize().observeForever {
+            b.editHome.textSize = it.toFloat()
         }
 
     }
@@ -66,7 +69,7 @@ class HomeFragment: Fragment() {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
             R.id.menu_edit -> {
-                viewModel.setOnItemEditClick()
+                viewModel.setItemEditEnableClick()
             }
             R.id.menu_delete -> {
                 AlertDialog.Builder(mainActivity)
@@ -99,6 +102,28 @@ class HomeFragment: Fragment() {
 
                 HandleUI.showKeyboard(mainActivity)
                 dialog.show()
+            }
+            R.id.menu_setting -> {
+                // show dialog
+                val dialog = DialogSettingEditView(mainActivity).apply {
+                    viewModel.onTextSizeChangeComple = {
+                        b.tvTextSize.setText("$it sp")
+                    }
+
+                    b.tvTextSize.setText("${viewModel.getTextSize().value} sp")
+                    b.btnOk.setOnClickListener {
+                        dialog.cancel()
+                        viewModel.saveTextSize()
+                    }
+
+                    b.imgGiam.setOnClickListener {
+                        viewModel.setTextSizeReduce()
+                    }
+                    b.imgTang.setOnClickListener {
+                        viewModel.setTextSizeIncrease()
+                    }
+                }.show()
+
             }
         }
         return super.onOptionsItemSelected(item)

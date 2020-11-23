@@ -21,11 +21,4 @@
         android:icon="@drawable/ic_setting"
         android:iconTint="@color/white"
         />
-    <item
-        android:id="@+id/menu_delete"
-        android:title="delete"
-        app:showAsAction="always"
-        android:icon="@drawable/ic_delete"
-        android:iconTint="@color/white"
-        />
 </menu>
