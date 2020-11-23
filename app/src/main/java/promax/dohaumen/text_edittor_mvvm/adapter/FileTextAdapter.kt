@@ -24,6 +24,7 @@ class FileTextAdapter: RecyclerView.Adapter<FileTextAdapter.Holder>() {
         this.list = list
         notifyDataSetChanged()
     }
+    fun getList() = list
 
     fun setSwapCheckItem(fileText: FileText) {
         fileText.isCheck = !fileText.isCheck

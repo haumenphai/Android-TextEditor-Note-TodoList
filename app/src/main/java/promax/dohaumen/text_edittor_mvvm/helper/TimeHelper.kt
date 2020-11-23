@@ -5,6 +5,6 @@ import java.util.*
 
 fun getCurrentDate(): String {
     val date = Date()
-    val simpleDateFormat = SimpleDateFormat("[E] dd-MM-yyyy k:mm:ss a")
+    val simpleDateFormat = SimpleDateFormat("[E] dd/MM/yyyy hh:mm:ss aa")
     return  simpleDateFormat.format(date)
 }

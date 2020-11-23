@@ -1,19 +1,18 @@
 package promax.dohaumen.text_edittor_mvvm.views.activity
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
-import androidx.lifecycle.ViewModel
+import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
 import promax.dohaumen.text_edittor_mvvm.R
 import promax.dohaumen.text_edittor_mvvm.databinding.ActivityViewFileBinding
 import promax.dohaumen.text_edittor_mvvm.models.FileText
 import promax.dohaumen.text_edittor_mvvm.viewmodel.ViewFileActivityViewModel
-import promax.dohaumen.text_edittor_mvvm.views.DialogSettingEditView
+import promax.dohaumen.text_edittor_mvvm.views.dialog.DialogSettingEditView
 
 class ViewFileActivity : AppCompatActivity() {
     lateinit var b: ActivityViewFileBinding
@@ -45,7 +44,19 @@ class ViewFileActivity : AppCompatActivity() {
             b.editViewFile.textSize = it.toFloat()
         }
 
+        setConfigToolBar()
     }
+
+    fun setConfigToolBar() {
+        setSupportActionBar(b.toolBar)
+        b.appbarLayout.outlineProvider = null
+        supportActionBar!!.title = viewModel.fileText.name
+
+        b.toolBar.setNavigationOnClickListener {
+            onBackPressed()
+        }
+    }
+
 
 
 
@@ -65,11 +76,11 @@ class ViewFileActivity : AppCompatActivity() {
             R.id.menu_save -> {
                 AlertDialog.Builder(this)
                     .setTitle("Save")
-                    .setPositiveButton("OK") {s,s1 ->
+                    .setPositiveButton("OK") { s, s1 ->
                         viewModel.saveFileText(b.editViewFile.text.toString())
                         Toast.makeText(this, "Saved", Toast.LENGTH_SHORT).show()
                     }
-                    .setNegativeButton("Cancel") {s,s1 ->
+                    .setNegativeButton("Cancel") { s, s1 ->
 
                     }.show()
             }
@@ -97,6 +108,23 @@ class ViewFileActivity : AppCompatActivity() {
         return super.onOptionsItemSelected(item)
     }
 
+    override fun onBackPressed() {
+        if (viewModel.fileText.content != b.editViewFile.text.toString()) {
+            AlertDialog.Builder(this)
+                .setTitle("Lưu")
+                .setMessage("Bạn đã chỉnh sửa nhưng chưa lưu. Lưu và thoát?")
+                .setPositiveButton("Lưu") { s, s1 ->
+                    viewModel.saveFileText(b.editViewFile.text.toString())
+                    Toast.makeText(this, "Đã lưu", Toast.LENGTH_SHORT).show()
+                    super.onBackPressed()
+                }.setNegativeButton("Hủy") { s, s1 ->
+                    super.onBackPressed()
+                }.show()
+        } else {
+            super.onBackPressed()
+        }
+    }
+
 
     override fun onStart() {
         super.onStart()
@@ -104,28 +132,28 @@ class ViewFileActivity : AppCompatActivity() {
 
     override fun onResume() {
         super.onResume()
-        Log.d("AAA","onresum")
+        Log.d("AAA", "onresum")
     }
 
 
     override fun onPause() {
         super.onPause()
-        Log.d("AAA","onPause")
+        Log.d("AAA", "onPause")
     }
 
     override fun onStop() {
         super.onStop()
-        Log.d("AAA","onStop")
+        Log.d("AAA", "onStop")
     }
 
     override fun onRestart() {
         super.onRestart()
-        Log.d("AAA","onReset")
+        Log.d("AAA", "onReset")
     }
 
     override fun onDestroy() {
         super.onDestroy()
-        Log.d("AAA","onDestroy")
+        Log.d("AAA", "onDestroy")
     }
 
 

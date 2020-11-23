@@ -2,10 +2,20 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
     <item
+        android:id="@+id/menu_search"
+        android:title="search"
+        android:icon="@drawable/ic_search"
+        app:showAsAction="always"
+        android:iconTint="@color/white"
+        app:iconTint="@color/white"
+        />
+    <item
         android:id="@+id/menu_add_file"
         android:title="add"
         android:icon="@drawable/ic_add"
         app:showAsAction="always"
         android:iconTint="@color/white"
+        app:iconTint="@color/white"
         />
+
 </menu>

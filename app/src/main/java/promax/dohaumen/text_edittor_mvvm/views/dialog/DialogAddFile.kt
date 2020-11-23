@@ -1,4 +1,4 @@
-package promax.dohaumen.text_edittor_mvvm.views
+package promax.dohaumen.text_edittor_mvvm.views.dialog
 
 import android.app.Dialog
 import android.content.Context

@@ -11,8 +11,8 @@ import promax.dohaumen.text_edittor_mvvm.views.activity.MainActivity
 import promax.dohaumen.text_edittor_mvvm.R
 import promax.dohaumen.text_edittor_mvvm.databinding.FragmentHomeBinding
 import promax.dohaumen.text_edittor_mvvm.viewmodel.HomeFragmentViewModel
-import promax.dohaumen.text_edittor_mvvm.views.DialogAddFile
-import promax.dohaumen.text_edittor_mvvm.views.DialogSettingEditView
+import promax.dohaumen.text_edittor_mvvm.views.dialog.DialogAddFile
+import promax.dohaumen.text_edittor_mvvm.views.dialog.DialogSettingEditView
 import promax.hmp.dev.utils.HandleUI
 
 class HomeFragment: Fragment() {
@@ -29,10 +29,18 @@ class HomeFragment: Fragment() {
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         b = FragmentHomeBinding.inflate(inflater, container, false)
         mainActivity = activity as MainActivity
+        setConfigToolBar()
+
 
         viewModel = ViewModelProvider(this).get(HomeFragmentViewModel::class.java)
 
         return b.root
+    }
+
+    private fun setConfigToolBar() {
+        mainActivity.setSupportActionBar(b.toolBar)
+        b.appbarLayout.outlineProvider = null
+        mainActivity.supportActionBar!!.title = "Text Editor"
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {

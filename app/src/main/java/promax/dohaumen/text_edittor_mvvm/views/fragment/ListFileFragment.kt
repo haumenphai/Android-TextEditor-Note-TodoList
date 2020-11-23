@@ -3,7 +3,10 @@ package promax.dohaumen.text_edittor_mvvm.views.fragment
 import android.app.AlertDialog
 import android.content.DialogInterface
 import android.content.Intent
+import android.graphics.Color
 import android.os.Bundle
+import android.text.Editable
+import android.text.TextWatcher
 import android.view.*
 import android.widget.Toast
 import androidx.fragment.app.Fragment
@@ -16,8 +19,9 @@ import promax.dohaumen.text_edittor_mvvm.views.activity.ViewFileActivity
 import promax.dohaumen.text_edittor_mvvm.adapter.FileTextAdapter
 import promax.dohaumen.text_edittor_mvvm.databinding.FragmentListFileBinding
 import promax.dohaumen.text_edittor_mvvm.helper.demSoTu
+import promax.dohaumen.text_edittor_mvvm.helper.searchFileText
 import promax.dohaumen.text_edittor_mvvm.viewmodel.ListFileFragmentViewModel
-import promax.dohaumen.text_edittor_mvvm.views.DialogAddFile
+import promax.dohaumen.text_edittor_mvvm.views.dialog.DialogAddFile
 import promax.hmp.dev.utils.HandleUI
 
 class ListFileFragment: Fragment() {
@@ -26,21 +30,52 @@ class ListFileFragment: Fragment() {
     lateinit var viewModel: ListFileFragmentViewModel
     var adapter = FileTextAdapter()
 
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setHasOptionsMenu(true)
+    }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        setHasOptionsMenu(true)
         b = FragmentListFileBinding.inflate(inflater, container, false)
         b.layoutAction.root.visibility = View.GONE
 
         mainActivity = activity as MainActivity
         viewModel = ViewModelProvider(this).get(ListFileFragmentViewModel::class.java)
 
+        setConfigToolBar()
         initRecyclerView()
         setClickItem()
         setClickAction()
+
         return b.root
     }
 
+    private fun setConfigToolBar() {
+        mainActivity.setSupportActionBar(b.toolBar2)
+        mainActivity.supportActionBar!!.title = "List File"
+        b.toolBar2.setTitleTextColor(Color.WHITE)
+        b.toolBar2.inflateMenu(R.menu.list_fragment_menu)
+
+        b.layoutSearch.visibility = View.GONE
+        b.imgSearchClose.setOnClickListener {
+            b.layoutSearch.visibility = View.GONE
+            b.toolBar2.visibility = View.VISIBLE
+            b.editSearch.setText("")
+            HandleUI.hideKeyboardFrom(mainActivity, b.editSearch)
+        }
+
+        b.editSearch.addTextChangedListener(object : TextWatcher {
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
+            }
+
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+                adapter.setList(searchFileText(viewModel.getListFileText().value!!, b.editSearch.text.toString()))
+            }
+
+            override fun afterTextChanged(s: Editable?) {
+            }
+        })
+    }
 
 
     fun initRecyclerView() {
@@ -100,8 +135,11 @@ class ListFileFragment: Fragment() {
             if (listCheckedLength != 1) {
                 Snackbar.make(b.recyclerView, "Chỉ được chọn 1 file để đổi tên", 1111).show()
             } else {
+                val fileText = adapter.getListChecked().get(0)
                 val dialogAddFile = DialogAddFile(mainActivity).run {
                     HandleUI.showKeyboard(mainActivity)
+                    b.editFileName.setText(fileText.name)
+                    b.editFileName.setSelection(0,fileText.name.length)
                     b.tvTitle.text = "Đổi tên"
                     b.btnCancel.setOnClickListener {
                         HandleUI.hideKeyboardFrom(mainActivity, b.editFileName)
@@ -145,10 +183,7 @@ class ListFileFragment: Fragment() {
 
     }
 
-    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
-        inflater.inflate(R.menu.list_fragment_menu, menu)
-        super.onCreateOptionsMenu(menu, inflater)
-    }
+
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
@@ -174,6 +209,10 @@ class ListFileFragment: Fragment() {
                 HandleUI.showKeyboard(mainActivity)
                 dialogAddFile.show()
 
+            }
+            R.id.menu_search -> {
+                b.layoutSearch.visibility = View.VISIBLE
+                b.toolBar2.visibility = View.GONE
             }
         }
         return super.onOptionsItemSelected(item)

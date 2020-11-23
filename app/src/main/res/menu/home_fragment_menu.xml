@@ -12,20 +12,23 @@
         android:title="save"
         app:showAsAction="always"
         android:icon="@drawable/ic_save"
-        android:iconTint="@color/white"
+        app:iconTint="@color/color_black_2"
+        android:iconTint="@color/color_black_2"
         />
     <item
         android:id="@+id/menu_setting"
         android:title="setting"
         app:showAsAction="always"
         android:icon="@drawable/ic_setting"
-        android:iconTint="@color/white"
+        app:iconTint="@color/color_black_2"
+        android:iconTint="@color/color_black_2"
         />
     <item
         android:id="@+id/menu_delete"
         android:title="delete"
         app:showAsAction="always"
         android:icon="@drawable/ic_delete"
-        android:iconTint="@color/white"
+        app:iconTint="@color/color_black_2"
+        android:iconTint="@color/color_black_2"
         />
 </menu>
