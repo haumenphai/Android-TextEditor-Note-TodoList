@@ -4,12 +4,22 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".views.activity.MainActivity">
+    tools:context=".views.activity.MainActivity"
+    android:background="@color/color_edit"
+    >
 
     <FrameLayout
         android:id="@+id/container_fragment"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:layout_above="@id/line1"
+        />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="0.1dp"
+        android:background="@color/black"
+        android:id="@+id/line1"
         android:layout_above="@id/bottom_nav"
         />
 
@@ -19,7 +29,6 @@
         android:layout_height="50dp"
         android:layout_alignParentBottom="true"
         app:menu="@menu/bottom_nav"
-        android:background="#FDFAD7"
-
+        android:background="@color/color_edit_2"
         />
 </RelativeLayout>

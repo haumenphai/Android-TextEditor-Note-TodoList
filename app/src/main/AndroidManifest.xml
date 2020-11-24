@@ -10,9 +10,10 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/MyTheme">
-        <activity android:name=".views.activity.ViewFileActivity"
-            android:windowSoftInputMode="adjustPan"
-            ></activity>
+        <activity android:name=".views.activity.ViewListFileDeteledActivity"></activity>
+        <activity
+            android:name=".views.activity.ViewFileActivity"
+            android:windowSoftInputMode="adjustPan" />
         <activity
             android:name=".views.activity.MainActivity"
             android:windowSoftInputMode="adjustPan">

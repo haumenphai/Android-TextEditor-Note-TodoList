@@ -5,9 +5,8 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import promax.dohaumen.text_edittor_mvvm.data.FileTextDatabase
 import promax.dohaumen.text_edittor_mvvm.data.FileTextRes
-import promax.dohaumen.text_edittor_mvvm.helper.getCurrentDate
+import promax.dohaumen.text_edittor_mvvm.helper.getCurrentDate12h
 import promax.dohaumen.text_edittor_mvvm.models.FileText
-import java.io.File
 
 class ListFileFragmentViewModel: ViewModel() {
 
@@ -15,7 +14,7 @@ class ListFileFragmentViewModel: ViewModel() {
     fun getListFileText(): LiveData<List<FileText>> = fileTexts
 
     init {
-        FileTextDatabase.getINSTANCE().dao().liveData.observeForever {
+        FileTextDatabase.getINSTANCE().dao().getLiveData(false).observeForever {
             it.reverse()
             fileTexts.value = it
         }
@@ -28,15 +27,19 @@ class ListFileFragmentViewModel: ViewModel() {
             onSaveFileTextComple("Tên file không được để trống!", false)
         } else {
             val fileText = FileText(fileName, content, "fake date")
-            fileText.date = getCurrentDate()
-            fileText.lastEditedDate = fileText.date
+            fileText.dateCreate = getCurrentDate12h()
+            fileText.lastEditedDate = fileText.dateCreate
             FileTextDatabase.getINSTANCE().dao().insert(fileText)
             onSaveFileTextComple("Lưu file thành công", true)
         }
     }
 
     fun deleteListChecked(list: List<FileText>, onComplete:() -> Unit = {}) {
-        list.forEach { fileText -> FileTextDatabase.getINSTANCE().dao().delete(fileText) }
+        list.forEach { fileText ->
+            fileText.isDeleted = true
+            fileText.dateDeteled = getCurrentDate12h()
+            FileTextDatabase.getINSTANCE().dao().update(fileText)
+        }
         onComplete()
     }
 

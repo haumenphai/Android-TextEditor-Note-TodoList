@@ -17,12 +17,18 @@ import promax.dohaumen.text_edittor_mvvm.views.dialog.DialogSettingEditView
 class ViewFileActivity : AppCompatActivity() {
     lateinit var b: ActivityViewFileBinding
     lateinit var viewModel: ViewFileActivityViewModel
+
+    private var readOnLy = false // readOnly ap dung voi mo file da bi xoa
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         b = ActivityViewFileBinding.inflate(layoutInflater)
         setContentView(b.root)
 
         val fileText: FileText? = intent.getParcelableExtra("fileText")
+        if (intent.action == "Action view file read-only") {
+            readOnLy = true
+        }
 
         b.editViewFile.setText(fileText!!.content)
 
@@ -65,6 +71,10 @@ class ViewFileActivity : AppCompatActivity() {
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
         menuInflater.inflate(R.menu.activity_view_file_menu, menu)
         this.menu = menu
+        if (readOnLy) {
+            menu?.findItem(R.id.menu_save)?.isVisible = false
+            menu?.findItem(R.id.menu_edit)?.isVisible = false
+        }
         return super.onCreateOptionsMenu(menu)
     }
 

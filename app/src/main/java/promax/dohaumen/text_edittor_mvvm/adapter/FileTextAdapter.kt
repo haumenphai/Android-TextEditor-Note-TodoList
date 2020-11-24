@@ -5,7 +5,6 @@ import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.TextView
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 import promax.dohaumen.text_edittor_mvvm.R
@@ -19,6 +18,8 @@ class FileTextAdapter: RecyclerView.Adapter<FileTextAdapter.Holder>() {
 
     lateinit var onClickITem:(fileText: FileText) -> Unit
     lateinit var onLongClickITem:(fileText: FileText) -> Unit
+
+    var hienThiItemListFileBiXoa = false
 
     fun setList(list: List<FileText>) {
         this.list = list
@@ -56,13 +57,17 @@ class FileTextAdapter: RecyclerView.Adapter<FileTextAdapter.Holder>() {
     override fun onBindViewHolder(holder: Holder, position: Int) {
         val fileText = list[position]
         holder.b.tvName.text = fileText.name
-        holder.b.tvDate.text = fileText.date
+        holder.b.tvDate.text = fileText.dateCreate
         holder.b.tvSTT.text  = "${position+1}"
 
         if (fileText.isCheck) {
             holder.b.background.setBackgroundColor(ContextCompat.getColor(context, R.color.red_500))
         } else {
             holder.b.background.setBackgroundResource(R.drawable.rippler_brow)
+        }
+
+        if (hienThiItemListFileBiXoa) {
+            holder.b.tvDate.text = "ngày xóa: ${fileText.dateDeteled}"
         }
 
     }

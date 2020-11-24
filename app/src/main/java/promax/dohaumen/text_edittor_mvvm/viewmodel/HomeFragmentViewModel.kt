@@ -5,7 +5,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import promax.dohaumen.text_edittor_mvvm.data.FileTextDatabase
 import promax.dohaumen.text_edittor_mvvm.data.sharef.HomeFragmentData
-import promax.dohaumen.text_edittor_mvvm.helper.getCurrentDate
+import promax.dohaumen.text_edittor_mvvm.helper.getCurrentDate12h
 import promax.dohaumen.text_edittor_mvvm.models.FileText
 
 class HomeFragmentViewModel: ViewModel() {
@@ -52,8 +52,8 @@ class HomeFragmentViewModel: ViewModel() {
             onSaveFileTextComple("Tên file không được để trống!", false)
         } else {
             val fileText = FileText(fileName, content, "fake date")
-            fileText.date = getCurrentDate()
-            fileText.lastEditedDate = fileText.date
+            fileText.dateCreate = getCurrentDate12h()
+            fileText.lastEditedDate = fileText.dateCreate
             FileTextDatabase.getINSTANCE().dao().insert(fileText)
             onSaveFileTextComple("Lưu file thành công", true)
         }

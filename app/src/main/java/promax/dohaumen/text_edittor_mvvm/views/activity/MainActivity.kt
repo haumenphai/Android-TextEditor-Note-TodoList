@@ -1,17 +1,17 @@
 package promax.dohaumen.text_edittor_mvvm.views.activity
 
-import android.icu.util.Calendar
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
+import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import promax.dohaumen.text_edittor_mvvm.R
+import promax.dohaumen.text_edittor_mvvm.data.FileTextDatabase
 import promax.dohaumen.text_edittor_mvvm.databinding.ActivityMainBinding
 //import promax.dohaumen.text_edittor_mvvm.databinding.ActivityMainBinding
 import promax.dohaumen.text_edittor_mvvm.views.fragment.HomeFragment
 import promax.dohaumen.text_edittor_mvvm.views.fragment.ListFileFragment
 import promax.dohaumen.text_edittor_mvvm.views.fragment.SettingFragment
-import java.text.SimpleDateFormat
-import java.util.*
 
 /**
  * Lưu giữ trạng thái của fragment khi chuyển qua fragment bằng bottomNav.

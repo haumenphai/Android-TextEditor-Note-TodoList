@@ -15,21 +15,22 @@ import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.material.snackbar.Snackbar
 import kotlinx.coroutines.launch
-import promax.dohaumen.text_edittor_mvvm.views.activity.MainActivity
 import promax.dohaumen.text_edittor_mvvm.R
-import promax.dohaumen.text_edittor_mvvm.views.activity.ViewFileActivity
 import promax.dohaumen.text_edittor_mvvm.adapter.FileTextAdapter
 import promax.dohaumen.text_edittor_mvvm.databinding.FragmentListFileBinding
+import promax.dohaumen.text_edittor_mvvm.databinding.FragmentListFileDeletedBinding
 import promax.dohaumen.text_edittor_mvvm.helper.demSoTu
 import promax.dohaumen.text_edittor_mvvm.helper.searchFileText
-import promax.dohaumen.text_edittor_mvvm.viewmodel.ListFileFragmentViewModel
+import promax.dohaumen.text_edittor_mvvm.viewmodel.ListFileDeletedFragmentViewModel
+import promax.dohaumen.text_edittor_mvvm.views.activity.ViewFileActivity
+import promax.dohaumen.text_edittor_mvvm.views.activity.ViewListFileDeteledActivity
 import promax.dohaumen.text_edittor_mvvm.views.dialog.DialogAddFile
 import promax.hmp.dev.utils.HandleUI
 
-class ListFileFragment() : Fragment() {
-    lateinit var b: FragmentListFileBinding
-    lateinit var mainActivity: MainActivity
-    lateinit var viewModel: ListFileFragmentViewModel
+class ListFileDeletedFragment: Fragment() {
+    lateinit var b: FragmentListFileDeletedBinding
+    lateinit var myActivity: ViewListFileDeteledActivity
+    lateinit var viewModel: ListFileDeletedFragmentViewModel
     var adapter = FileTextAdapter()
 
 
@@ -40,11 +41,11 @@ class ListFileFragment() : Fragment() {
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        b = FragmentListFileBinding.inflate(inflater, container, false)
+        b = FragmentListFileDeletedBinding.inflate(inflater, container, false)
         b.layoutAction.root.visibility = View.GONE
 
-        mainActivity = activity as MainActivity
-        viewModel = ViewModelProvider(this).get(ListFileFragmentViewModel::class.java)
+        myActivity = activity as ViewListFileDeteledActivity
+        viewModel = ViewModelProvider(this).get(ListFileDeletedFragmentViewModel::class.java)
 
         setConfigToolBar()
         initRecyclerView()
@@ -55,17 +56,19 @@ class ListFileFragment() : Fragment() {
     }
 
     private fun setConfigToolBar() {
-        mainActivity.setSupportActionBar(b.toolBar2)
-        mainActivity.supportActionBar!!.title = "List File"
+        myActivity.setSupportActionBar(b.toolBar2)
+        myActivity.supportActionBar!!.title = "List File"
         b.toolBar2.setTitleTextColor(Color.WHITE)
-        b.toolBar2.inflateMenu(R.menu.list_fragment_menu)
+        b.toolBar2.setNavigationOnClickListener {
+            myActivity.onBackPressed()
+        }
 
         b.layoutSearch.visibility = View.GONE
         b.imgSearchClose.setOnClickListener {
             b.layoutSearch.visibility = View.GONE
             b.toolBar2.visibility = View.VISIBLE
             b.editSearch.setText("")
-            HandleUI.hideKeyboardFrom(mainActivity, b.editSearch)
+            HandleUI.hideKeyboardFrom(myActivity, b.editSearch)
         }
 
         b.editSearch.addTextChangedListener(object : TextWatcher {
@@ -85,7 +88,8 @@ class ListFileFragment() : Fragment() {
 
 
     fun initRecyclerView() {
-        b.recyclerView.layoutManager = LinearLayoutManager(mainActivity)
+        adapter.hienThiItemListFileBiXoa = true
+        b.recyclerView.layoutManager = LinearLayoutManager(myActivity)
         b.recyclerView.adapter = adapter
 
         viewModel.getListFileText().observeForever {
@@ -97,6 +101,7 @@ class ListFileFragment() : Fragment() {
     fun setClickItem() {
         adapter.onClickITem = {
             val intent = Intent(context, ViewFileActivity::class.java)
+            intent.setAction("Action view file read-only")
             intent.putExtra("fileText", it)
             startActivity(intent)
         }
@@ -111,6 +116,7 @@ class ListFileFragment() : Fragment() {
     }
 
     fun setClickAction() {
+        b.layoutAction.actionRename.visibility = View.GONE
         fun cancelAction() {
             b.layoutAction.root.visibility = View.GONE
             setClickItem()
@@ -127,47 +133,16 @@ class ListFileFragment() : Fragment() {
             val listCheckedLength = adapter.getListChecked().size
             AlertDialog.Builder(context)
                 .setTitle("Delete $listCheckedLength File")
-                .setMessage("Do you want to delete $listCheckedLength files?")
+                .setMessage("Do you want to delete $listCheckedLength files? Deleted files cannot be recovered\n\n" +
+                            "Lưu ý: Điều này sẽ xóa vĩnh viễn file, không thể phục hồi")
                 .setPositiveButton("OK") { _1, _2 ->
                     viewModel.deleteListChecked(adapter.getListChecked()) {
-                        Snackbar.make(b.recyclerView, "Đã xóa $listCheckedLength file",1111).show()
+                        Toast.makeText(context, "Đã xóa $listCheckedLength file", Toast.LENGTH_SHORT).show()
                     }
                     cancelAction()
                 }
                 .setNegativeButton("Cancel") { dialogInterface: DialogInterface, i: Int ->
                 }.show()
-        }
-        b.layoutAction.actionRename.setOnClickListener {
-            val listCheckedLength = adapter.getListChecked().size
-            if (listCheckedLength != 1) {
-                Snackbar.make(b.recyclerView, "Chỉ được chọn 1 file để đổi tên", 1111).show()
-            } else {
-                val fileText = adapter.getListChecked().get(0)
-                val dialogAddFile = DialogAddFile(mainActivity).run {
-                    HandleUI.showKeyboard(mainActivity)
-                    b.editFileName.setText(fileText.name)
-                    b.editFileName.setSelection(0,fileText.name.length)
-                    b.tvTitle.text = "Đổi tên"
-                    b.btnCancel.setOnClickListener {
-                        HandleUI.hideKeyboardFrom(mainActivity, b.editFileName)
-                        cancel()
-                    }
-
-                    viewModel.onRenameComple = { mess, isSucssec ->
-                        Snackbar.make(this@ListFileFragment.b.recyclerView, mess, 1111).show()
-                        if (isSucssec) {
-                            HandleUI.hideKeyboardFrom(mainActivity, b.editFileName)
-                            cancel()
-                            cancelAction()
-                        }
-                    }
-                    b.btnSave.setOnClickListener {
-                        viewModel.reNameFile(b.editFileName.text.toString(), adapter.getListChecked().get(0))
-                    }
-
-                    show()
-                }
-            }
         }
 
         b.layoutAction.actionInfo.setOnClickListener {
@@ -176,12 +151,13 @@ class ListFileFragment() : Fragment() {
             if (listCheckedLength != 1) {
                 Snackbar.make(b.recyclerView, "Chỉ được chọn 1 file để xem thông tin", 1111).show()
             }
-            AlertDialog.Builder(mainActivity)
+            AlertDialog.Builder(myActivity)
                 .setTitle("Thông tin")
                 .setMessage("Tên file: ${fileText.name}\n" +
-                            "Nội dung: ${demSoTu(fileText.content)} từ, ${fileText.content.length} kí tự\n" +
-                            "Ngày tạo: \n \t${fileText.dateCreate}\n" +
-                            "Ngày chỉnh sửa gần nhất: \n \t${fileText.lastEditedDate}")
+                        "Nội dung: ${demSoTu(fileText.content)} từ, ${fileText.content.length} kí tự\n" +
+                        "Ngày tạo: \n \t${fileText.dateCreate}\n" +
+                        "Ngày chỉnh sửa gần nhất: \n \t${fileText.lastEditedDate}\n" +
+                        "Ngày xóa: \n \t${fileText.dateDeteled}\n")
                 .setNegativeButton("Ok") {s,s1 ->}
                 .show()
         }
@@ -190,33 +166,15 @@ class ListFileFragment() : Fragment() {
 
     }
 
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+        inflater.inflate(R.menu.list_fragment_menu, menu)
+        menu.findItem(R.id.menu_add_file).isVisible = false
+        super.onCreateOptionsMenu(menu, inflater)
+    }
 
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
-            R.id.menu_add_file -> {
-                val dialogAddFile = DialogAddFile(mainActivity)
-
-                viewModel.onSaveFileTextComple = { mess, isSuccess ->
-                    Toast.makeText(mainActivity, mess, Toast.LENGTH_SHORT).show()
-                    if (isSuccess) {
-                        HandleUI.hideKeyboardFrom(mainActivity, dialogAddFile.b.root)
-                        dialogAddFile.cancel()
-                    }
-                }
-
-                dialogAddFile.b.btnCancel.setOnClickListener {
-                    HandleUI.hideKeyboardFrom(mainActivity, dialogAddFile.b.root)
-                    dialogAddFile.cancel()
-                }
-                dialogAddFile.b.btnSave.setOnClickListener {
-                    viewModel.addFileText(dialogAddFile.b.editFileName.text.toString(), "")
-                }
-
-                HandleUI.showKeyboard(mainActivity)
-                dialogAddFile.show()
-
-            }
             R.id.menu_search -> {
                 b.layoutSearch.visibility = View.VISIBLE
                 b.toolBar2.visibility = View.GONE
@@ -224,5 +182,4 @@ class ListFileFragment() : Fragment() {
         }
         return super.onOptionsItemSelected(item)
     }
-
 }

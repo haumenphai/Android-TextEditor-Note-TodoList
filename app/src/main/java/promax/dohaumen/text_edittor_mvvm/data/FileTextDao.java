@@ -29,10 +29,11 @@ public interface FileTextDao {
     @Query("DELETE FROM filetext")
     void deleteAll();
 
-    @Query("SELECT * FROM filetext")
-    List<FileText> getList();
+    @Query("SELECT * FROM filetext WHERE isDeleted = :getListDelete")
+    List<FileText> getList(boolean getListDelete);
 
-    @Query("SELECT * FROM filetext")
-    LiveData<List<FileText>> getLiveData();
+    @Query("SELECT * FROM filetext WHERE isDeleted = :getListDelete")
+    LiveData<List<FileText>> getLiveData(boolean getListDelete);
+
 
 }

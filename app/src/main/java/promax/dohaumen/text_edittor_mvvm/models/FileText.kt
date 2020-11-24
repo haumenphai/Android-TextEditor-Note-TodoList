@@ -12,8 +12,10 @@ class FileText : Parcelable {
     var id: Int = 0
     var name: String = ""
     var content: String = ""
-    var date: String =   ""
+    var dateCreate: String =   ""
     var lastEditedDate: String = ""
+    var isDeleted: Boolean = false
+    var dateDeteled: String = ""
 
     @Ignore
     var isCheck = false
@@ -24,7 +26,7 @@ class FileText : Parcelable {
     constructor(name: String, content: String, date: String) {
         this.name = name
         this.content = content
-        this.date = date
+        this.dateCreate = date
         this.lastEditedDate = date
     }
 
@@ -33,7 +35,7 @@ class FileText : Parcelable {
         id = parcel.readInt()
         name = parcel.readString().toString()
         content = parcel.readString().toString()
-        date = parcel.readString().toString()
+        dateCreate = parcel.readString().toString()
     }
 
 
@@ -41,7 +43,7 @@ class FileText : Parcelable {
         parcel.writeInt(id)
         parcel.writeString(name)
         parcel.writeString(content)
-        parcel.writeString(date)
+        parcel.writeString(dateCreate)
     }
 
     override fun describeContents(): Int {

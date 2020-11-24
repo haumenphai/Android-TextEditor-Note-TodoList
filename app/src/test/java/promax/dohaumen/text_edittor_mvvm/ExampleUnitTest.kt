@@ -2,6 +2,7 @@ package promax.dohaumen.text_edittor_mvvm
 
 import org.junit.Assert.assertEquals
 import org.junit.Test
+import promax.dohaumen.text_edittor_mvvm.helper.getCurentDate24h
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -19,14 +20,10 @@ class ExampleUnitTest {
 
     @Test
     fun testDate() {
-        val date = Date()
-        val simpleDateFormat = SimpleDateFormat("[E] dd-MM-yyyy k:mm:ss a")
-        val dateResult = simpleDateFormat.format(date)
-        println(dateResult)
     }
 
     @Test
     fun test2() {
-
+        print(getCurentDate24h())
     }
 }
