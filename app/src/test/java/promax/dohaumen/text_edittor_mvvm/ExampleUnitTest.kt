@@ -20,6 +20,9 @@ class ExampleUnitTest {
 
     @Test
     fun testDate() {
+        val date = Date()
+        val simpleDateFormat = SimpleDateFormat("[E] dd/MM/yyyy hh:mm:ss aa")
+        val result =  simpleDateFormat.format(date)
     }
 
     @Test

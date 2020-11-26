@@ -70,6 +70,12 @@ class FileTextAdapter: RecyclerView.Adapter<FileTextAdapter.Holder>() {
             holder.b.tvDate.text = "ngày xóa: ${fileText.dateDeteled}"
         }
 
+        if (fileText.password != null) {
+            holder.b.imgFileIsLooked.visibility = View.VISIBLE
+        } else {
+            holder.b.imgFileIsLooked.visibility = View.GONE
+        }
+
     }
 
     override fun getItemCount() = list.size

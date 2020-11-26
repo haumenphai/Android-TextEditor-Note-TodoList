@@ -16,6 +16,7 @@ class FileText : Parcelable {
     var lastEditedDate: String = ""
     var isDeleted: Boolean = false
     var dateDeteled: String = ""
+    var password: String? = null
 
     @Ignore
     var isCheck = false

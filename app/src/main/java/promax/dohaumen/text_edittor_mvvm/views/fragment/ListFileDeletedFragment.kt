@@ -21,6 +21,7 @@ import promax.dohaumen.text_edittor_mvvm.databinding.FragmentListFileBinding
 import promax.dohaumen.text_edittor_mvvm.databinding.FragmentListFileDeletedBinding
 import promax.dohaumen.text_edittor_mvvm.helper.demSoTu
 import promax.dohaumen.text_edittor_mvvm.helper.searchFileText
+import promax.dohaumen.text_edittor_mvvm.models.FileText
 import promax.dohaumen.text_edittor_mvvm.viewmodel.ListFileDeletedFragmentViewModel
 import promax.dohaumen.text_edittor_mvvm.views.activity.ViewFileActivity
 import promax.dohaumen.text_edittor_mvvm.views.activity.ViewListFileDeteledActivity
@@ -57,7 +58,7 @@ class ListFileDeletedFragment: Fragment() {
 
     private fun setConfigToolBar() {
         myActivity.setSupportActionBar(b.toolBar2)
-        myActivity.supportActionBar!!.title = "List File"
+        myActivity.supportActionBar!!.title = "List File deleted"
         b.toolBar2.setTitleTextColor(Color.WHITE)
         b.toolBar2.setNavigationOnClickListener {
             myActivity.onBackPressed()
@@ -99,11 +100,42 @@ class ListFileDeletedFragment: Fragment() {
 
 
     fun setClickItem() {
-        adapter.onClickITem = {
-            val intent = Intent(context, ViewFileActivity::class.java)
-            intent.setAction("Action view file read-only")
-            intent.putExtra("fileText", it)
-            startActivity(intent)
+        adapter.onClickITem = { fileText ->
+            // todo: problem?
+            if (fileText.password != null) {
+                val dialog = DialogAddFile(myActivity)
+                dialog.b.tvTitle.text = "Nhập mật khẩu"
+                dialog.b.editFileName.hint = "mật khẩu"
+                dialog.b.btnSave.text = "OK"
+
+                dialog.b.btnCancel.setOnClickListener {
+                    HandleUI.hideKeyboardFrom(myActivity, dialog.b.editFileName)
+                    dialog.cancel()
+                }
+                fun checkPass() {
+                    if (dialog.b.editFileName.text.toString() == fileText.password) {
+                        HandleUI.hideKeyboardFrom(myActivity, dialog.b.editFileName)
+                        startActivityViewFile(fileText)
+                        dialog.cancel()
+                    } else {
+                        Toast.makeText(context, "Sai mật khẩu!", Toast.LENGTH_SHORT).show()
+                        dialog.b.editFileName.setText("")
+                    }
+                }
+                dialog.b.btnSave.setOnClickListener {
+                    checkPass()
+                }
+                dialog.b.editFileName.setOnEditorActionListener { v, actionId, event ->
+                    checkPass()
+                    true
+                }
+
+                HandleUI.showKeyboard(myActivity)
+                dialog.show()
+            } else {
+                startActivityViewFile(fileText)
+            }
+
         }
         adapter.onLongClickITem = {
             b.layoutAction.root.visibility = View.VISIBLE
@@ -117,6 +149,8 @@ class ListFileDeletedFragment: Fragment() {
 
     fun setClickAction() {
         b.layoutAction.actionRename.visibility = View.GONE
+        b.layoutAction.actionSetPassword.visibility = View.GONE
+
         fun cancelAction() {
             b.layoutAction.root.visibility = View.GONE
             setClickItem()
@@ -181,5 +215,12 @@ class ListFileDeletedFragment: Fragment() {
             }
         }
         return super.onOptionsItemSelected(item)
+    }
+
+    private fun startActivityViewFile(fileText: FileText) {
+        val intent = Intent(context, ViewFileActivity::class.java)
+        intent.setAction("Action view file read-only")
+        intent.putExtra("fileText", fileText)
+        startActivity(intent)
     }
 }

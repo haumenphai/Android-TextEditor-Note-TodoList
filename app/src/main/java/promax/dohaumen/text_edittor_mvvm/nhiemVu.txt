@@ -5,4 +5,3 @@ Khi lưu file, mỗi file lại có một theme riêng. cho phép chỉnh sửa 
 
 todo: thêm mật khẩu, thêm xuất list ra bộ nhớ, thêm mở xem file text.
 
-todo: chuyển từ trạng thái lưu trữ state fragment thành replace để mở app nhanh hơn. Thay đổi title appBar của FragmentListFileDeleted

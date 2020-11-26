@@ -7,13 +7,16 @@ import java.util.*
 fun getCurrentDate12h(): String {
     val date = Date()
     val simpleDateFormat = SimpleDateFormat("[E] dd/MM/yyyy hh:mm:ss aa")
-    return  simpleDateFormat.format(date)
+    var result = simpleDateFormat.format(date)
+    result = result.replace("SA", "AM")
+    result = result.replace("CH", "PM")
+    return result
 }
 
 // định dạng 24h
 fun getCurentDate24h(): String {
     val date = Date()
-    val simpleDateFormat = SimpleDateFormat("[E] dd/MM/yyyy hh:mm:ss")
+    val simpleDateFormat = SimpleDateFormat("[E] dd/MM/yyyy k:mm:ss")
     return  simpleDateFormat.format(date)
 }
 

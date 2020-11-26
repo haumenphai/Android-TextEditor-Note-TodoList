@@ -16,7 +16,7 @@ import java.util.List;
 import promax.dohaumen.text_edittor_mvvm.MyApplication;
 import promax.dohaumen.text_edittor_mvvm.models.FileText;
 
-@Database(entities = {FileText.class}, version = 5)
+@Database(entities = {FileText.class}, version = 6)
 public abstract class FileTextDatabase extends RoomDatabase {
     public abstract FileTextDao dao();
 

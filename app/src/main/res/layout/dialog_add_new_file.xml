@@ -20,6 +20,7 @@
         android:layout_centerHorizontal="true"
         />
 
+
     <EditText
         android:id="@+id/edit_file_name"
         android:layout_width="match_parent"
