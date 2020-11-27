@@ -24,11 +24,11 @@ class FileText : Parcelable {
 
     constructor() {}
     @Ignore
-    constructor(name: String, content: String, date: String) {
+    constructor(name: String, content: String, dateCreate: String) {
         this.name = name
         this.content = content
-        this.dateCreate = date
-        this.lastEditedDate = date
+        this.dateCreate = dateCreate
+        this.lastEditedDate = dateCreate
     }
 
     @Ignore

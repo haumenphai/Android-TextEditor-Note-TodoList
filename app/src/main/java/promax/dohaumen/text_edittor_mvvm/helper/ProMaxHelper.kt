@@ -2,6 +2,7 @@ package promax.dohaumen.text_edittor_mvvm.helper
 
 import android.util.Log
 import kotlinx.coroutines.delay
+import promax.dohaumen.text_edittor_mvvm.MyApplication
 import promax.dohaumen.text_edittor_mvvm.models.FileText
 import promax.hmp.dev.heler.StringHelper
 import java.util.*
@@ -10,7 +11,7 @@ fun demSoTu(string: String): Int {
     if (string == "") return 0
     return string.split(" ").size
 }
-fun getTuVietTat(s: String):String {
+fun getTuVietTat(s: String): String {
     val arr = s.trim().split(" ")
     var result = ""
     for (i in 0..arr.size-1) {
@@ -18,6 +19,8 @@ fun getTuVietTat(s: String):String {
     }
     return result
 }
+
+fun getString(resources: Int): String = MyApplication.context.getString(resources)
 
 
 

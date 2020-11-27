@@ -32,7 +32,7 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="chọn tất cả"
+            android:text="@string/tv_select_all"
             android:textSize="13sp"
             android:layout_below="@id/img_chon_tat_ca"
             android:gravity="center"
@@ -60,7 +60,7 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Xóa"
+            android:text="@string/tv_delete"
             android:textSize="13sp"
             android:layout_below="@id/img_delete"
             android:gravity="center"
@@ -92,7 +92,7 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Đổi tên"
+            android:text="@string/tv_rename"
             android:textSize="13sp"
             android:layout_below="@id/img_rename"
             android:gravity="center"
@@ -127,7 +127,7 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Thông tin"
+            android:text="@string/tv_info"
             android:textSize="13sp"
             android:layout_below="@id/img_info"
             android:gravity="center"
@@ -161,7 +161,7 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Hủy"
+            android:text="@string/tv_cancel"
             android:textSize="13sp"
             android:layout_below="@id/img_cancel"
             android:gravity="center"
@@ -193,7 +193,7 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Mật khẩu"
+            android:text="@string/tv_password"
             android:textSize="13sp"
             android:layout_below="@id/img_look"
             android:gravity="center"

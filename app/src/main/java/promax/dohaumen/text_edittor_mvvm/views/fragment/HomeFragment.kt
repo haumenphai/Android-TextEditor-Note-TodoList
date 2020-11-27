@@ -55,6 +55,7 @@ class HomeFragment: Fragment() {
             if (isEditHometEnable) {
                 menu?.findItem(R.id.menu_edit)?.setIcon(R.drawable.ic_edit)
                 Toast.makeText(mainActivity, "editing...", Toast.LENGTH_SHORT).show()
+                b.editHome.setSelection(b.editHome.text.toString().length)
             } else {
                 menu?.findItem(R.id.menu_edit)?.setIcon(R.drawable.ic_edit_gray)
             }
@@ -81,11 +82,11 @@ class HomeFragment: Fragment() {
             }
             R.id.menu_delete -> {
                 AlertDialog.Builder(mainActivity)
-                    .setTitle("Delete text temp?")
-                    .setNegativeButton("OK") { dialogInterface: DialogInterface, i: Int ->
+                    .setTitle(getString(R.string.delete_temp_text))
+                    .setNegativeButton(getString(R.string.btn_ok)) { dialogInterface: DialogInterface, i: Int ->
                         viewModel.deleteTextTemp()
                     }
-                    .setPositiveButton("Cancel") { dialogInterface: DialogInterface, i: Int ->
+                    .setPositiveButton(getString(R.string.btn_cancel)) { dialogInterface: DialogInterface, i: Int ->
 
                     }
                     .show()

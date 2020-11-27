@@ -41,7 +41,7 @@
             android:gravity="left"
             android:inputType="textNoSuggestions|textMultiLine"
             android:textColor="@color/black"
-            android:hint="content null, write here..."
+            android:hint="@string/hint_edit_view_file"
             />
     </ScrollView>
 

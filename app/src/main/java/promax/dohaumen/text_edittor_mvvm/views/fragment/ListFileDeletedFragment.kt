@@ -88,24 +88,26 @@ class ListFileDeletedFragment: Fragment() {
     }
 
 
-    fun initRecyclerView() {
+    private fun initRecyclerView() {
         adapter.hienThiItemListFileBiXoa = true
         b.recyclerView.layoutManager = LinearLayoutManager(myActivity)
         b.recyclerView.adapter = adapter
 
         viewModel.getListFileText().observeForever {
             adapter.setList(it)
+            b.tvListEmpty.visibility = if (it.isEmpty()) View.VISIBLE else View.GONE
+
         }
     }
 
 
-    fun setClickItem() {
+    private fun setClickItem() {
         adapter.onClickITem = { fileText ->
             // todo: problem?
             if (fileText.password != null) {
                 val dialog = DialogAddFile(myActivity)
-                dialog.b.tvTitle.text = "Nhập mật khẩu"
-                dialog.b.editFileName.hint = "mật khẩu"
+                dialog.b.tvTitle.text = getString(R.string.enter_password)
+                dialog.b.editFileName.hint = getString(R.string.password)
                 dialog.b.btnSave.text = "OK"
 
                 dialog.b.btnCancel.setOnClickListener {
@@ -118,7 +120,7 @@ class ListFileDeletedFragment: Fragment() {
                         startActivityViewFile(fileText)
                         dialog.cancel()
                     } else {
-                        Toast.makeText(context, "Sai mật khẩu!", Toast.LENGTH_SHORT).show()
+                        Toast.makeText(context, getString(R.string.password_is_not_correct), Toast.LENGTH_SHORT).show()
                         dialog.b.editFileName.setText("")
                     }
                 }
@@ -147,7 +149,7 @@ class ListFileDeletedFragment: Fragment() {
         }
     }
 
-    fun setClickAction() {
+    private fun setClickAction() {
         b.layoutAction.actionRename.visibility = View.GONE
         b.layoutAction.actionSetPassword.visibility = View.GONE
 
@@ -165,35 +167,40 @@ class ListFileDeletedFragment: Fragment() {
         }
         b.layoutAction.actionDelete.setOnClickListener {
             val listCheckedLength = adapter.getListChecked().size
-            AlertDialog.Builder(context)
-                .setTitle("Delete $listCheckedLength File")
-                .setMessage("Do you want to delete $listCheckedLength files? Deleted files cannot be recovered\n\n" +
-                            "Lưu ý: Điều này sẽ xóa vĩnh viễn file, không thể phục hồi")
-                .setPositiveButton("OK") { _1, _2 ->
-                    viewModel.deleteListChecked(adapter.getListChecked()) {
-                        Toast.makeText(context, "Đã xóa $listCheckedLength file", Toast.LENGTH_SHORT).show()
+            if (listCheckedLength != 0) {
+                AlertDialog.Builder(context)
+                    .setTitle("${getString(R.string.tv_delete)} $listCheckedLength File")
+                    .setMessage("${getString(R.string.do_you_want_to_delete)} $listCheckedLength files?\n" +
+                            getString(R.string.deleted_files_cannot_be_recovered)
+                    )
+                    .setPositiveButton(R.string.delete) { _1, _2 ->
+                        viewModel.deleteListChecked(adapter.getListChecked()) {
+                            Toast.makeText(context, "${getString(R.string.deleted)} $listCheckedLength file", Toast.LENGTH_SHORT).show()
+                        }
+                        cancelAction()
                     }
-                    cancelAction()
-                }
-                .setNegativeButton("Cancel") { dialogInterface: DialogInterface, i: Int ->
-                }.show()
+                    .setNegativeButton(R.string.btn_cancel) { dialogInterface: DialogInterface, i: Int ->
+                    }.show()
+            }
         }
 
         b.layoutAction.actionInfo.setOnClickListener {
             val listCheckedLength = adapter.getListChecked().size
-            val fileText = adapter.getListChecked().get(0)
             if (listCheckedLength != 1) {
-                Snackbar.make(b.recyclerView, "Chỉ được chọn 1 file để xem thông tin", 1111).show()
+                Snackbar.make(b.recyclerView, getString(R.string.only_1_file_can_be_selected_to_view_information), 1111).show()
+            } else {
+                val fileText = adapter.getListChecked().get(0)
+                AlertDialog.Builder(myActivity)
+                    .setTitle(R.string.info)
+                    .setMessage("${getString(R.string.file_name)}: ${fileText.name}\n" +
+                            "${getString(R.string.content)}: ${demSoTu(fileText.content)} ${getString(R.string.word)}, " +
+                            "${fileText.content.length} ${getString(R.string.characters)}\n" +
+                            "${getString(R.string.date_created)}: \n \t${fileText.dateCreate}\n" +
+                            "${getString(R.string.last_edited_date)}: \n \t${fileText.lastEditedDate}\n" +
+                            "${getString(R.string.date_deleted)}: \n \t${fileText.dateDeteled}\n")
+                    .setNegativeButton("Ok") {s,s1 ->}
+                    .show()
             }
-            AlertDialog.Builder(myActivity)
-                .setTitle("Thông tin")
-                .setMessage("Tên file: ${fileText.name}\n" +
-                        "Nội dung: ${demSoTu(fileText.content)} từ, ${fileText.content.length} kí tự\n" +
-                        "Ngày tạo: \n \t${fileText.dateCreate}\n" +
-                        "Ngày chỉnh sửa gần nhất: \n \t${fileText.lastEditedDate}\n" +
-                        "Ngày xóa: \n \t${fileText.dateDeteled}\n")
-                .setNegativeButton("Ok") {s,s1 ->}
-                .show()
         }
 
 

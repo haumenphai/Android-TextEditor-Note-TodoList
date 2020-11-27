@@ -42,6 +42,7 @@ class ViewFileActivity : AppCompatActivity() {
             if (isEditHometEnable) {
                 menu?.findItem(R.id.menu_edit)?.setIcon(R.drawable.ic_edit)
                 Toast.makeText(this, "editing...", Toast.LENGTH_SHORT).show()
+                b.editViewFile.setSelection(b.editViewFile.text.toString().length)
             } else {
                 menu?.findItem(R.id.menu_edit)?.setIcon(R.drawable.ic_edit_gray)
             }
@@ -85,12 +86,12 @@ class ViewFileActivity : AppCompatActivity() {
             }
             R.id.menu_save -> {
                 AlertDialog.Builder(this)
-                    .setTitle("Save")
+                    .setTitle(getString(R.string.btn_save))
                     .setPositiveButton("OK") { s, s1 ->
                         viewModel.saveFileText(b.editViewFile.text.toString())
-                        Toast.makeText(this, "Saved", Toast.LENGTH_SHORT).show()
+                        Toast.makeText(this, getString(R.string.mess_saved), Toast.LENGTH_SHORT).show()
                     }
-                    .setNegativeButton("Cancel") { s, s1 ->
+                    .setNegativeButton(getString(R.string.btn_cancel)) { s, s1 ->
 
                     }.show()
             }
@@ -121,13 +122,13 @@ class ViewFileActivity : AppCompatActivity() {
     override fun onBackPressed() {
         if (viewModel.fileText.content != b.editViewFile.text.toString()) {
             AlertDialog.Builder(this)
-                .setTitle("Lưu")
-                .setMessage("Bạn đã chỉnh sửa nhưng chưa lưu. Lưu và thoát?")
-                .setPositiveButton("Lưu") { s, s1 ->
+                .setTitle(R.string.btn_save)
+                .setMessage(getString(R.string.mess_save_and_exit))
+                .setPositiveButton(getString(R.string.btn_save)) { s, s1 ->
                     viewModel.saveFileText(b.editViewFile.text.toString())
-                    Toast.makeText(this, "Đã lưu", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(this, getString(R.string.mess_saved), Toast.LENGTH_SHORT).show()
                     super.onBackPressed()
-                }.setNegativeButton("Hủy") { s, s1 ->
+                }.setNegativeButton(getString(R.string.btn_cancel)) { s, s1 ->
                     super.onBackPressed()
                 }.show()
         } else {

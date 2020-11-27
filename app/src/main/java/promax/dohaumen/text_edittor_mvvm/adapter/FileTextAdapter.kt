@@ -67,7 +67,7 @@ class FileTextAdapter: RecyclerView.Adapter<FileTextAdapter.Holder>() {
         }
 
         if (hienThiItemListFileBiXoa) {
-            holder.b.tvDate.text = "ngày xóa: ${fileText.dateDeteled}"
+            holder.b.tvDate.text = "${context.getString(R.string.date_delete)} ${fileText.dateDeteled}"
         }
 
         if (fileText.password != null) {

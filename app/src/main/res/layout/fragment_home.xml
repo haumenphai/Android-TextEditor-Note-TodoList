@@ -36,7 +36,7 @@
             android:layout_height="match_parent"
             android:background="@drawable/bg_edittext_full_secreen"
             android:gravity="left"
-            android:hint="write here..."
+            android:hint="@string/tv_write_here"
             android:inputType="textNoSuggestions|textMultiLine"
             android:textColor="@color/black"
             />

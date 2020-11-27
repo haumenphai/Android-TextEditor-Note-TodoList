@@ -1,3 +1,79 @@
 <resources>
     <string name="app_name">Text Edittor</string>
+    <string name="btn_cancel">Cancel</string>
+    <string name="btn_ok" translatable="false">OK</string>
+    <string name="btn_save">Save</string>
+    <string name="hint_edit_view_file">content null, write here...</string>
+    <string name="title_dialog_save_file">Save Text</string>
+    <string name="hint_edit_save_file">enter file name</string>
+    <string name="title_dialog_setting">Setting</string>
+    <string name="tv_text_size">Text Size</string>
+    <string name="tv_write_here">write here...</string>
+    <string name="hint_edit_search">search</string>
+    <string name="tv_contact_facebook">Contact: facebook</string>
+    <string name="tv_view_list_file_deleted">View deleted files</string>
+    <string name="tv_select_all">Select all</string>
+
+    <string name="tv_delete">Delete</string>
+    <string name="tv_rename">Rename</string>
+    <string name="tv_info">Info</string>
+    <string name="tv_cancel">Cancel</string>
+    <string name="tv_password">Password</string>
+
+    <string name="menu_edit">edit</string>
+    <string name="menu_save">save</string>
+    <string name="menu_setting">setting</string>
+    <string name="menu_delete">delete</string>
+    <string name="menu_search">search</string>
+    <string name="menu_add">add new file</string>
+
+    <string name="date_delete">date delete:</string>
+    <string name="mess_file_name_must_not_emtpy">The file name must not emtpy!</string>
+    <string name="mess_save_file_successfully">Save the file successfully</string>
+    <string name="mess_rename_successfully">Rename successfully</string>
+    <string name="mess_setup_password_faild">Password and confirm password must be the same</string>
+    <string name="mess_setup_password_succseccfully">Set password successfully</string>
+    <string name="mess_old_password_is_not_correct">Old password is not correct</string>
+    <string name="mess_changed_password_successfully">Password changed successfully</string>
+    <string name="mess_delete_password_succsecfully">Delete password successfully</string>
+    <string name="mess_delete_password_faild">Password is not correct</string>
+
+    <string name="mess_saved">Saved</string>
+    <string name="mess_save_and_exit">You have edited but not saved it. Save and exit?</string>
+    <string name="delete_temp_text">Delete temp text?</string>
+
+    <string name="enter_password">Enter Password</string>
+    <string name="password">password</string>
+    <string name="password_is_not_correct">Password is not correct</string>
+
+    <string name="do_you_want_to_delete">Do you want to delete</string>
+    <string name="deleted_files_cannot_be_recovered">Deleted files cannot be recovered</string>
+    <string name="deleted">Deleted</string>
+    <string name="delete">Delete</string>
+    
+    <string name="only_1_file_can_be_selected_to_view_information">Only 1 file can be selected to view information</string>
+    <string name="info">Info</string>
+    <string name="file_name">File name</string>
+    <string name="content">Content</string>
+    <string name="date_created">Date created</string>
+    <string name="last_edited_date">Last edited date</string>
+    <string name="date_deleted">Date deleted</string>
+    <string name="word">word</string>
+    <string name="characters">characters</string>
+    <string name="only_1_file_can_be_selected_to_rename">Only 1 file can be selected to rename</string>
+    <string name="rename">Rename</string>
+    <string name="only_1_file_can_be_selected_to_set_password">Only 1 file can be selected to set password</string>
+    <string name="set_password">Set password</string>
+    <string name="change_password">Change password</string>
+    <string name="delete_password">Delete password</string>
+    <string name="confirm_password">confirm password</string>
+    <string name="enter_old_password">Enter old password</string>
+    <string name="enter_new_password">Enter new password</string>
+    <string name="list_empty">List empty</string>
+
+    <string name="nav_home">Home</string>
+    <string name="nav_list_file">List file</string>
+    <string name="nav_setting">Setting</string>
+
+
 </resources>

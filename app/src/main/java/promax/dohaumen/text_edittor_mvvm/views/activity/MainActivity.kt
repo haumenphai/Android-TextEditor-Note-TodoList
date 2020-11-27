@@ -31,7 +31,7 @@ class MainActivity : AppCompatActivity() {
      * Lưu giữ trạng thái của fragment khi chuyển qua fragment bằng bottomNav.
      * Tất cả các fragment được khởi tạo cùng lúc, có cùng trạng thái.
      */
-    fun controlFragmentWithSaveState() {
+    private fun controlFragmentWithSaveState() {
         val homeFragment = HomeFragment()
         val listFileFragment = ListFileFragment()
         val settingFragment = SettingFragment()
@@ -43,17 +43,17 @@ class MainActivity : AppCompatActivity() {
         }.commit()
 
         b.bottomNav.setOnNavigationItemSelectedListener {
-            when (it.title.toString()) {
-                "Home" -> {
+            when (it.itemId) {
+                R.id.home -> {
                     supportFragmentManager.beginTransaction().hide(activeFragment).show(homeFragment).commit()
                     activeFragment = homeFragment
                 }
 
-                "List file" -> {
+                R.id.list_file -> {
                     supportFragmentManager.beginTransaction().hide(activeFragment).show(listFileFragment).commit()
                     activeFragment = listFileFragment
                 }
-                "Setting" -> {
+                R.id.setting -> {
                     supportFragmentManager.beginTransaction().hide(activeFragment).show(settingFragment).commit()
                     activeFragment = settingFragment
                 }
@@ -67,7 +67,7 @@ class MainActivity : AppCompatActivity() {
     /**
      * Không lưu giữ trạng thái khi chuyển qua lại các fragment,
      */
-    fun controlFragment() {
+    private fun controlFragment() {
         supportFragmentManager.beginTransaction().replace(R.id.container_fragment, HomeFragment()).commit()
 
         b.bottomNav.setOnNavigationItemSelectedListener {

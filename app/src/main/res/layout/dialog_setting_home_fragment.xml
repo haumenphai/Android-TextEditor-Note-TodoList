@@ -15,7 +15,7 @@
         android:layout_height="wrap_content"
         android:textSize="19sp"
         android:textColor="@color/black"
-        android:text="Setting"
+        android:text="@string/title_dialog_setting"
         android:layout_centerHorizontal="true"
         />
 
@@ -23,7 +23,7 @@
         android:id="@+id/tv_1"
         android:layout_width="wrap_content"
         android:layout_height="40dp"
-        android:text="Text Size:"
+        android:text="@string/tv_text_size"
         android:textColor="@color/black"
         android:textSize="16sp"
         android:gravity="center"
@@ -94,7 +94,7 @@
         android:layout_height="35dp"
         app:backgroundTint="@null"
         android:background="@drawable/bg_button"
-        android:text="OK"
+        android:text="@string/btn_ok"
         android:textColor="@color/black"
         android:layout_below="@id/tv_chu_de"
         android:layout_marginTop="10dp"

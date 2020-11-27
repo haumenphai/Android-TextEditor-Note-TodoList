@@ -94,6 +94,7 @@ class ListFileFragment() : Fragment() {
 
         viewModel.getListFileText().observeForever {
             adapter.setList(it)
+            b.tvListEmpty.visibility = if (it.isEmpty()) View.VISIBLE else View.GONE
         }
     }
 
@@ -103,8 +104,8 @@ class ListFileFragment() : Fragment() {
             // todo: problem?
             if (fileText.password != null) {
                 val dialog = DialogAddFile(mainActivity)
-                dialog.b.tvTitle.text = "Nhập mật khẩu"
-                dialog.b.editFileName.hint = "mật khẩu"
+                dialog.b.tvTitle.text = getString(R.string.enter_password)
+                dialog.b.editFileName.hint = getString(R.string.password)
                 dialog.b.btnSave.text = "OK"
 
 
@@ -118,7 +119,7 @@ class ListFileFragment() : Fragment() {
                         startActivityViewFile(fileText)
                         dialog.cancel()
                     } else {
-                        Toast.makeText(context, "Sai mật khẩu!", Toast.LENGTH_SHORT).show()
+                        Toast.makeText(context, getString(R.string.password_is_not_correct), Toast.LENGTH_SHORT).show()
                         dialog.b.editFileName.setText("")
                     }
                 }
@@ -163,29 +164,30 @@ class ListFileFragment() : Fragment() {
         }
         b.layoutAction.actionDelete.setOnClickListener {
             val listCheckedLength = adapter.getListChecked().size
+            if (listCheckedLength != 0)
             AlertDialog.Builder(context)
-                .setTitle("Delete $listCheckedLength File")
-                .setMessage("Do you want to delete $listCheckedLength files?")
-                .setPositiveButton("OK") { _1, _2 ->
+                .setTitle("${getString(R.string.tv_delete)} $listCheckedLength File")
+                .setMessage("${getString(R.string.do_you_want_to_delete)} $listCheckedLength files?")
+                .setPositiveButton(R.string.delete) { _1, _2 ->
                     viewModel.deleteListChecked(adapter.getListChecked()) {
-                        Snackbar.make(b.recyclerView, "Đã xóa $listCheckedLength file",1111).show()
+                        Snackbar.make(b.recyclerView, "${getString(R.string.deleted)} $listCheckedLength file",1111).show()
                     }
                     cancelAction()
                 }
-                .setNegativeButton("Cancel") { dialogInterface: DialogInterface, i: Int ->
+                .setNegativeButton(R.string.btn_cancel) { dialogInterface: DialogInterface, i: Int ->
                 }.show()
         }
         b.layoutAction.actionRename.setOnClickListener {
             val listCheckedLength = adapter.getListChecked().size
             if (listCheckedLength != 1) {
-                Snackbar.make(b.recyclerView, "Chỉ được chọn 1 file để đổi tên", 1111).show()
+                Snackbar.make(b.recyclerView, R.string.only_1_file_can_be_selected_to_rename, 1111).show()
             } else {
                 val fileText = adapter.getListChecked().get(0)
                 val dialogAddFile = DialogAddFile(mainActivity).run {
                     HandleUI.showKeyboard(mainActivity)
                     b.editFileName.setText(fileText.name)
                     b.editFileName.setSelection(0,fileText.name.length)
-                    b.tvTitle.text = "Đổi tên"
+                    b.tvTitle.text = getString(R.string.rename)
                     b.btnCancel.setOnClickListener {
                         HandleUI.hideKeyboardFrom(mainActivity, b.editFileName)
                         cancel()
@@ -207,47 +209,48 @@ class ListFileFragment() : Fragment() {
                 }
             }
         }
-
         b.layoutAction.actionInfo.setOnClickListener {
             val listCheckedLength = adapter.getListChecked().size
-            val fileText = adapter.getListChecked().get(0)
             if (listCheckedLength != 1) {
-                Snackbar.make(b.recyclerView, "", 1111).show()
+                Snackbar.make(b.recyclerView, getString(R.string.only_1_file_can_be_selected_to_view_information), 1111).show()
+            } else {
+                val fileText = adapter.getListChecked().get(0)
+                AlertDialog.Builder(mainActivity)
+                    .setTitle(R.string.info)
+                    .setMessage("${getString(R.string.file_name)}: ${fileText.name}\n" +
+                            "${getString(R.string.content)}: ${demSoTu(fileText.content)} ${getString(R.string.word)}, " +
+                            "${fileText.content.length} ${getString(R.string.characters)}\n" +
+                            "${getString(R.string.date_created)}: \n \t${fileText.dateCreate}\n" +
+                            "${getString(R.string.last_edited_date)}: \n \t${fileText.lastEditedDate}")
+                    .setNegativeButton("Ok") {s,s1 ->}
+                    .show()
             }
-            AlertDialog.Builder(mainActivity)
-                .setTitle("Thông tin")
-                .setMessage("Tên file: ${fileText.name}\n" +
-                            "Nội dung: ${demSoTu(fileText.content)} từ, ${fileText.content.length} kí tự\n" +
-                            "Ngày tạo: \n \t${fileText.dateCreate}\n" +
-                            "Ngày chỉnh sửa gần nhất: \n \t${fileText.lastEditedDate}")
-                .setNegativeButton("Ok") {s,s1 ->}
-                .show()
         }
-
         b.layoutAction.actionSetPassword.setOnClickListener {
             val listCheckedLength = adapter.getListChecked().size
-            val fileText = adapter.getListChecked().get(0)
 
             if (listCheckedLength != 1) {
-                Snackbar.make(b.recyclerView, "Chỉ được chọn một file để đặt mật khẩu", 1111).show()
+                Snackbar.make(b.recyclerView, R.string.only_1_file_can_be_selected_to_set_password, 1111).show()
             } else {
+                val fileText = adapter.getListChecked().get(0)
                 val popupMenu = PopupMenu(context, b.layoutAction.actionSetPassword)
-                popupMenu.menu.add("Đặt mật khẩu")
                 if (fileText.password != null) {
-                    popupMenu.menu.add("Đổi mật khẩu")
-                    popupMenu.menu.add("Xóa mật khẩu")
+                    popupMenu.menu.add(R.string.change_password)
+                    popupMenu.menu.add(R.string.delete_password)
+                } else {
+                    popupMenu.menu.add(R.string.set_password)
                 }
 
                 popupMenu.setOnMenuItemClickListener {
                     when (it.title) {
-                        "Đặt mật khẩu" -> {
+                        getString(R.string.set_password) -> {
                             val dialog = DialogAddNewFile2(context!!)
                             dialog.dialog.setCanceledOnTouchOutside(false)
-                            dialog.tvTitle.text = "Đặt mật khẩu"
+                            dialog.tvTitle.text = getString(R.string.set_password)
                             dialog.tvMess.visibility = View.GONE
                             dialog.editText2.visibility = View.VISIBLE
-                            dialog.editText1.hint = "Nhập mật khẩu mới"
-                            dialog.editText2.hint = "Nhập mật khẩu lại"
+                            dialog.editText1.hint = getString(R.string.password)
+                            dialog.editText2.hint = getString(R.string.confirm_password)
 
                             dialog.btnCancel.setOnClickListener {
                                 HandleUI.hideKeyboardFrom(context, dialog.editText1)
@@ -267,23 +270,23 @@ class ListFileFragment() : Fragment() {
                             HandleUI.showKeyboard(context)
                             dialog.show()
                         }
-                        "Đổi mật khẩu" -> {
+                        getString(R.string.change_password) -> {
                             val dialog = DialogAddNewFile2(context!!)
                             dialog.dialog.setCanceledOnTouchOutside(false)
-                            dialog.tvTitle.text = "Đổi mật khẩu"
+                            dialog.tvTitle.text = getString(R.string.change_password)
                             dialog.tvMess.visibility = View.GONE
                             dialog.editText2.visibility = View.VISIBLE
-                            dialog.editText1.hint = "Nhập mật khẩu cũ"
-                            dialog.editText2.hint = "Nhập mật khẩu mới"
+                            dialog.editText1.hint = getString(R.string.enter_old_password)
+                            dialog.editText2.hint = getString(R.string.enter_new_password)
 
                             dialog.btnCancel.setOnClickListener {
                                 HandleUI.hideKeyboardFrom(context, dialog.editText1)
                                 dialog.cancel()
                             }
                             dialog.btnOk.setOnClickListener {
-                                viewModel.rePassword(fileText, dialog.editText1.text.toString(), dialog.editText2.text.toString())
+                                viewModel.changePassword(fileText, dialog.editText1.text.toString(), dialog.editText2.text.toString())
                             }
-                            viewModel.onRePasswordComplete = { mess, isSucssec ->
+                            viewModel.onChangePasswordComplete = { mess, isSucssec ->
                                 Toast.makeText(mainActivity, mess, Toast.LENGTH_SHORT).show()
                                 if (isSucssec) {
                                     HandleUI.hideKeyboardFrom(context, dialog.editText1)
@@ -294,12 +297,12 @@ class ListFileFragment() : Fragment() {
                             HandleUI.showKeyboard(context)
                             dialog.show()
                         }
-                        "Xóa mật khẩu" -> {
+                        getString(R.string.delete_password) -> {
                             val dialog = DialogAddNewFile2(context!!)
                             dialog.dialog.setCanceledOnTouchOutside(false)
-                            dialog.tvTitle.text = "Xoá mật khẩu"
+                            dialog.tvTitle.text = getString(R.string.delete_password)
                             dialog.tvMess.visibility = View.GONE
-                            dialog.editText1.hint = "Nhập mật khẩu cũ"
+                            dialog.editText1.hint = getString(R.string.enter_old_password)
 
                             dialog.btnCancel.setOnClickListener {
                                 HandleUI.hideKeyboardFrom(context, dialog.editText1)

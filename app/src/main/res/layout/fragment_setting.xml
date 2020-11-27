@@ -32,16 +32,32 @@
         app:layout_constraintStart_toStartOf="@+id/tv_app_name"
         app:layout_constraintTop_toBottomOf="@+id/tv_app_name" />
 
+
+    <TextView
+        android:id="@+id/tv_lien_he_facebook"
+        android:layout_width="wrap_content"
+        android:layout_height="40dp"
+        android:layout_marginStart="16dp"
+        android:text="@string/tv_contact_facebook"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tv_app_version"
+        android:textSize="16sp"
+        android:textColor="@color/black"
+        android:gravity="center"
+        android:background="@drawable/bg_1"
+        />
+
     <TextView
         android:id="@+id/tv_xem_cac_file_da_bi_xoa"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_height="30dp"
         android:layout_marginStart="16dp"
         android:layout_marginBottom="16dp"
-        android:text="Xem các file đã bị xóa"
+        android:text="@string/tv_view_list_file_deleted"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         android:textSize="16sp"
         android:textColor="#515151"
+        android:gravity="center"
         />
 </androidx.constraintlayout.widget.ConstraintLayout>

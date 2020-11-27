@@ -3,13 +3,13 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
     <item
         android:id="@+id/menu_edit"
-        android:title="edit"
+        android:title="@string/menu_edit"
         android:icon="@drawable/ic_edit_gray"
         app:showAsAction="always"
         />
     <item
         android:id="@+id/menu_save"
-        android:title="save"
+        android:title="@string/menu_save"
         app:showAsAction="always"
         android:icon="@drawable/ic_save"
         app:iconTint="@color/color_black_2"
@@ -17,7 +17,7 @@
         />
     <item
         android:id="@+id/menu_setting"
-        android:title="setting"
+        android:title="@string/menu_setting"
         app:showAsAction="always"
         android:icon="@drawable/ic_setting"
         app:iconTint="@color/color_black_2"
@@ -25,7 +25,7 @@
         />
     <item
         android:id="@+id/menu_delete"
-        android:title="delete"
+        android:title="@string/menu_delete"
         app:showAsAction="always"
         android:icon="@drawable/ic_delete"
         app:iconTint="@color/color_black_2"
