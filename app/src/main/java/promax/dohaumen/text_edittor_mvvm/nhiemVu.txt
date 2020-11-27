@@ -1,7 +1,4 @@
 
 
-todo: thêm theme trong home fragment.
-Khi lưu file, mỗi file lại có một theme riêng. cho phép chỉnh sửa file trong activityViewFile.
 
-todo: thêm mật khẩu, thêm xuất list ra bộ nhớ, thêm mở xem file text.
 
