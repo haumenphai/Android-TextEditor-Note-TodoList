@@ -18,12 +18,19 @@ class ListFileDeletedFragmentViewModel: ViewModel() {
     }
 
 
-
     fun deleteListChecked(list: List<FileText>, onComplete:() -> Unit = {}) {
         list.forEach { fileText ->
             FileTextDatabase.getINSTANCE().dao().delete(fileText)
         }
         onComplete()
+    }
+
+    fun restoreListChecked(list: List<FileText>, onComplete: () -> Unit = {}) {
+        list.forEach { fileText ->
+            fileText.isDeleted = false
+            FileTextDatabase.getINSTANCE().dao().update(fileText)
+            onComplete()
+        }
     }
 
 

@@ -152,6 +152,7 @@ class ListFileDeletedFragment: Fragment() {
     private fun setClickAction() {
         b.layoutAction.actionRename.visibility = View.GONE
         b.layoutAction.actionSetPassword.visibility = View.GONE
+        b.layoutAction.actionRestore.visibility = View.VISIBLE
 
         fun cancelAction() {
             b.layoutAction.root.visibility = View.GONE
@@ -183,7 +184,6 @@ class ListFileDeletedFragment: Fragment() {
                     }.show()
             }
         }
-
         b.layoutAction.actionInfo.setOnClickListener {
             val listCheckedLength = adapter.getListChecked().size
             if (listCheckedLength != 1) {
@@ -201,6 +201,17 @@ class ListFileDeletedFragment: Fragment() {
                     .setNegativeButton("Ok") {s,s1 ->}
                     .show()
             }
+        }
+        b.layoutAction.actionRestore.setOnClickListener {
+            AlertDialog.Builder(context)
+                .setTitle(R.string.restore)
+                .setNegativeButton(R.string.btn_cancel) {s1,s2->
+
+                }.setPositiveButton(R.string.btn_ok) {s1, s2->
+                    viewModel.restoreListChecked(adapter.getListChecked()) {
+                        Toast.makeText(context, R.string.successful_recovery, Toast.LENGTH_SHORT).show()
+                    }
+                }.show()
         }
 
 

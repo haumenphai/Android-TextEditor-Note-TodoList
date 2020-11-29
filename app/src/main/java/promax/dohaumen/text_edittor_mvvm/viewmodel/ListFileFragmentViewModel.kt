@@ -45,6 +45,15 @@ class ListFileFragmentViewModel: ViewModel() {
         onComplete()
     }
 
+    lateinit var listDeleteUndo: List<FileText>
+    fun undoDelete() {
+        listDeleteUndo.forEach { fileText ->
+            fileText.isDeleted = false
+            fileText.dateDeteled = ""
+            FileTextDatabase.getINSTANCE().dao().update(fileText)
+        }
+    }
+
 
     var onRenameComple:(mess: String, isSucssec: Boolean) -> Unit = { mess, isSucssec -> }
     fun reNameFile(newName: String, fileText: FileText) {

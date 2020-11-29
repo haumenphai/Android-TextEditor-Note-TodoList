@@ -11,7 +11,7 @@ class ViewFileActivityViewModel: ViewModel() {
     private var textSize: MutableLiveData<Int> = MutableLiveData()
     private var isEditTextEnable: MutableLiveData<Boolean> = MutableLiveData()
 
-    lateinit var fileText: FileText
+    var fileText: FileText? = null
 
     init {
         textSize.value  = HomeFragmentData.getTextSize()
@@ -38,8 +38,8 @@ class ViewFileActivityViewModel: ViewModel() {
     }
 
     fun saveFileText(newContent: String) {
-        fileText.content = newContent
-        FileTextRes.update(fileText)
+        fileText!!.content = newContent
+        FileTextRes.update(fileText!!)
     }
 
 }

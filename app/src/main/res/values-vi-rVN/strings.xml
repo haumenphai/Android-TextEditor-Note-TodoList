@@ -66,4 +66,10 @@
     <string name="nav_home">Nháp</string>
     <string name="nav_list_file">Danh sách</string>
     <string name="nav_setting">Cài đặt</string>
+    <string name="undo">Hoàn tác</string>
+    <string name="restore">Khôi phục những file này?</string>
+    <string name="action_restore">Phục hồi</string>
+    <string name="successful_recovery">Khôi phục thành công</string>
+    <string name="saved">Đã lưu</string>
+    <string name="cannot_write_file">Không thể lưu file</string>
 </resources>

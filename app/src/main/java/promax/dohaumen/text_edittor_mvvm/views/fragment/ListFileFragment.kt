@@ -28,6 +28,7 @@ import promax.dohaumen.text_edittor_mvvm.viewmodel.ListFileFragmentViewModel
 import promax.dohaumen.text_edittor_mvvm.views.dialog.DialogAddFile
 import promax.hmp.dev.utils.HandleUI
 import promax.hmp.dev.views.DialogAddNewFile2
+import java.lang.Exception
 
 class ListFileFragment() : Fragment() {
     lateinit var b: FragmentListFileBinding
@@ -169,8 +170,12 @@ class ListFileFragment() : Fragment() {
                 .setTitle("${getString(R.string.tv_delete)} $listCheckedLength File")
                 .setMessage("${getString(R.string.do_you_want_to_delete)} $listCheckedLength files?")
                 .setPositiveButton(R.string.delete) { _1, _2 ->
+                    viewModel.listDeleteUndo = adapter.getListChecked()
                     viewModel.deleteListChecked(adapter.getListChecked()) {
-                        Snackbar.make(b.recyclerView, "${getString(R.string.deleted)} $listCheckedLength file",1111).show()
+                        Snackbar.make(b.recyclerView, "${getString(R.string.deleted)} $listCheckedLength file",3000)
+                            .setAction(R.string.undo) {
+                                viewModel.undoDelete()
+                            }.show()
                     }
                     cancelAction()
                 }

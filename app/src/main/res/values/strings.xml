@@ -74,6 +74,12 @@
     <string name="nav_home">Home</string>
     <string name="nav_list_file">List file</string>
     <string name="nav_setting">Setting</string>
+    <string name="undo">Undo</string>
+    <string name="restore">Restore this files?</string>
+    <string name="action_restore">Restore</string>
+    <string name="successful_recovery">successful recovery</string>
+    <string name="saved">Saved</string>
+    <string name="cannot_write_file">Cannot save file</string>
 
 
 </resources>
