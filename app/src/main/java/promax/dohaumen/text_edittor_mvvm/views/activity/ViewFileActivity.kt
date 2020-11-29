@@ -5,7 +5,6 @@ import android.content.Intent
 import android.content.pm.PackageManager
 import android.os.Build
 import android.os.Bundle
-import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import android.widget.Toast
@@ -194,12 +193,12 @@ class ViewFileActivity : AppCompatActivity() {
         }
     }
 
-    private val RESQUEST_WRITE_FILE = 11
+    private val RESQUEST_CODE_WRITE_FILE = 11
 
     override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)
         when (requestCode) {
-            RESQUEST_WRITE_FILE -> {
+            RESQUEST_CODE_WRITE_FILE -> {
                 if (grantResults.size > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                     // can write file
                     writeFileText(intent.data!!, b.editViewFile.text.toString())
@@ -212,7 +211,7 @@ class ViewFileActivity : AppCompatActivity() {
     }
 
     private fun requestPermisstionWriteFile() {
-        ActivityCompat.requestPermissions(this , arrayOf(Manifest.permission.WRITE_EXTERNAL_STORAGE), RESQUEST_WRITE_FILE)
+        ActivityCompat.requestPermissions(this , arrayOf(Manifest.permission.WRITE_EXTERNAL_STORAGE), RESQUEST_CODE_WRITE_FILE)
     }
 
     private fun isGrantedpermisstionWriteFile(): Boolean {
