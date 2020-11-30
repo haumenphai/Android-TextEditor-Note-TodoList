@@ -66,6 +66,9 @@ fun getRealPathFromURI(contentUri: Uri?): String? {
     return path
 }
 
+/**
+ * Lưu file đã đọc từ uri vào bộ nhớ ngoài
+ */
 fun writeFileText(uri: Uri, content: String) {
     val file = File(getRealPathFromURI(uri))
     file.writeBytes(content.toByteArray())

@@ -84,10 +84,10 @@ class FileTextAdapter: RecyclerView.Adapter<FileTextAdapter.Holder>() {
         val b = ItemFileTextBinding.bind(itemView)
         init {
             b.background.setOnClickListener {
-                onClickITem(list[adapterPosition])
+                onClickITem(list[layoutPosition])
             }
             b.background.setOnLongClickListener {
-                onLongClickITem(list[adapterPosition])
+                onLongClickITem(list[layoutPosition])
                 true
             }
         }
