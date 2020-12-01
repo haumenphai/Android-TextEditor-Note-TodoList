@@ -369,6 +369,8 @@ class ListFileFragment() : Fragment() {
             R.id.menu_search -> {
                 b.layoutSearch.visibility = View.VISIBLE
                 b.toolBar2.visibility = View.GONE
+                b.editSearch.requestFocus()
+                HandleUI.showKeyboard(context)
             }
         }
         return super.onOptionsItemSelected(item)
