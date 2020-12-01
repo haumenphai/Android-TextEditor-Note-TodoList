@@ -21,6 +21,8 @@ class HomeFragmentViewModel: ViewModel() {
         isEditTextEnable.value = false
     }
 
+
+
     fun getTextTemp(): LiveData<String> = textTemp
     fun deleteTextTemp() { textTemp.value = ""}
     fun saveTextTemp(text: String) = HomeFragmentData.setTextTemp(text)

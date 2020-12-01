@@ -2,18 +2,26 @@ package promax.dohaumen.text_edittor_mvvm.views.fragment
 
 import android.app.AlertDialog
 import android.content.DialogInterface
+import android.graphics.Color
 import android.os.Bundle
+import android.text.Editable
+import android.text.TextWatcher
 import android.view.*
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
-import promax.dohaumen.text_edittor_mvvm.views.activity.MainActivity
+import androidx.lifecycle.lifecycleScope
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
 import promax.dohaumen.text_edittor_mvvm.R
 import promax.dohaumen.text_edittor_mvvm.databinding.FragmentHomeBinding
 import promax.dohaumen.text_edittor_mvvm.viewmodel.HomeFragmentViewModel
+import promax.dohaumen.text_edittor_mvvm.views.activity.MainActivity
 import promax.dohaumen.text_edittor_mvvm.views.dialog.DialogAddFile
 import promax.dohaumen.text_edittor_mvvm.views.dialog.DialogSettingEditView
+import promax.hmp.dev.heler.TextStyleHelper
 import promax.hmp.dev.utils.HandleUI
+import promax.hmp.dev.utils.TimeDelayUlti
 
 class HomeFragment: Fragment() {
     lateinit var b: FragmentHomeBinding
@@ -26,13 +34,14 @@ class HomeFragment: Fragment() {
         setHasOptionsMenu(true)
     }
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         b = FragmentHomeBinding.inflate(inflater, container, false)
         mainActivity = activity as MainActivity
         setConfigToolBar()
 
 
         viewModel = ViewModelProvider(this).get(HomeFragmentViewModel::class.java)
+
 
         return b.root
     }
@@ -45,13 +54,14 @@ class HomeFragment: Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
         viewModel.getTextTemp().observeForever {
             b.editHome.setText(it)
+            TimeDelayUlti.setTime(100).runAfterMilisecond {
+                setTextLineCount()
+            }
         }
         viewModel.isEditTextEnable().observeForever { isEditHometEnable ->
             b.editHome.isEnabled = isEditHometEnable
-
             if (isEditHometEnable) {
                 menu?.findItem(R.id.menu_edit)?.setIcon(R.drawable.ic_edit)
                 Toast.makeText(mainActivity, "editing...", Toast.LENGTH_SHORT).show()
@@ -62,7 +72,47 @@ class HomeFragment: Fragment() {
         }
         viewModel.getTextSize().observeForever {
             b.editHome.textSize = it.toFloat()
+            b.tvLineNumber.textSize = it.toFloat()
         }
+        DialogSettingEditView.isShowLineNumber().observeForever {
+            b.tvLineNumber.visibility = if (it) View.VISIBLE else View.GONE
+        }
+
+//
+
+        b.editHome.addTextChangedListener(object : TextWatcher {
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
+            override fun afterTextChanged(s: Editable?) {}
+
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+                setTextLineCount()
+            }
+        })
+
+
+    }
+
+    private fun setTextLineCount() {
+        b.tvLineNumber.text = ""
+        val lineCount: Int = b.editHome.lineCount
+        var lineNumber = 1
+        var textLine = ""
+
+        for (i in 0 until lineCount) {
+            if (i == 0) {
+                textLine += lineNumber.toString()
+                ++lineNumber
+            } else if (b.editHome.text.toString()
+                    .get(b.editHome.layout.getLineStart(i) - 1) == '\n'
+            ) {
+                textLine += lineNumber.toString()
+                ++lineNumber
+            }
+            textLine += "\n"
+
+        }
+        textLine = textLine.substring(0, textLine.length - 1)
+        b.tvLineNumber.text = textLine
 
     }
 
@@ -79,6 +129,8 @@ class HomeFragment: Fragment() {
         when (item.itemId) {
             R.id.menu_edit -> {
                 viewModel.setItemEditEnableClick()
+
+
             }
             R.id.menu_delete -> {
                 AlertDialog.Builder(mainActivity)
@@ -99,7 +151,10 @@ class HomeFragment: Fragment() {
                     dialog.cancel()
                 }
                 dialog.b.btnSave.setOnClickListener {
-                    viewModel.saveFileText(dialog.b.editFileName.text.toString(), b.editHome.text.toString())
+                    viewModel.saveFileText(
+                        dialog.b.editFileName.text.toString(),
+                        b.editHome.text.toString()
+                    )
                 }
                 viewModel.onSaveFileTextComple = { mess, isSuccess ->
                     Toast.makeText(mainActivity, mess, Toast.LENGTH_SHORT).show()
@@ -117,6 +172,12 @@ class HomeFragment: Fragment() {
                 val dialog = DialogSettingEditView(mainActivity).apply {
                     viewModel.onTextSizeChangeComple = {
                         b.tvTextSize.setText("$it sp")
+                    }
+
+                    b.checkboxShowLineNumber.isChecked = DialogSettingEditView.isShowLineNumber().value!!
+                    b.checkboxShowLineNumber.setOnClickListener {
+                        val isChecked = b.checkboxShowLineNumber.isChecked
+                        DialogSettingEditView.saveIsShowLineNummber(isChecked)
                     }
 
                     b.tvTextSize.setText("${viewModel.getTextSize().value} sp")

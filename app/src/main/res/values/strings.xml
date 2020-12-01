@@ -80,6 +80,7 @@
     <string name="successful_recovery">successful recovery</string>
     <string name="saved">Saved</string>
     <string name="cannot_write_file">Cannot save file</string>
+    <string name="show_line_number">show line number</string>
 
 
 </resources>

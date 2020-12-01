@@ -5,8 +5,12 @@ import android.content.Intent
 import android.content.pm.PackageManager
 import android.os.Build
 import android.os.Bundle
+import android.os.storage.StorageManager
+import android.text.Editable
+import android.text.TextWatcher
 import android.view.Menu
 import android.view.MenuItem
+import android.view.View
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
@@ -19,6 +23,7 @@ import promax.dohaumen.text_edittor_mvvm.helper.*
 import promax.dohaumen.text_edittor_mvvm.models.FileText
 import promax.dohaumen.text_edittor_mvvm.viewmodel.ViewFileActivityViewModel
 import promax.dohaumen.text_edittor_mvvm.views.dialog.DialogSettingEditView
+import promax.hmp.dev.utils.TimeDelayUlti
 import java.io.File
 
 
@@ -34,7 +39,21 @@ class ViewFileActivity : AppCompatActivity() {
         b = ActivityViewFileBinding.inflate(layoutInflater)
         setContentView(b.root)
 
+        initViewModel()
+        setConfigToolBar()
+        handleAction()
 
+        b.editViewFile.addTextChangedListener(object : TextWatcher {
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
+            override fun afterTextChanged(s: Editable?) {}
+
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+                setTextLineCount()
+            }
+        })
+    }
+
+    fun initViewModel() {
         viewModel = ViewModelProvider(this).get(ViewFileActivityViewModel::class.java)
         viewModel.isEditTextEnable().observeForever { isEditHometEnable ->
             b.editViewFile.isEnabled = isEditHometEnable
@@ -49,11 +68,11 @@ class ViewFileActivity : AppCompatActivity() {
         }
         viewModel.getTextSize().observeForever {
             b.editViewFile.textSize = it.toFloat()
+            b.tvLineNumber.textSize = it.toFloat()
         }
-
-        setConfigToolBar()
-        handleAction()
-
+        DialogSettingEditView.isShowLineNumber().observeForever {
+            b.tvLineNumber.visibility = if (it) View.VISIBLE else View.GONE
+        }
     }
 
     fun setConfigToolBar() {
@@ -73,20 +92,31 @@ class ViewFileActivity : AppCompatActivity() {
             b.editViewFile.setText(fileText!!.content)
             viewModel.fileText = fileText
             supportActionBar!!.title = viewModel.fileText?.name
+            TimeDelayUlti.setTime(100).runAfterMilisecond {
+                setTextLineCount()
+            }
         }
+
         // Mở từ file văn bản bằng app khác
         if (intent.action == Intent.ACTION_VIEW) {
             contentFile = readTextFromUri(intent.data!!)
             b.editViewFile.setText(contentFile)
             supportActionBar!!.title = File(intent.data!!.path).name
+            TimeDelayUlti.setTime(100).runAfterMilisecond {
+                setTextLineCount()
+            }
+            b.tvLineNumber.visibility = View.VISIBLE // mở từ file trong storage sẽ luôn luôn hiển thị line number
         }
+
         // Mở từ list file bình thường
         if (intent.action == null) {
             val fileText: FileText? = intent.getParcelableExtra("fileText")
             b.editViewFile.setText(fileText!!.content)
             viewModel.fileText = fileText
             supportActionBar!!.title = viewModel.fileText?.name
-
+            TimeDelayUlti.setTime(100).runAfterMilisecond {
+                setTextLineCount()
+            }
         }
     }
 
@@ -134,6 +164,12 @@ class ViewFileActivity : AppCompatActivity() {
                 val dialog = DialogSettingEditView(this).apply {
                     viewModel.onTextSizeChangeComple = {
                         b.tvTextSize.setText("$it sp")
+                    }
+
+                    b.checkboxShowLineNumber.isChecked = DialogSettingEditView.isShowLineNumber().value!!
+                    b.checkboxShowLineNumber.setOnClickListener {
+                        val isChecked = b.checkboxShowLineNumber.isChecked
+                        DialogSettingEditView.saveIsShowLineNummber(isChecked)
                     }
 
                     b.tvTextSize.setText("${viewModel.getTextSize().value} sp")
@@ -223,5 +259,27 @@ class ViewFileActivity : AppCompatActivity() {
         }
     }
 
+    private fun setTextLineCount() {
+        b.tvLineNumber.text = ""
+        val lineCount: Int = b.editViewFile.lineCount
+        var lineNumber = 1
+        var textLine = ""
+
+        for (i in 0 until lineCount) {
+            if (i == 0) {
+                textLine += lineNumber.toString()
+                ++lineNumber
+            } else if (b.editViewFile.text.toString().get(b.editViewFile.layout.getLineStart(i) - 1) == '\n'
+            ) {
+                textLine += lineNumber.toString()
+                ++lineNumber
+            }
+            textLine += "\n"
+
+        }
+        textLine = textLine.substring(0, textLine.length - 1)
+        b.tvLineNumber.text = textLine
+
+    }
 
 }

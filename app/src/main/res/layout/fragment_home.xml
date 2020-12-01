@@ -30,16 +30,38 @@
         android:layout_below="@id/line1"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
-        <EditText
-            android:id="@+id/edit_home"
+        <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:background="@drawable/bg_edittext_full_secreen"
-            android:gravity="left"
-            android:hint="@string/tv_write_here"
-            android:inputType="textNoSuggestions|textMultiLine"
-            android:textColor="@color/black"
-            />
+            android:layout_height="wrap_content">
+            <TextView
+                android:visibility="visible"
+                android:id="@+id/tv_line_number"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textStyle="bold"
+                android:textSize="16sp"
+                android:paddingTop="10dp"
+                android:paddingLeft="5dp"
+                android:paddingRight="7dp"
+                android:paddingBottom="5dp"
+                android:text="1\n\n100"
+                android:background="#9F9F9F"
+                android:textColor="#2B2B2B"
+                android:gravity="right"
+                />
+            <EditText
+                android:id="@+id/edit_home"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@drawable/bg_edittext_full_secreen"
+                android:gravity="left"
+                android:hint="@string/tv_write_here"
+                android:inputType="textNoSuggestions|textMultiLine"
+                android:textColor="@color/black"
+                android:layout_toRightOf="@id/tv_line_number"
+                />
+        </RelativeLayout>
+
     </ScrollView>
 
 

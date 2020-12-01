@@ -76,6 +76,16 @@
         android:layout_below="@id/tv_1"
         />
 
+    <androidx.appcompat.widget.AppCompatCheckBox
+        android:id="@+id/checkbox_show_line_number"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/show_line_number"
+        android:layout_below="@id/line_1"
+        android:checked="true"
+        android:layout_marginStart="-5dp"
+        />
+
     <TextView
         android:visibility="gone"
         android:id="@+id/tv_chu_de"
@@ -96,7 +106,7 @@
         android:background="@drawable/bg_button"
         android:text="@string/btn_ok"
         android:textColor="@color/black"
-        android:layout_below="@id/tv_chu_de"
+        android:layout_below="@id/checkbox_show_line_number"
         android:layout_marginTop="10dp"
         android:layout_alignParentRight="true"
 

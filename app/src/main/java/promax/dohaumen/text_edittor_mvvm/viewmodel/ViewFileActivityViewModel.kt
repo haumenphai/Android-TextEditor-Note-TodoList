@@ -18,6 +18,7 @@ class ViewFileActivityViewModel: ViewModel() {
         isEditTextEnable.value = false
     }
 
+
     fun isEditTextEnable(): LiveData<Boolean> = isEditTextEnable
 
     fun setItemEditEnableClick() {

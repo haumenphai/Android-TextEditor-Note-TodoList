@@ -2,6 +2,7 @@ package promax.dohaumen.text_edittor_mvvm.data.sharef
 
 import android.content.Context
 import android.content.SharedPreferences
+import androidx.lifecycle.LiveData
 import promax.dohaumen.text_edittor_mvvm.MyApplication
 
 object HomeFragmentData {
@@ -10,7 +11,14 @@ object HomeFragmentData {
     private val edit: SharedPreferences.Editor = sharedPreferences.edit()
 
     private const val textDefault = ""
-    private const val textSize = 16 // todo: change to 18sp
+    private const val textSize = 16
+    private const val isShowLineNumber = true
+
+    fun isShowLineNumber() = sharedPreferences.getBoolean("is_show_line_number", isShowLineNumber)
+    fun setShowLineNumber(isShowLineNummber: Boolean) {
+        edit.putBoolean("is_show_line_number", isShowLineNummber)
+        edit.apply()
+    }
 
     fun getTextTemp() = sharedPreferences.getString("text_temp", textDefault)
     fun setTextTemp(text: String) {
