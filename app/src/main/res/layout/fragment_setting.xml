@@ -24,13 +24,26 @@
         android:id="@+id/tv_app_version"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="11dp"
         android:text="1.0.0"
         android:textColor="@color/black"
         android:textSize="17sp"
         app:layout_constraintEnd_toEndOf="@+id/tv_app_name"
         app:layout_constraintStart_toStartOf="@+id/tv_app_name"
         app:layout_constraintTop_toBottomOf="@+id/tv_app_name" />
+
+    <TextView
+        android:id="@+id/tv_developer"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="10dp"
+        android:text="Developer: Trịnh Đức Độ"
+        android:textColor="@color/black"
+        android:textSize="16sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tv_app_version"
+        android:padding="5dp"
+        />
 
 
     <TextView
@@ -40,7 +53,7 @@
         android:layout_marginStart="16dp"
         android:text="@string/tv_contact_facebook"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tv_app_version"
+        app:layout_constraintTop_toBottomOf="@+id/tv_developer"
         android:textSize="16sp"
         android:textColor="@color/black"
         android:gravity="center"
