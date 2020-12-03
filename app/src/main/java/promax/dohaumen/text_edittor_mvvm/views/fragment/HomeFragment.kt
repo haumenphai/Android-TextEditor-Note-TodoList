@@ -81,8 +81,8 @@ class HomeFragment: Fragment() {
         }
 
 //
-        b.tvLineNumber.movementMethod = object : ScrollingMovementMethod(){}
-        b.editHome.movementMethod = object : ScrollingMovementMethod(){}
+//        b.tvLineNumber.movementMethod = object : ScrollingMovementMethod(){}
+//        b.editHome.movementMethod = object : ScrollingMovementMethod(){}
 
         b.editHome.addTextChangedListener(object : TextWatcher {
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
@@ -126,6 +126,7 @@ class HomeFragment: Fragment() {
 
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+        menu.clear()
         inflater.inflate(R.menu.home_fragment_menu, menu)
         this.menu = menu
         super.onCreateOptionsMenu(menu, inflater)
