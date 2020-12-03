@@ -6,6 +6,7 @@ import android.graphics.Color
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
+import android.text.method.ScrollingMovementMethod
 import android.view.*
 import android.widget.Toast
 import androidx.fragment.app.Fragment
@@ -22,6 +23,7 @@ import promax.dohaumen.text_edittor_mvvm.views.dialog.DialogSettingEditView
 import promax.hmp.dev.heler.TextStyleHelper
 import promax.hmp.dev.utils.HandleUI
 import promax.hmp.dev.utils.TimeDelayUlti
+import java.lang.Exception
 
 class HomeFragment: Fragment() {
     lateinit var b: FragmentHomeBinding
@@ -79,6 +81,8 @@ class HomeFragment: Fragment() {
         }
 
 //
+        b.tvLineNumber.movementMethod = object : ScrollingMovementMethod(){}
+        b.editHome.movementMethod = object : ScrollingMovementMethod(){}
 
         b.editHome.addTextChangedListener(object : TextWatcher {
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
@@ -111,7 +115,9 @@ class HomeFragment: Fragment() {
             textLine += "\n"
 
         }
-        textLine = textLine.substring(0, textLine.length - 1)
+        try {
+            textLine = textLine.substring(0, textLine.length - 1)
+        } catch (e: Exception) {}
         b.tvLineNumber.text = textLine
 
     }

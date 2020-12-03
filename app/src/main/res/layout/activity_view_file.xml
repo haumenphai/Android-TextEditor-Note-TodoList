@@ -4,67 +4,63 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".views.activity.ViewFileActivity"
     android:background="@color/color_edit"
-    >
+    tools:context=".views.activity.ViewFileActivity">
+
     <com.google.android.material.appbar.AppBarLayout
         android:id="@+id/appbar_layout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@null"
-        >
+        android:background="@null">
+
         <androidx.appcompat.widget.Toolbar
             android:id="@+id/tool_bar"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:navigationIcon="?attr/homeAsUpIndicator"
-            />
+            app:navigationIcon="?attr/homeAsUpIndicator" />
 
     </com.google.android.material.appbar.AppBarLayout>
+
     <View
+        android:id="@+id/line1"
         android:layout_width="match_parent"
         android:layout_height="0.1dp"
-        android:background="@color/black"
-        android:id="@+id/line1"
         android:layout_below="@id/appbar_layout"
-        />
-    <ScrollView
-        android:layout_below="@id/line1"
+        android:background="@color/black" />
+
+    <RelativeLayout
+        android:id="@+id/layout_edit"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        >
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
-            <TextView
-                android:visibility="visible"
-                android:id="@+id/tv_line_number"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textStyle="bold"
-                android:textSize="16sp"
-                android:paddingTop="10dp"
-                android:paddingLeft="5dp"
-                android:paddingRight="7dp"
-                android:paddingBottom="5dp"
-                android:text="1\n\n100"
-                android:background="#9F9F9F"
-                android:textColor="#2B2B2B"
-                android:gravity="right"
-                />
-            <EditText
-                android:id="@+id/edit_view_file"
-                android:layout_toRightOf="@id/tv_line_number"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:background="@drawable/bg_edittext_full_secreen"
-                android:gravity="left"
-                android:inputType="textNoSuggestions|textMultiLine"
-                android:textColor="@color/black"
-                android:hint="@string/hint_edit_view_file"
-                />
-        </RelativeLayout>
+        android:layout_below="@id/line1">
 
-    </ScrollView>
+        <TextView
+            android:id="@+id/tv_line_number"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:background="#9F9F9F"
+            android:gravity="right"
+            android:paddingLeft="5dp"
+            android:paddingTop="10dp"
+            android:paddingRight="7dp"
+            android:paddingBottom="5dp"
+            android:text="1\n\n100"
+            android:textColor="#2B2B2B"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            android:visibility="visible" />
+
+        <EditText
+            android:id="@+id/edit_view_file"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_toRightOf="@id/tv_line_number"
+            android:background="@drawable/bg_edittext_full_secreen"
+            android:gravity="left"
+            android:hint="@string/hint_edit_view_file"
+            android:inputType="textNoSuggestions|textMultiLine"
+            android:textColor="@color/black" />
+    </RelativeLayout>
+
 
 </RelativeLayout>

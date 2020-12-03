@@ -8,6 +8,7 @@ import android.os.Bundle
 import android.os.storage.StorageManager
 import android.text.Editable
 import android.text.TextWatcher
+import android.text.method.ScrollingMovementMethod
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
@@ -25,6 +26,7 @@ import promax.dohaumen.text_edittor_mvvm.viewmodel.ViewFileActivityViewModel
 import promax.dohaumen.text_edittor_mvvm.views.dialog.DialogSettingEditView
 import promax.hmp.dev.utils.TimeDelayUlti
 import java.io.File
+import java.lang.Exception
 
 
 class ViewFileActivity : AppCompatActivity() {
@@ -51,6 +53,9 @@ class ViewFileActivity : AppCompatActivity() {
                 setTextLineCount()
             }
         })
+        b.tvLineNumber.movementMethod = object : ScrollingMovementMethod() {}
+        b.editViewFile.movementMethod = object : ScrollingMovementMethod() {}
+
     }
 
     fun initViewModel() {
@@ -277,7 +282,9 @@ class ViewFileActivity : AppCompatActivity() {
             textLine += "\n"
 
         }
-        textLine = textLine.substring(0, textLine.length - 1)
+        try {
+            textLine = textLine.substring(0, textLine.length - 1)
+        } catch (e: Exception){}
         b.tvLineNumber.text = textLine
 
     }
