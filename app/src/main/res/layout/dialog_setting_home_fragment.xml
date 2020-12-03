@@ -76,7 +76,7 @@
         android:layout_below="@id/tv_1"
         />
 
-    <androidx.appcompat.widget.AppCompatCheckBox
+    <CheckBox
         android:id="@+id/checkbox_show_line_number"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

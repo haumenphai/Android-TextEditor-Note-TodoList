@@ -28,39 +28,46 @@
         android:layout_below="@id/appbar_layout"
         android:background="@color/black" />
 
-    <RelativeLayout
-        android:id="@+id/layout_edit"
+    <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@id/line1">
-
-        <TextView
-            android:id="@+id/tv_line_number"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:background="#9F9F9F"
-            android:gravity="right"
-            android:paddingLeft="5dp"
-            android:paddingTop="10dp"
-            android:paddingRight="7dp"
-            android:paddingBottom="5dp"
-            android:text="1\n\n100"
-            android:textColor="#2B2B2B"
-            android:textSize="16sp"
-            android:textStyle="bold"
-            android:visibility="visible" />
-
-        <EditText
-            android:id="@+id/edit_view_file"
+        android:fillViewport="true"
+        android:layout_below="@id/line1"
+        >
+        <RelativeLayout
+            android:id="@+id/layout_edit"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_toRightOf="@id/tv_line_number"
-            android:background="@drawable/bg_edittext_full_secreen"
-            android:gravity="left"
-            android:hint="@string/hint_edit_view_file"
-            android:inputType="textNoSuggestions|textMultiLine"
-            android:textColor="@color/black" />
-    </RelativeLayout>
+            android:layout_height="wrap_content"
+            >
+            <TextView
+                android:id="@+id/tv_line_number"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:background="#9F9F9F"
+                android:gravity="right"
+                android:paddingLeft="5dp"
+                android:paddingTop="10dp"
+                android:paddingRight="7dp"
+                android:paddingBottom="5dp"
+                android:text="1\n\n100"
+                android:textColor="#2B2B2B"
+                android:textSize="16sp"
+                android:textStyle="bold"
+                android:visibility="visible" />
+
+            <EditText
+                android:id="@+id/edit_view_file"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_toRightOf="@id/tv_line_number"
+                android:background="@drawable/bg_edittext_full_secreen"
+                android:gravity="left"
+                android:hint="@string/hint_edit_view_file"
+                android:inputType="textNoSuggestions|textMultiLine"
+                android:textColor="@color/black" />
+        </RelativeLayout>
+    </ScrollView>
+
 
 
 </RelativeLayout>

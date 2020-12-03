@@ -195,6 +195,7 @@ class ViewFileActivity : AppCompatActivity() {
         return super.onOptionsItemSelected(item)
     }
 
+
     override fun onBackPressed() {
         when(intent.action) {
             Intent.ACTION_VIEW -> {

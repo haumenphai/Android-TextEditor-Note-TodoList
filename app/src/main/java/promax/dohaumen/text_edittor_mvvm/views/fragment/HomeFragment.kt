@@ -1,29 +1,23 @@
 package promax.dohaumen.text_edittor_mvvm.views.fragment
 
 import android.app.AlertDialog
+import android.app.Dialog
 import android.content.DialogInterface
-import android.graphics.Color
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
-import android.text.method.ScrollingMovementMethod
 import android.view.*
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
-import androidx.lifecycle.lifecycleScope
-import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.launch
 import promax.dohaumen.text_edittor_mvvm.R
 import promax.dohaumen.text_edittor_mvvm.databinding.FragmentHomeBinding
 import promax.dohaumen.text_edittor_mvvm.viewmodel.HomeFragmentViewModel
 import promax.dohaumen.text_edittor_mvvm.views.activity.MainActivity
 import promax.dohaumen.text_edittor_mvvm.views.dialog.DialogAddFile
 import promax.dohaumen.text_edittor_mvvm.views.dialog.DialogSettingEditView
-import promax.hmp.dev.heler.TextStyleHelper
 import promax.hmp.dev.utils.HandleUI
 import promax.hmp.dev.utils.TimeDelayUlti
-import java.lang.Exception
 
 class HomeFragment: Fragment() {
     lateinit var b: FragmentHomeBinding
@@ -136,8 +130,6 @@ class HomeFragment: Fragment() {
         when (item.itemId) {
             R.id.menu_edit -> {
                 viewModel.setItemEditEnableClick()
-
-
             }
             R.id.menu_delete -> {
                 AlertDialog.Builder(mainActivity)
@@ -149,7 +141,6 @@ class HomeFragment: Fragment() {
 
                     }
                     .show()
-
             }
             R.id.menu_save -> {
                 val dialog = DialogAddFile(mainActivity)
