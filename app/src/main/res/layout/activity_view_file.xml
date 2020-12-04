@@ -63,7 +63,8 @@
                 android:background="@drawable/bg_edittext_full_secreen"
                 android:gravity="left"
                 android:hint="@string/hint_edit_view_file"
-                android:inputType="textNoSuggestions|textMultiLine"
+                android:inputType="textNoSuggestions|textMultiLine|textCapSentences"
+
                 android:textColor="@color/black" />
         </RelativeLayout>
     </ScrollView>

@@ -1,14 +1,16 @@
 package promax.dohaumen.text_edittor_mvvm.views.activity
 
-import androidx.appcompat.app.AppCompatActivity
+//import promax.dohaumen.text_edittor_mvvm.databinding.ActivityMainBinding
+import android.content.pm.ActivityInfo
+import android.content.res.Configuration
 import android.os.Bundle
 import android.util.Log
-import androidx.core.content.ContextCompat
+import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentManager
 import promax.dohaumen.text_edittor_mvvm.R
-import promax.dohaumen.text_edittor_mvvm.data.FileTextDatabase
 import promax.dohaumen.text_edittor_mvvm.databinding.ActivityMainBinding
-//import promax.dohaumen.text_edittor_mvvm.databinding.ActivityMainBinding
 import promax.dohaumen.text_edittor_mvvm.views.fragment.HomeFragment
 import promax.dohaumen.text_edittor_mvvm.views.fragment.ListFileFragment
 import promax.dohaumen.text_edittor_mvvm.views.fragment.SettingFragment
@@ -23,7 +25,6 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         b = ActivityMainBinding.inflate(layoutInflater)
         setContentView(b.root)
-
         controlFragmentWithSaveState()
     }
 
@@ -71,15 +72,24 @@ class MainActivity : AppCompatActivity() {
         supportFragmentManager.beginTransaction().replace(R.id.container_fragment, HomeFragment()).commit()
 
         b.bottomNav.setOnNavigationItemSelectedListener {
-            when (it.title.toString()) {
-                "Home" -> {
-                    supportFragmentManager.beginTransaction().replace(R.id.container_fragment, HomeFragment()).commit()
+            when (it.itemId) {
+                R.id.home -> {
+                    supportFragmentManager.beginTransaction().replace(
+                        R.id.container_fragment,
+                        HomeFragment()
+                    ).commit()
                 }
-                "List file" -> {
-                    supportFragmentManager.beginTransaction().replace(R.id.container_fragment, ListFileFragment()).commit()
+                R.id.list_file -> {
+                    supportFragmentManager.beginTransaction().replace(
+                        R.id.container_fragment,
+                        ListFileFragment()
+                    ).commit()
                 }
-                "Setting" -> {
-                    supportFragmentManager.beginTransaction().replace(R.id.container_fragment, SettingFragment()).commit()
+                R.id.setting -> {
+                    supportFragmentManager.beginTransaction().replace(
+                        R.id.container_fragment,
+                        SettingFragment()
+                    ).commit()
                 }
             }
 
