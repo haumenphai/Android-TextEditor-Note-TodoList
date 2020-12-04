@@ -11,15 +11,24 @@ import promax.dohaumen.text_edittor_mvvm.helper.getCurrentDate12h
 import promax.dohaumen.text_edittor_mvvm.models.FileText
 
 class HomeFragmentViewModel: ViewModel() {
-    private var textTemp: MutableLiveData<String> = MutableLiveData()
-    private var textSize: MutableLiveData<Int> = MutableLiveData()
-    private var isEditTextEnable: MutableLiveData<Boolean> = MutableLiveData()
-
-    init {
-        textTemp.value  = HomeFragmentData.getTextTemp()
-        textSize.value  = HomeFragmentData.getTextSize()
-        isEditTextEnable.value = false
+    private val textTemp: MutableLiveData<String> by lazy {
+        val live: MutableLiveData<String> = MutableLiveData()
+        live.value = HomeFragmentData.getTextTemp()
+        live
     }
+    private val textSize: MutableLiveData<Int> by lazy {
+        val live: MutableLiveData<Int> = MutableLiveData()
+        live.value = HomeFragmentData.getTextSize()
+        live
+    }
+    private val isEditTextEnable: MutableLiveData<Boolean> by lazy {
+        val live: MutableLiveData<Boolean> = MutableLiveData()
+        live.value = false
+        live
+    }
+
+
+
 
 
 

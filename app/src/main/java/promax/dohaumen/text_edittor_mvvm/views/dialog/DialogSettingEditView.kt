@@ -18,23 +18,49 @@ class DialogSettingEditView(val context: Context) {
         b = DialogSettingHomeFragmentBinding.bind(view)
         dialog = Dialog(context)
         dialog.setContentView(view)
-        dialog.setCanceledOnTouchOutside(true)
+        dialog.setCanceledOnTouchOutside(false)
     }
 
     fun show() = dialog.show()
     fun cancel() = dialog.cancel()
 
     companion object {
-        private var isShowLineNumber: MutableLiveData<Boolean> = MutableLiveData()
-        fun isShowLineNumber(): LiveData<Boolean> {
-            isShowLineNumber.value = HomeFragmentData.isShowLineNumber()
-            return isShowLineNumber
+        private val isShowLineNumber: MutableLiveData<Boolean> by lazy {
+            val live: MutableLiveData<Boolean> = MutableLiveData()
+            live.value = HomeFragmentData.isAutomaticCapitalization()
+            live
         }
+        fun isShowLineNumber(): LiveData<Boolean>  = isShowLineNumber
         fun saveIsShowLineNummber(isShow: Boolean) {
             isShowLineNumber.value = isShow
             HomeFragmentData.setShowLineNumber(isShow)
+        }
 
+
+        private val isAutoCap: MutableLiveData<Boolean> by lazy {
+            val live: MutableLiveData<Boolean> = MutableLiveData()
+            live.value = HomeFragmentData.isAutomaticCapitalization()
+            live
+        }
+        fun isAutoCap(): LiveData<Boolean> = isAutoCap
+        fun saveAutoCap(isAuto: Boolean) {
+            isAutoCap.value = isAuto
+            HomeFragmentData.setAutomaticCapitalization(isAuto)
         }
 
     }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 }

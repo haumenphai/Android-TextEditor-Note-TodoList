@@ -60,7 +60,6 @@
                 android:background="@drawable/bg_edittext_full_secreen"
                 android:gravity="left"
                 android:hint="@string/tv_write_here"
-                android:inputType="textNoSuggestions|textMultiLine"
                 android:textColor="@color/black"
                 android:layout_toRightOf="@id/tv_line_number"
                 />

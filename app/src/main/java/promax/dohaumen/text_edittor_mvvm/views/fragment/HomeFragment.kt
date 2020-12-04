@@ -1,10 +1,10 @@
 package promax.dohaumen.text_edittor_mvvm.views.fragment
 
 import android.app.AlertDialog
-import android.app.Dialog
 import android.content.DialogInterface
 import android.os.Bundle
 import android.text.Editable
+import android.text.InputType
 import android.text.TextWatcher
 import android.view.*
 import android.widget.Toast
@@ -19,6 +19,7 @@ import promax.dohaumen.text_edittor_mvvm.views.dialog.DialogSettingEditView
 import promax.hmp.dev.utils.HandleUI
 import promax.hmp.dev.utils.TimeDelayUlti
 
+
 class HomeFragment: Fragment() {
     lateinit var b: FragmentHomeBinding
     lateinit var mainActivity: MainActivity
@@ -30,14 +31,17 @@ class HomeFragment: Fragment() {
         setHasOptionsMenu(true)
     }
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View {
         b = FragmentHomeBinding.inflate(inflater, container, false)
         mainActivity = activity as MainActivity
         setConfigToolBar()
 
 
         viewModel = ViewModelProvider(this).get(HomeFragmentViewModel::class.java)
-
 
         return b.root
     }
@@ -73,10 +77,23 @@ class HomeFragment: Fragment() {
         DialogSettingEditView.isShowLineNumber().observeForever {
             b.tvLineNumber.visibility = if (it) View.VISIBLE else View.GONE
         }
+        DialogSettingEditView.isAutoCap().observeForever { isAutoCap ->
+            if (isAutoCap) {
+                b.editHome.setInputType(
+                    InputType.TYPE_CLASS_TEXT or
+                            InputType.TYPE_TEXT_FLAG_MULTI_LINE or
+                            InputType.TYPE_TEXT_FLAG_NO_SUGGESTIONS or
+                            InputType.TYPE_TEXT_FLAG_CAP_SENTENCES
+                )
+            } else {
+                b.editHome.setInputType(
+                    InputType.TYPE_CLASS_TEXT or
+                            InputType.TYPE_TEXT_FLAG_MULTI_LINE or
+                            InputType.TYPE_TEXT_FLAG_NO_SUGGESTIONS
+                )
+            }
+        }
 
-//
-//        b.tvLineNumber.movementMethod = object : ScrollingMovementMethod(){}
-//        b.editHome.movementMethod = object : ScrollingMovementMethod(){}
 
         b.editHome.addTextChangedListener(object : TextWatcher {
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
@@ -144,6 +161,13 @@ class HomeFragment: Fragment() {
             }
             R.id.menu_save -> {
                 val dialog = DialogAddFile(mainActivity)
+                dialog.b.editFileName.setOnEditorActionListener { v, actionId, event ->
+                    viewModel.saveFileText(
+                        dialog.b.editFileName.text.toString(),
+                        b.editHome.text.toString()
+                    )
+                    true
+                }
                 dialog.b.btnCancel.setOnClickListener {
                     HandleUI.hideKeyboardFrom(mainActivity, dialog.b.root)
                     dialog.cancel()
@@ -172,10 +196,16 @@ class HomeFragment: Fragment() {
                         b.tvTextSize.setText("$it sp")
                     }
 
-                    b.checkboxShowLineNumber.isChecked = DialogSettingEditView.isShowLineNumber().value!!
+                    b.checkboxShowLineNumber.isChecked =
+                        DialogSettingEditView.isShowLineNumber().value!!
                     b.checkboxShowLineNumber.setOnClickListener {
                         val isChecked = b.checkboxShowLineNumber.isChecked
                         DialogSettingEditView.saveIsShowLineNummber(isChecked)
+                    }
+                    b.checkboxIsAutoCap.isChecked = DialogSettingEditView.isAutoCap().value!!
+                    b.checkboxIsAutoCap.setOnClickListener {
+                        val isChecked = b.checkboxIsAutoCap.isChecked
+                        DialogSettingEditView.saveAutoCap(isChecked)
                     }
 
                     b.tvTextSize.setText("${viewModel.getTextSize().value} sp")

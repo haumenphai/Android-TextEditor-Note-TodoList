@@ -13,6 +13,12 @@ object HomeFragmentData {
     private const val textDefault = ""
     private const val textSize = 16
     private const val isShowLineNumber = true
+    private const val automaticCapitalization = true // tự động viết hoa đầu dòng
+
+    fun isAutomaticCapitalization() = sharedPreferences.getBoolean("tu_dong_viet_hoa", automaticCapitalization)
+    fun setAutomaticCapitalization(auto: Boolean) {
+        edit.putBoolean("tu_dong_viet_hoa", auto)
+    }
 
     fun isShowLineNumber() = sharedPreferences.getBoolean("is_show_line_number", isShowLineNumber)
     fun setShowLineNumber(isShowLineNummber: Boolean) {

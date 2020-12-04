@@ -84,6 +84,16 @@
         android:layout_below="@id/line_1"
         android:checked="true"
         android:layout_marginStart="-5dp"
+        android:layout_marginTop="10dp"
+        />
+    <CheckBox
+        android:id="@+id/checkbox_is_auto_cap"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/automatic_capitalization"
+        android:layout_below="@id/checkbox_show_line_number"
+        android:checked="true"
+        android:layout_marginStart="-5dp"
         />
 
     <TextView
@@ -100,13 +110,13 @@
 
     <Button
         android:id="@+id/btn_ok"
+        android:layout_below="@id/checkbox_is_auto_cap"
         android:layout_width="wrap_content"
         android:layout_height="35dp"
         app:backgroundTint="@null"
         android:background="@drawable/bg_button"
         android:text="@string/btn_ok"
         android:textColor="@color/black"
-        android:layout_below="@id/checkbox_show_line_number"
         android:layout_marginTop="10dp"
         android:layout_alignParentRight="true"
 

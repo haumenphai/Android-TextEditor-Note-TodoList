@@ -7,6 +7,7 @@ import android.os.Build
 import android.os.Bundle
 import android.os.storage.StorageManager
 import android.text.Editable
+import android.text.InputType
 import android.text.TextWatcher
 import android.text.method.ScrollingMovementMethod
 import android.view.Menu
@@ -75,8 +76,25 @@ class ViewFileActivity : AppCompatActivity() {
             b.editViewFile.textSize = it.toFloat()
             b.tvLineNumber.textSize = it.toFloat()
         }
+
         DialogSettingEditView.isShowLineNumber().observeForever {
             b.tvLineNumber.visibility = if (it) View.VISIBLE else View.GONE
+        }
+        DialogSettingEditView.isAutoCap().observeForever { isAutoCap ->
+            if (isAutoCap) {
+                b.editViewFile.setInputType(
+                    InputType.TYPE_CLASS_TEXT or
+                            InputType.TYPE_TEXT_FLAG_MULTI_LINE or
+                            InputType.TYPE_TEXT_FLAG_NO_SUGGESTIONS or
+                            InputType.TYPE_TEXT_FLAG_CAP_SENTENCES
+                )
+            } else {
+                b.editViewFile.setInputType(
+                    InputType.TYPE_CLASS_TEXT or
+                            InputType.TYPE_TEXT_FLAG_MULTI_LINE or
+                            InputType.TYPE_TEXT_FLAG_NO_SUGGESTIONS
+                )
+            }
         }
     }
 
@@ -175,6 +193,12 @@ class ViewFileActivity : AppCompatActivity() {
                     b.checkboxShowLineNumber.setOnClickListener {
                         val isChecked = b.checkboxShowLineNumber.isChecked
                         DialogSettingEditView.saveIsShowLineNummber(isChecked)
+                    }
+
+                    b.checkboxIsAutoCap.isChecked = DialogSettingEditView.isAutoCap().value!!
+                    b.checkboxIsAutoCap.setOnClickListener {
+                        val isChecked = b.checkboxIsAutoCap.isChecked
+                        DialogSettingEditView.saveAutoCap(isChecked)
                     }
 
                     b.tvTextSize.setText("${viewModel.getTextSize().value} sp")

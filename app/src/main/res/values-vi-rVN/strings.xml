@@ -73,4 +73,5 @@
     <string name="saved">Đã lưu</string>
     <string name="cannot_write_file">Không thể lưu file</string>
     <string name="show_line_number">hiện số dòng</string>
+    <string name="automatic_capitalization">tự động viết hoa đầu dòng</string>
 </resources>
