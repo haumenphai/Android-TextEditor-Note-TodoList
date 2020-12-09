@@ -1,4 +1,4 @@
-package promax.dohaumen.text_edittor_mvvm.data;
+package promax.dohaumen.text_edittor_mvvm.data.file_text;
 
 
 import androidx.lifecycle.LiveData;
@@ -34,6 +34,5 @@ public interface FileTextDao {
 
     @Query("SELECT * FROM filetext WHERE isDeleted = :getListDelete")
     LiveData<List<FileText>> getLiveData(boolean getListDelete);
-
 
 }

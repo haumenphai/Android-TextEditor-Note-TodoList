@@ -1,24 +1,21 @@
 package promax.dohaumen.text_edittor_mvvm.views.activity
 
 //import promax.dohaumen.text_edittor_mvvm.databinding.ActivityMainBinding
-import android.content.pm.ActivityInfo
-import android.content.res.Configuration
 import android.os.Bundle
-import android.util.Log
-import android.widget.Toast
+import android.view.Menu
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.FragmentManager
 import promax.dohaumen.text_edittor_mvvm.R
 import promax.dohaumen.text_edittor_mvvm.databinding.ActivityMainBinding
 import promax.dohaumen.text_edittor_mvvm.views.fragment.HomeFragment
 import promax.dohaumen.text_edittor_mvvm.views.fragment.ListFileFragment
 import promax.dohaumen.text_edittor_mvvm.views.fragment.SettingFragment
+import promax.dohaumen.text_edittor_mvvm.views.fragment.TodoListFragment
 
 
 class MainActivity : AppCompatActivity() {
     lateinit var b: ActivityMainBinding
-
+    lateinit var botNavMenu: Menu
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -26,6 +23,9 @@ class MainActivity : AppCompatActivity() {
         b = ActivityMainBinding.inflate(layoutInflater)
         setContentView(b.root)
         controlFragmentWithSaveState()
+
+        b.bottomNav.inflateMenu(R.menu.bottom_nav_main)
+//        b.bottomNav.menu.getItem(1).isVisible = false
     }
 
     /**
@@ -36,11 +36,14 @@ class MainActivity : AppCompatActivity() {
         val homeFragment = HomeFragment()
         val listFileFragment = ListFileFragment()
         val settingFragment = SettingFragment()
+        val todoListFragment = TodoListFragment()
+
         var activeFragment: Fragment = homeFragment
         supportFragmentManager.beginTransaction().apply {
-            add(R.id.container_fragment, homeFragment, "homeFragment")
-            add(R.id.container_fragment, listFileFragment, "homeFragment").hide(listFileFragment)
-            add(R.id.container_fragment, settingFragment, "homeFragment").hide(settingFragment)
+            add(R.id.container_fragment, homeFragment, "home")
+            add(R.id.container_fragment, listFileFragment, "list").hide(listFileFragment)
+            add(R.id.container_fragment, settingFragment, "setting").hide(settingFragment)
+            add(R.id.container_fragment, todoListFragment, "todo_list").hide(todoListFragment)
         }.commit()
 
         b.bottomNav.setOnNavigationItemSelectedListener {
@@ -57,6 +60,10 @@ class MainActivity : AppCompatActivity() {
                 R.id.setting -> {
                     supportFragmentManager.beginTransaction().hide(activeFragment).show(settingFragment).commit()
                     activeFragment = settingFragment
+                }
+                R.id.todo_list -> {
+                    supportFragmentManager.beginTransaction().hide(activeFragment).show(todoListFragment).commit()
+                    activeFragment = todoListFragment
                 }
             }
 

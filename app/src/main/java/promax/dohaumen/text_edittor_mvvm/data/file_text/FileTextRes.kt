@@ -1,5 +1,6 @@
-package promax.dohaumen.text_edittor_mvvm.data
+package promax.dohaumen.text_edittor_mvvm.data.file_text
 
+import promax.dohaumen.text_edittor_mvvm.data.file_text.FileTextDatabase
 import promax.dohaumen.text_edittor_mvvm.helper.getCurrentDate12h
 import promax.dohaumen.text_edittor_mvvm.models.FileText
 

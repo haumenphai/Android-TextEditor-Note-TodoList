@@ -82,6 +82,7 @@
     <string name="cannot_write_file">Cannot save file</string>
     <string name="show_line_number">show line number</string>
     <string name="automatic_capitalization">automatic capitalization</string>
+    <string name="todo_list">Todo List</string>
 
 
 </resources>

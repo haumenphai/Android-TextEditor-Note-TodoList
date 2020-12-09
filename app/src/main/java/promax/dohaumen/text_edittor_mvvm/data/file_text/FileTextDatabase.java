@@ -1,17 +1,13 @@
-package promax.dohaumen.text_edittor_mvvm.data;
+package promax.dohaumen.text_edittor_mvvm.data.file_text;
 
 
 import android.os.AsyncTask;
-import android.os.CountDownTimer;
 
 import androidx.annotation.NonNull;
-import androidx.room.Dao;
 import androidx.room.Database;
 import androidx.room.Room;
 import androidx.room.RoomDatabase;
 import androidx.sqlite.db.SupportSQLiteDatabase;
-
-import java.util.List;
 
 import promax.dohaumen.text_edittor_mvvm.MyApplication;
 import promax.dohaumen.text_edittor_mvvm.models.FileText;

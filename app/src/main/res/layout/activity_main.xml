@@ -28,7 +28,8 @@
         android:layout_width="match_parent"
         android:layout_height="50dp"
         android:layout_alignParentBottom="true"
-        app:menu="@menu/bottom_nav"
         android:background="@color/color_edit_2"
+        app:labelVisibilityMode="labeled"
+        tools:menu="@menu/bottom_nav_main"
         />
 </RelativeLayout>

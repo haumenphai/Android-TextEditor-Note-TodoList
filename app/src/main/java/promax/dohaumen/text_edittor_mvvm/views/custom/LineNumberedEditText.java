@@ -9,6 +9,8 @@ import android.graphics.Typeface;
 import android.util.AttributeSet;
 import android.widget.EditText;
 
+import promax.dohaumen.text_edittor_mvvm.helper.TimeHelperKt;
+
 public class LineNumberedEditText extends EditText
 {
     private final Context context;
@@ -20,6 +22,7 @@ public class LineNumberedEditText extends EditText
         super(context);
         this.context = context;
         init();
+
     }
 
     public LineNumberedEditText(Context context, AttributeSet attrs)
