@@ -1,0 +1,2 @@
+
+Chức năng todo_list với data binding
