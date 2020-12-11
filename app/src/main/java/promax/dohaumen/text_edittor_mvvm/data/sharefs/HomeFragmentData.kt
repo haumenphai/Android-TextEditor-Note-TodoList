@@ -1,8 +1,7 @@
-package promax.dohaumen.text_edittor_mvvm.data.sharef
+package promax.dohaumen.text_edittor_mvvm.data.sharefs
 
 import android.content.Context
 import android.content.SharedPreferences
-import androidx.lifecycle.LiveData
 import promax.dohaumen.text_edittor_mvvm.MyApplication
 
 object HomeFragmentData {

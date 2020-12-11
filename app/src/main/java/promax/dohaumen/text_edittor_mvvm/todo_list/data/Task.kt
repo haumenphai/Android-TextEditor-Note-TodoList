@@ -1,4 +1,4 @@
-package promax.dohaumen.text_edittor_mvvm.models
+package promax.dohaumen.text_edittor_mvvm.todo_list.data
 
 import androidx.room.Entity
 import androidx.room.Ignore

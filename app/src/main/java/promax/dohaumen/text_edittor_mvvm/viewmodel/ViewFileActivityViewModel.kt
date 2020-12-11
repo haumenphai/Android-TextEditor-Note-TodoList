@@ -3,8 +3,8 @@ package promax.dohaumen.text_edittor_mvvm.viewmodel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import promax.dohaumen.text_edittor_mvvm.data.file_text.FileTextRes
-import promax.dohaumen.text_edittor_mvvm.data.sharef.HomeFragmentData
+import promax.dohaumen.text_edittor_mvvm.data.FileTextRes
+import promax.dohaumen.text_edittor_mvvm.data.sharefs.HomeFragmentData
 import promax.dohaumen.text_edittor_mvvm.models.FileText
 
 class ViewFileActivityViewModel: ViewModel() {

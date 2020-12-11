@@ -1,8 +1,7 @@
-package promax.dohaumen.text_edittor_mvvm.data.task
+package promax.dohaumen.text_edittor_mvvm.todo_list.data
 
 import androidx.lifecycle.LiveData
 import androidx.room.*
-import promax.dohaumen.text_edittor_mvvm.models.Task
 
 @Dao
 interface TaskDao {

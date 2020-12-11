@@ -7,10 +7,12 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import promax.dohaumen.text_edittor_mvvm.R
 import promax.dohaumen.text_edittor_mvvm.databinding.ActivityMainBinding
+import promax.dohaumen.text_edittor_mvvm.todo_list.data.DataTaskFake
+import promax.dohaumen.text_edittor_mvvm.todo_list.data.TaskDatabase
 import promax.dohaumen.text_edittor_mvvm.views.fragment.HomeFragment
 import promax.dohaumen.text_edittor_mvvm.views.fragment.ListFileFragment
 import promax.dohaumen.text_edittor_mvvm.views.fragment.SettingFragment
-import promax.dohaumen.text_edittor_mvvm.views.fragment.TodoListFragment
+import promax.dohaumen.text_edittor_mvvm.todo_list.view.TodoListFragment
 
 
 class MainActivity : AppCompatActivity() {
@@ -26,6 +28,10 @@ class MainActivity : AppCompatActivity() {
 
         b.bottomNav.inflateMenu(R.menu.bottom_nav_main)
 //        b.bottomNav.menu.getItem(1).isVisible = false
+
+        DataTaskFake.listFake.forEach {
+            TaskDatabase.get.dao().insert(it)
+        }
     }
 
     /**

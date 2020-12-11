@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+        <import type="android.view.View"/>
+        <variable
+            name="task"
+            type="promax.dohaumen.text_edittor_mvvm.todo_list.data.Task" />
+    </data>
+
+    <RelativeLayout
+        android:id="@+id/background"
+        android:customBackground="@{task.completed}"
+        android:layout_width="match_parent"
+        android:layout_height="45dp"
+        >
+
+        <TextView
+            android:id="@+id/tv_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:ellipsize="end"
+            android:text="@{task.name}"
+            tools:text="nhiem vu 1"
+            android:textColor="@color/black"
+            android:textSize="15sp"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="10dp"
+
+            />
+        <CheckBox
+            android:id="@+id/checkbox_complete"
+            android:layout_width="50dp"
+            android:layout_height="44.5dp"
+            android:layout_alignParentRight="true"
+            android:checked="@{task.completed}"
+            />
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="0.5dp"
+            android:background="@color/black"
+            android:layout_below="@id/checkbox_complete"
+            />
+    </RelativeLayout>
+</layout>

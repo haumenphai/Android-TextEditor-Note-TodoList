@@ -6,7 +6,7 @@ import android.view.LayoutInflater
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import promax.dohaumen.text_edittor_mvvm.R
-import promax.dohaumen.text_edittor_mvvm.data.sharef.HomeFragmentData
+import promax.dohaumen.text_edittor_mvvm.data.sharefs.HomeFragmentData
 import promax.dohaumen.text_edittor_mvvm.databinding.DialogSettingHomeFragmentBinding
 
 class DialogSettingEditView(val context: Context) {
