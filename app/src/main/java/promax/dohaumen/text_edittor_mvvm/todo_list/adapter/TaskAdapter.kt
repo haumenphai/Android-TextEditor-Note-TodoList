@@ -40,6 +40,8 @@ open class TaskAdapter: RecyclerView.Adapter<TaskAdapter.Holder>() {
     private val animation = AnimationUtils.loadAnimation(MyApplication.context, R.anim.anim_item_task)
     var playAnimation = false
 
+    var checkBoxEnable = true
+
     override fun onBindViewHolder(holder: Holder, position: Int) {
         val task = listTask[position]
 
@@ -48,6 +50,7 @@ open class TaskAdapter: RecyclerView.Adapter<TaskAdapter.Holder>() {
         holder.binding.isShowNummber = isShowNumber
         holder.binding.executePendingBindings()
 
+        holder.binding.checkboxComplete.isEnabled = checkBoxEnable
 
 
         if (playAnimation && task.isChecked) {
@@ -62,7 +65,6 @@ open class TaskAdapter: RecyclerView.Adapter<TaskAdapter.Holder>() {
 
             }
         }
-
 
     }
 

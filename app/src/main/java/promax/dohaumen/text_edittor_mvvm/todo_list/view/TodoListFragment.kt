@@ -125,18 +125,24 @@ class TodoListFragment: Fragment() {
                 menu.findItem(R.id.menu_view_task_completed).isChecked = false
                 menu.findItem(R.id.menu_view_all_task).isChecked = false
                 adapter.setList(viewModel.tasks.value!!)
+                adapter.checkBoxEnable = true
+                adapter.notifyDataSetChanged()
             }
             R.id.menu_view_task_completed -> {
                 item.isChecked = true
                 menu.findItem(R.id.menu_view_task).isChecked = false
                 menu.findItem(R.id.menu_view_all_task).isChecked = false
                 adapter.setList(TaskDatabase.get.dao().getList(true))
+                adapter.checkBoxEnable = false
+                adapter.notifyDataSetChanged()
             }
             R.id.menu_view_all_task -> {
                 item.isChecked = true
                 menu.findItem(R.id.menu_view_task).isChecked = false
                 menu.findItem(R.id.menu_view_task_completed).isChecked = false
                 adapter.setList(TaskDatabase.get.dao().getList())
+                adapter.checkBoxEnable = false
+                adapter.notifyDataSetChanged()
             }
         }
         return super.onOptionsItemSelected(item)
