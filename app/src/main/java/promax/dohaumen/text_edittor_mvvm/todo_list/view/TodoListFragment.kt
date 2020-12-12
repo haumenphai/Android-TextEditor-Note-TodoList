@@ -107,9 +107,12 @@ class TodoListFragment: Fragment() {
     private fun searchTask() {
         val key = b.editSearch.text.toString()
         lifecycleScope.launch {
-            Search.searchTask(viewModel.tasks.value!!, key) { result ->
+            Search.searchTask(viewModel.tasks.value!!, key, onPreSearch = {
+                b.progressBar.visibility = View.VISIBLE
+            }, onComplete = { result ->
                 adapter.setList(result)
-            }
+                b.progressBar.visibility = View.GONE
+            })
         }
     }
 

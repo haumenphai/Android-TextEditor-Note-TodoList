@@ -6,11 +6,13 @@ import java.util.*
 import kotlin.collections.ArrayList
 
 object Search {
-    fun searchTask(listInput: List<Task>, keySearch: String, onComplete: (list: List<Task>) -> Unit) {
+    fun searchTask(listInput: List<Task>, keySearch: String, onPreSearch:() -> Unit, onComplete: (list: List<Task>) -> Unit) {
+        onPreSearch()
         if (keySearch.trim() == "") {
             onComplete(listInput)
             return
         }
+
         object : android.widget.Filter() {
             override fun performFiltering(constraint: CharSequence?): FilterResults {
                 val results = FilterResults()

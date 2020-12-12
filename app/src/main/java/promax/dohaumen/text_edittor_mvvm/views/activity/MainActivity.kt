@@ -31,11 +31,10 @@ class MainActivity : AppCompatActivity() {
 //        b.bottomNav.menu.getItem(1).isVisible = false
 
 //        TaskDatabase.get.dao().deleteAll()
-//        for (i in 1..1000) {
+//        for (i in 1..100) {
 //            val task = Task("nhiem vu: $i","")
 //            TaskDatabase.get.dao().insert(task)
 //        }
-
 
     }
 

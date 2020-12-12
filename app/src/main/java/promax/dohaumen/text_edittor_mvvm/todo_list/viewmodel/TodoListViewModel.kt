@@ -8,6 +8,8 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.recyclerview.widget.RecyclerView
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.async
 import kotlinx.coroutines.launch
 import promax.dohaumen.text_edittor_mvvm.helper.getTuVietTat
@@ -19,10 +21,9 @@ import promax.hmp.dev.heler.StringHelper
 import java.util.*
 
 class TodoListViewModel: ViewModel() {
-    lateinit var tasks: LiveData<List<Task>>
-    init {
-        tasks = TaskDatabase.get.dao().getLiveData()
-    }
+    val tasks: LiveData<List<Task>> by lazy { TaskDatabase.get.dao().getLiveData() }
+
+
 
 
 

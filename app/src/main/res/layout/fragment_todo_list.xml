@@ -63,6 +63,16 @@
                 app:tint="@color/black" />
         </RelativeLayout>
 
+        <ProgressBar
+            android:visibility="gone"
+            android:id="@+id/progress_bar"
+            android:progressTint="@color/black"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_below="@id/appbar_layout"
+            android:translationZ="10dp"
+            />
+
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recycler_view"
             android:layout_width="match_parent"

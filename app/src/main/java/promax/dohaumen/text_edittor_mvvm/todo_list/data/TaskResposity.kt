@@ -5,6 +5,7 @@ object TaskResposity {
 
     suspend fun getList(isCompleted: Boolean) = dao.getList(isCompleted)
     suspend fun getLiveData(isCompleted: Boolean) = dao.getLiveData(isCompleted)
+    suspend fun getLiveData() = dao.getLiveData()
     suspend fun deleteAll() = dao.deleteAll()
     suspend fun delete(vararg task: Task) = dao.delete(*task)
     suspend fun insert(vararg task: Task) = dao.insert(*task)
