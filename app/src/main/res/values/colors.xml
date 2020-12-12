@@ -15,4 +15,9 @@
 
     <color name="color_black_2">#292929</color>
     <color name="test">#515151</color>
+
+<!--    Color item rippler solid-->
+    <color name="color_item">#E3E6CFAD</color>
+    <color name="color_item2">#E3FFEBCD</color>
+
 </resources>

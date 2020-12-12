@@ -63,7 +63,7 @@ class FileTextAdapter: RecyclerView.Adapter<FileTextAdapter.Holder>() {
         if (fileText.isCheck) {
             holder.b.background.setBackgroundColor(ContextCompat.getColor(context, R.color.red_500))
         } else {
-            holder.b.background.setBackgroundResource(R.drawable.rippler_brow)
+            holder.b.background.setBackgroundResource(R.drawable.rippler_item_brow)
         }
 
         if (hienThiItemListFileBiXoa) {

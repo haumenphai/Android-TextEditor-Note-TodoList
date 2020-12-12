@@ -4,11 +4,11 @@ import android.view.View
 import androidx.databinding.BindingAdapter
 import promax.dohaumen.text_edittor_mvvm.R
 
-@BindingAdapter("android:customBackground")
+@BindingAdapter("promax:customBackground")
 fun setCustomPrimaryBackground(v: View, isCompleted: Boolean) {
     if (!isCompleted) {
-        v.setBackgroundResource(R.drawable.rippler_brow)
+        v.setBackgroundResource(R.drawable.rippler_item_brow)
     } else {
-        v.setBackgroundResource(R.drawable.ripper_btn_red)
+        v.setBackgroundResource(R.drawable.rippler_item_completed)
     }
 }
