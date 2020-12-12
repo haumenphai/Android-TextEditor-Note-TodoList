@@ -71,7 +71,7 @@
     <string name="enter_new_password">Enter new password</string>
     <string name="list_empty">List empty</string>
 
-    <string name="nav_home">Home</string>
+    <string name="nav_home">Note</string>
     <string name="nav_list_file">List file</string>
     <string name="nav_setting">Setting</string>
     <string name="undo">Undo</string>
