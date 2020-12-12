@@ -12,9 +12,11 @@ import androidx.core.content.ContextCompat
 import androidx.core.content.PermissionChecker.checkSelfPermission
 import promax.dohaumen.text_edittor_mvvm.MyApplication
 import promax.dohaumen.text_edittor_mvvm.models.FileText
+import promax.dohaumen.text_edittor_mvvm.todo_list.data.Task
 import promax.hmp.dev.heler.StringHelper
 import java.io.BufferedReader
 import java.io.File
+import java.lang.Exception
 import java.util.*
 
 
@@ -23,12 +25,17 @@ fun demSoTu(string: String): Int {
     return string.split(" ").size
 }
 fun getTuVietTat(s: String): String {
-    val arr = s.trim().split(" ")
-    var result = ""
-    for (i in 0..arr.size-1) {
-        result += arr[i].substring(0, 1)
+    try {
+        val arr = s.trim().split(" ")
+        var result = ""
+        for (i in 0..arr.size-1) {
+            result += arr[i].substring(0, 1)
+        }
+        return result
+    } catch (e: Exception) {
+
     }
-    return result
+    return "";
 }
 
 fun getString(resources: Int): String = MyApplication.context.getString(resources)
@@ -105,6 +112,8 @@ suspend fun searchFileText(list: List<FileText>, keySearch: String): List<FileTe
     }
     return result
 }
+
+
 
 suspend fun testCroutine(): String {
     for (i in 0..10_000_000_000) {

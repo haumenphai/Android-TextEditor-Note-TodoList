@@ -83,6 +83,7 @@
     <string name="show_line_number">show line number</string>
     <string name="automatic_capitalization">automatic capitalization</string>
     <string name="todo_list">Todo List</string>
+    <string name="delete_task_completed">Delete task completed</string>
 
 
 </resources>

@@ -11,15 +11,25 @@ import androidx.recyclerview.widget.RecyclerView
 import promax.dohaumen.text_edittor_mvvm.MyApplication
 import promax.dohaumen.text_edittor_mvvm.R
 import promax.dohaumen.text_edittor_mvvm.databinding.ItemTaskBinding
+import promax.dohaumen.text_edittor_mvvm.helper.getTuVietTat
+import promax.dohaumen.text_edittor_mvvm.models.FileText
 import promax.dohaumen.text_edittor_mvvm.todo_list.data.Task
+import promax.hmp.dev.heler.StringHelper
+import java.util.*
+import kotlin.collections.ArrayList
 
 class TaskAdapter: RecyclerView.Adapter<TaskAdapter.Holder>() {
-    var listTask: List<Task> = ArrayList()
+    private var listTask: List<Task> = ArrayList()
 
     fun setList(list: List<Task>) {
         listTask = list
         notifyDataSetChanged()
     }
+
+    fun getList() = listTask
+
+
+
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): Holder {
         val inflater = LayoutInflater.from(parent.context)

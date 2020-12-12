@@ -1,2 +1,3 @@
 
 Chức năng todo_list với data binding
+binding.lifecycleOwner = this (sử dụng trong fragment)
