@@ -28,7 +28,6 @@ import promax.dohaumen.text_edittor_mvvm.viewmodel.ListFileFragmentViewModel
 import promax.dohaumen.text_edittor_mvvm.views.dialog.DialogAddFile
 import promax.hmp.dev.utils.HandleUI
 import promax.hmp.dev.views.DialogAddNewFile2
-import java.lang.Exception
 
 class ListFileFragment() : Fragment() {
     lateinit var b: FragmentListFileBinding

@@ -5,7 +5,6 @@ import android.content.Intent
 import android.content.pm.PackageManager
 import android.os.Build
 import android.os.Bundle
-import android.os.storage.StorageManager
 import android.text.Editable
 import android.text.InputType
 import android.text.TextWatcher
@@ -31,18 +30,17 @@ import java.lang.Exception
 
 
 class ViewFileActivity : AppCompatActivity() {
-    lateinit var b: ActivityViewFileBinding
-    lateinit var viewModel: ViewFileActivityViewModel
+    val b: ActivityViewFileBinding by lazy { ActivityViewFileBinding.inflate(layoutInflater) }
+    val viewModel: ViewFileActivityViewModel by lazy { ViewModelProvider(this).get(ViewFileActivityViewModel::class.java) }
 
     private var readOnLy = false // readOnly ap dung voi mo file da bi xoa
     private var contentFile: String? = null // content open from storage
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        b = ActivityViewFileBinding.inflate(layoutInflater)
         setContentView(b.root)
 
-        initViewModel()
+        hViewModel()
         setConfigToolBar()
         handleAction()
 
@@ -59,8 +57,7 @@ class ViewFileActivity : AppCompatActivity() {
 
     }
 
-    fun initViewModel() {
-        viewModel = ViewModelProvider(this).get(ViewFileActivityViewModel::class.java)
+    fun hViewModel() {
         viewModel.isEditTextEnable().observeForever { isEditHometEnable ->
             b.editViewFile.isEnabled = isEditHometEnable
 

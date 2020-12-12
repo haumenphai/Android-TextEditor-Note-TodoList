@@ -17,7 +17,6 @@ import com.google.android.material.snackbar.Snackbar
 import kotlinx.coroutines.launch
 import promax.dohaumen.text_edittor_mvvm.R
 import promax.dohaumen.text_edittor_mvvm.adapter.FileTextAdapter
-import promax.dohaumen.text_edittor_mvvm.databinding.FragmentListFileBinding
 import promax.dohaumen.text_edittor_mvvm.databinding.FragmentListFileDeletedBinding
 import promax.dohaumen.text_edittor_mvvm.helper.demSoTu
 import promax.dohaumen.text_edittor_mvvm.helper.searchFileText

@@ -33,19 +33,19 @@ interface TaskDao {
     @Query("DELETE FROM task")
     fun deleteAll()
 
-    @Query("SELECT * FROM task where isCompleted = :isCompleted")
+    @Query("SELECT * FROM task where isCompleted = :isCompleted ORDER BY id DESC")
     fun getList(isCompleted: Boolean): List<Task>
 
-    @Query("SELECT * FROM task")
+    @Query("SELECT * FROM task ORDER BY id DESC")
     fun getList(): List<Task>
 
 
-    @Query("SELECT * FROM task where isCompleted = :isCompleted")
+    @Query("SELECT * FROM task where isCompleted = :isCompleted ORDER BY id DESC")
     fun getLiveData(isCompleted: Boolean): LiveData<List<Task>>
 
-    @Query("SELECT * FROM task")
+    @Query("SELECT * FROM task  ORDER BY id DESC")
     fun getLiveData(): LiveData<List<Task>>
 
-    @Query("SELECT * FROM task where isDeleted = :isDeleted")
+    @Query("SELECT * FROM task where isDeleted = :isDeleted ORDER BY id DESC")
     fun getListDeleted(isDeleted: Boolean): List<Task>
 }

@@ -17,4 +17,12 @@
         android:iconTint="@color/white"
         app:iconTint="@color/white"
         />
+    <item
+        android:id="@+id/menu_add_task"
+        android:title="add task"
+        android:icon="@drawable/ic_add"
+        app:showAsAction="always"
+        android:iconTint="@color/white"
+        app:iconTint="@color/white"
+        />
 </menu>

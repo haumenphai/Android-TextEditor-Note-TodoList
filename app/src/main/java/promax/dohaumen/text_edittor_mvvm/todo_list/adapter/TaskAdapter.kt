@@ -39,6 +39,7 @@ class TaskAdapter: RecyclerView.Adapter<TaskAdapter.Holder>() {
 
     override fun onBindViewHolder(holder: Holder, position: Int) {
         holder.binding.task = listTask[position]
+        holder.binding.stt = "${position+1}"
         holder.binding.executePendingBindings()
     }
 

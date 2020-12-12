@@ -74,4 +74,10 @@
     <string name="cannot_write_file">Không thể lưu file</string>
     <string name="show_line_number">hiện số dòng</string>
     <string name="automatic_capitalization">tự động viết hoa đầu dòng</string>
+    <string name="delete_task_completed">Xóa những nhiệm vụ đã hoàn thành</string>
+    <string name="file_name_must_not_empty">Tên không được để trống</string>
+    <string name="add_task_successfully">Thêm nhiệm vụ thành công</string>
+    <string name="name">tên</string>
+    <string name="describe">miêu tả</string>
+    <string name="task_count">Số nhiệm vụ:</string>
 </resources>

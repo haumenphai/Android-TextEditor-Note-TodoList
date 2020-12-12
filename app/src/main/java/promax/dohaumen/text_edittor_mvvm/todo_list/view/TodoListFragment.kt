@@ -1,5 +1,6 @@
 package promax.dohaumen.text_edittor_mvvm.todo_list.view
 
+import android.content.Intent
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
@@ -15,20 +16,19 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import kotlinx.coroutines.launch
 import promax.dohaumen.text_edittor_mvvm.R
 import promax.dohaumen.text_edittor_mvvm.databinding.FragmentTodoListBinding
-import promax.dohaumen.text_edittor_mvvm.todo_list.adapter.TaskAdapter
 import promax.dohaumen.text_edittor_mvvm.helper.Search
+import promax.dohaumen.text_edittor_mvvm.todo_list.adapter.TaskAdapter
 import promax.dohaumen.text_edittor_mvvm.todo_list.viewmodel.TodoListViewModel
 import promax.dohaumen.text_edittor_mvvm.views.activity.MainActivity
 import promax.hmp.dev.utils.HandleUI
 import java.util.*
-import java.util.concurrent.Executors
 
 
 class TodoListFragment: Fragment() {
-    lateinit var mainActivity: MainActivity
-    lateinit var b: FragmentTodoListBinding
+    private lateinit var mainActivity: MainActivity
+    private lateinit var b: FragmentTodoListBinding
     private val viewModel: TodoListViewModel by lazy { ViewModelProvider(this).get(TodoListViewModel::class.java) }
-    val adapter: TaskAdapter = TaskAdapter()
+    private val adapter: TaskAdapter = TaskAdapter()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -99,6 +99,10 @@ class TodoListFragment: Fragment() {
             R.id.menu_delete_file_completed -> {
 
             }
+            R.id.menu_add_task -> {
+                val intent = Intent(mainActivity, AddTaskActivity::class.java)
+                startActivity(intent)
+            }
         }
         return super.onOptionsItemSelected(item)
     }
@@ -115,5 +119,6 @@ class TodoListFragment: Fragment() {
             })
         }
     }
+
 
 }
