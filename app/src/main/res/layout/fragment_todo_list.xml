@@ -5,12 +5,7 @@
     xmlns:promax="http://schemas.android.com/apk/res-auto"
     >
 
-    <data>
-        <import type="android.view.View"/>
-        <variable
-            name="viewModel"
-            type="promax.dohaumen.text_edittor_mvvm.todo_list.viewmodel.TodoListViewModel" />
-    </data>
+
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -64,7 +59,6 @@
         </RelativeLayout>
 
         <ProgressBar
-            android:visibility="gone"
             android:id="@+id/progress_bar"
             android:progressTint="@color/black"
             android:layout_width="match_parent"
@@ -73,11 +67,30 @@
             android:translationZ="10dp"
             />
 
+        <RelativeLayout
+            android:id="@+id/layout_mess"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/appbar_layout"
+            >
+            <TextView
+                android:id="@+id/tv_mess"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                tools:text="Not found"
+                android:layout_marginTop="10dp"
+                android:layout_centerHorizontal="true"
+                android:textColor="@color/black"
+                android:textSize="16sp"
+                />
+
+        </RelativeLayout>
+
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recycler_view"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@id/appbar_layout"
+            android:layout_below="@id/layout_mess"
             tools:listitem="@layout/item_task" />
     </RelativeLayout>
 </layout>

@@ -10,11 +10,14 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import promax.dohaumen.text_edittor_mvvm.R
 import promax.dohaumen.text_edittor_mvvm.databinding.FragmentTodoListBinding
 import promax.dohaumen.text_edittor_mvvm.helper.Search
 import promax.dohaumen.text_edittor_mvvm.todo_list.adapter.TaskAdapter
+import promax.dohaumen.text_edittor_mvvm.todo_list.data.TaskDatabase
 import promax.dohaumen.text_edittor_mvvm.todo_list.viewmodel.TodoListViewModel
 import promax.dohaumen.text_edittor_mvvm.views.activity.MainActivity
 import promax.hmp.dev.utils.HandleUI
@@ -38,25 +41,30 @@ class TodoListFragment: Fragment() {
 
         b.recyclerView.layoutManager = LinearLayoutManager(context)
         b.recyclerView.adapter = adapter
-        b.viewModel = viewModel
         b.lifecycleOwner = this
 
         viewModel.tasks.observe(viewLifecycleOwner, {
             adapter.setList(it)
         })
 
-
+        hideView()
         setConfigToolBar()
         setClick()
         return b.root
     }
 
+    private fun hideView() {
+        b.progressBar.visibility    = View.GONE
+        b.tvMess.visibility         = View.GONE
+    }
+
+    lateinit var menu: Menu
     private fun setConfigToolBar() {
         b.layoutSearch.visibility = View.GONE
         mainActivity.setSupportActionBar(b.toolBar)
         b.toolBar.inflateMenu(R.menu.todo_list_fragment_menu)
 
-        val menu = b.toolBar.menu
+        menu = b.toolBar.menu
         viewModel.isShowNumber.observe(this, { isShow ->
             val item = menu.findItem(R.id.menu_show_number)
             item.isChecked = isShow
@@ -86,6 +94,9 @@ class TodoListFragment: Fragment() {
             HandleUI.hideKeyboardFrom(context, b.editSearch)
             true
         }
+        adapter.onClickItem = { task ->
+            DialogViewTask(mainActivity, task).show()
+        }
     }
 
 
@@ -109,6 +120,24 @@ class TodoListFragment: Fragment() {
                 item.setChecked(!item.isChecked)
                 viewModel.isShowNumber.value = item.isChecked
             }
+            R.id.menu_view_task -> {
+                item.isChecked = true
+                menu.findItem(R.id.menu_view_task_completed).isChecked = false
+                menu.findItem(R.id.menu_view_all_task).isChecked = false
+                adapter.setList(viewModel.tasks.value!!)
+            }
+            R.id.menu_view_task_completed -> {
+                item.isChecked = true
+                menu.findItem(R.id.menu_view_task).isChecked = false
+                menu.findItem(R.id.menu_view_all_task).isChecked = false
+                adapter.setList(TaskDatabase.get.dao().getList(true))
+            }
+            R.id.menu_view_all_task -> {
+                item.isChecked = true
+                menu.findItem(R.id.menu_view_task).isChecked = false
+                menu.findItem(R.id.menu_view_task_completed).isChecked = false
+                adapter.setList(TaskDatabase.get.dao().getList())
+            }
         }
         return super.onOptionsItemSelected(item)
     }
@@ -119,8 +148,13 @@ class TodoListFragment: Fragment() {
         lifecycleScope.launch {
             Search.searchTask(viewModel.tasks.value!!, key, onPreSearch = {
                 b.progressBar.visibility = View.VISIBLE
+                b.tvMess.visibility = View.GONE
             }, onComplete = { result ->
                 adapter.setList(result)
+                if (result.isEmpty()) {
+                    b.tvMess.visibility = View.VISIBLE
+                    b.tvMess.setText(getString(R.string.not_found))
+                }
                 b.progressBar.visibility = View.GONE
             })
         }

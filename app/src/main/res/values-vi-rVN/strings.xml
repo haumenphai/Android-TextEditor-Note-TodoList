@@ -82,5 +82,7 @@
     <string name="task_count">Số nhiệm vụ:</string>
     <string name="show_number">Hiện số thứ tự</string>
     <string name="todo_list">Nhiệm vụ</string>
+    <string name="date_compled">Ngày hoàn thành</string>
+    <string name="date_delete_2">Ngày xóa</string>
 
 </resources>

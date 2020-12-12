@@ -8,7 +8,15 @@ import promax.dohaumen.text_edittor_mvvm.todo_list.data.Task
 import promax.dohaumen.text_edittor_mvvm.todo_list.data.TaskDatabase
 
 class TodoListViewModel: ViewModel() {
-    val tasks: LiveData<List<Task>> by lazy { TaskDatabase.get.dao().getLiveData(false) }
+    val tasks: LiveData<List<Task>> by lazy {
+        TaskDatabase.get.dao().getLiveData(false)
+    }
+    val tasksCompleted: LiveData<List<Task>> by lazy {
+        TaskDatabase.get.dao().getLiveData(true)
+    }
+    val allTasks: LiveData<List<Task>> by lazy {
+        TaskDatabase.get.dao().getLiveData()
+    }
 
     val isShowNumber: MutableLiveData<Boolean> by lazy {
         val isShow = DataTodoListFragment.isShowNumber()

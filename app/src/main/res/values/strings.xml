@@ -90,6 +90,14 @@
     <string name="describe">describe</string>
     <string name="task_count">Task count:</string>
     <string name="show_number">Show number</string>
+    <string name="date_compled">Date completed</string>
+    <string name="date_delete_2">Date deleted</string>
+    <string name="view_all_task">View all task</string>
+    <string name="view_task_completed">View task completed</string>
+    <string name="not_found">Not found</string>
+    <string name="back">back</string>
+    <string name="tasks_completed">Task Completed</string>
+    <string name="view_task">View Task</string>
 
 
 </resources>

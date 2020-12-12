@@ -17,8 +17,7 @@ import promax.dohaumen.text_edittor_mvvm.todo_list.data.Task
 import promax.dohaumen.text_edittor_mvvm.todo_list.data.TaskDatabase
 import promax.hmp.dev.utils.TimeDelayUlti
 import kotlin.collections.ArrayList
-
-class TaskAdapter: RecyclerView.Adapter<TaskAdapter.Holder>() {
+open class TaskAdapter: RecyclerView.Adapter<TaskAdapter.Holder>() {
     private var listTask: List<Task> = ArrayList()
 
     fun setList(list: List<Task>) {
@@ -63,18 +62,19 @@ class TaskAdapter: RecyclerView.Adapter<TaskAdapter.Holder>() {
 
             }
         }
+
+
     }
-
-
-
 
     override fun getItemCount(): Int = listTask.size
 
 
+    lateinit var onClickItem:(task: Task) -> Unit
+
     inner class Holder(val binding: ItemTaskBinding) : RecyclerView.ViewHolder(binding.root) {
         init {
             binding.background.setOnClickListener {
-                Toast.makeText(MyApplication.context, listTask[adapterPosition].name, Toast.LENGTH_SHORT).show()
+                onClickItem(listTask[adapterPosition])
             }
             binding.checkboxComplete.setOnClickListener {
                 val task = listTask[adapterPosition]
@@ -84,7 +84,6 @@ class TaskAdapter: RecyclerView.Adapter<TaskAdapter.Holder>() {
                 } else {
                     task.dateCompleted = ""
                 }
-                // todo start dialog
 
                 notifyDataSetChanged()
             }
