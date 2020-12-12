@@ -84,5 +84,10 @@
     <string name="todo_list">Nhiệm vụ</string>
     <string name="date_compled">Ngày hoàn thành</string>
     <string name="date_delete_2">Ngày xóa</string>
+    <string name="view_all_task">Xem tất cả nhiệm vụ</string>
+    <string name="view_task_completed">Xem nhiệm vụ đã hoàn thành</string>
+    <string name="not_found">Không tìm thấy</string>
+    <string name="back">quay về</string>
+    <string name="view_task">Xem nhiệm vụ</string>
 
 </resources>

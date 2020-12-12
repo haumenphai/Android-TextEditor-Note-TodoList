@@ -11,11 +11,9 @@ class TodoListViewModel: ViewModel() {
     val tasks: LiveData<List<Task>> by lazy {
         TaskDatabase.get.dao().getLiveData(false)
     }
-    val tasksCompleted: LiveData<List<Task>> by lazy {
-        TaskDatabase.get.dao().getLiveData(true)
-    }
-    val allTasks: LiveData<List<Task>> by lazy {
-        TaskDatabase.get.dao().getLiveData()
+
+    val allTasks: List<Task> by lazy {
+        TaskDatabase.get.dao().getList()
     }
 
     val isShowNumber: MutableLiveData<Boolean> by lazy {

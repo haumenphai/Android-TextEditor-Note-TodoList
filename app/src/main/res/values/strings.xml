@@ -96,8 +96,7 @@
     <string name="view_task_completed">View task completed</string>
     <string name="not_found">Not found</string>
     <string name="back">back</string>
-    <string name="tasks_completed">Task Completed</string>
-    <string name="view_task">View Task</string>
+    <string name="view_task">View task</string>
 
 
 </resources>
