@@ -5,9 +5,7 @@ import android.view.Menu
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import promax.dohaumen.text_edittor_mvvm.R
-import promax.dohaumen.text_edittor_mvvm.data.FileTextDatabase
 import promax.dohaumen.text_edittor_mvvm.databinding.ActivityMainBinding
-import promax.dohaumen.text_edittor_mvvm.models.FileText
 import promax.dohaumen.text_edittor_mvvm.todo_list.data.Task
 import promax.dohaumen.text_edittor_mvvm.todo_list.data.TaskDatabase
 import promax.dohaumen.text_edittor_mvvm.views.fragment.HomeFragment
@@ -30,11 +28,12 @@ class MainActivity : AppCompatActivity() {
         b.bottomNav.inflateMenu(R.menu.bottom_nav_main)
 //        b.bottomNav.menu.getItem(1).isVisible = false
 
-//        TaskDatabase.get.dao().deleteAll()
-//        for (i in 1..100) {
-//            val task = Task("nhiem vu: $i","")
-//            TaskDatabase.get.dao().insert(task)
-//        }
+        // todo: remove
+        TaskDatabase.get.dao().deleteAll()
+        for (i in 1..100) {
+            val task = Task("nhiem vu: $i","")
+            TaskDatabase.get.dao().insert(task)
+        }
 
     }
 

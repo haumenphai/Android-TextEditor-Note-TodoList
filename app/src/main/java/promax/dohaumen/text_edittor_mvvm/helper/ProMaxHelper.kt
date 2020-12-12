@@ -9,10 +9,8 @@ import android.os.Build
 import android.provider.MediaStore
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
-import androidx.core.content.PermissionChecker.checkSelfPermission
 import promax.dohaumen.text_edittor_mvvm.MyApplication
 import promax.dohaumen.text_edittor_mvvm.models.FileText
-import promax.dohaumen.text_edittor_mvvm.todo_list.data.Task
 import promax.hmp.dev.heler.StringHelper
 import java.io.BufferedReader
 import java.io.File

@@ -101,7 +101,6 @@ class ListFileFragment() : Fragment() {
 
     fun setClickItem() {
         adapter.onClickITem = { fileText ->
-            // todo: problem?
             if (fileText.password != null) {
                 val dialog = DialogAddFile(mainActivity)
                 dialog.b.tvTitle.text = getString(R.string.enter_password)

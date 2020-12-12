@@ -4,10 +4,7 @@ import android.content.Intent
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
-import android.view.LayoutInflater
-import android.view.MenuItem
-import android.view.View
-import android.view.ViewGroup
+import android.view.*
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
@@ -21,7 +18,6 @@ import promax.dohaumen.text_edittor_mvvm.todo_list.adapter.TaskAdapter
 import promax.dohaumen.text_edittor_mvvm.todo_list.viewmodel.TodoListViewModel
 import promax.dohaumen.text_edittor_mvvm.views.activity.MainActivity
 import promax.hmp.dev.utils.HandleUI
-import java.util.*
 
 
 class TodoListFragment: Fragment() {
@@ -35,11 +31,7 @@ class TodoListFragment: Fragment() {
         setHasOptionsMenu(true)
     }
 
-    override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View {
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         b = DataBindingUtil.inflate(inflater, R.layout.fragment_todo_list, container, false)
         mainActivity = activity as MainActivity
 
@@ -63,6 +55,15 @@ class TodoListFragment: Fragment() {
         b.layoutSearch.visibility = View.GONE
         mainActivity.setSupportActionBar(b.toolBar)
         b.toolBar.inflateMenu(R.menu.todo_list_fragment_menu)
+
+        val menu = b.toolBar.menu
+        viewModel.isShowNumber.observe(this, { isShow ->
+            val item = menu.findItem(R.id.menu_show_number)
+            item.isChecked = isShow
+            adapter.isShowNumber = isShow
+            adapter.notifyDataSetChanged()
+        })
+
     }
 
     private fun setClick() {
@@ -96,12 +97,17 @@ class TodoListFragment: Fragment() {
                 b.editSearch.requestFocus()
                 HandleUI.showKeyboard(context)
             }
-            R.id.menu_delete_file_completed -> {
-
+            R.id.menu_hide_task_completed -> {
+                adapter.playAnimation = true
+                adapter.notifyDataSetChanged()
             }
             R.id.menu_add_task -> {
                 val intent = Intent(mainActivity, AddTaskActivity::class.java)
                 startActivity(intent)
+            }
+            R.id.menu_show_number -> {
+                item.setChecked(!item.isChecked)
+                viewModel.isShowNumber.value = item.isChecked
             }
         }
         return super.onOptionsItemSelected(item)
@@ -118,6 +124,11 @@ class TodoListFragment: Fragment() {
                 b.progressBar.visibility = View.GONE
             })
         }
+    }
+
+    override fun onStop() {
+        super.onStop()
+        viewModel.saveData()
     }
 
 

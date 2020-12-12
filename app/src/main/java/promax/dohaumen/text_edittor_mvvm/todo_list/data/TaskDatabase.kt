@@ -4,7 +4,7 @@ import androidx.lifecycle.LiveData
 import androidx.room.*
 import promax.dohaumen.text_edittor_mvvm.MyApplication.Companion.context
 
-@Database(entities = [Task::class], version = 1)
+@Database(entities = [Task::class], version = 3)
 abstract class TaskDatabase: RoomDatabase() {
     abstract fun dao() : TaskDao
 
@@ -33,19 +33,19 @@ interface TaskDao {
     @Query("DELETE FROM task")
     fun deleteAll()
 
-    @Query("SELECT * FROM task where isCompleted = :isCompleted ORDER BY id DESC")
-    fun getList(isCompleted: Boolean): List<Task>
+    @Query("SELECT * FROM task where isChecked = :isChecked ORDER BY id DESC")
+    fun getList(isChecked: Boolean): List<Task>
 
     @Query("SELECT * FROM task ORDER BY id DESC")
     fun getList(): List<Task>
 
 
-    @Query("SELECT * FROM task where isCompleted = :isCompleted ORDER BY id DESC")
-    fun getLiveData(isCompleted: Boolean): LiveData<List<Task>>
+    @Query("SELECT * FROM task where isChecked = :isChecked ORDER BY id DESC")
+    fun getLiveData(isChecked: Boolean): LiveData<List<Task>>
 
     @Query("SELECT * FROM task  ORDER BY id DESC")
     fun getLiveData(): LiveData<List<Task>>
 
-    @Query("SELECT * FROM task where isDeleted = :isDeleted ORDER BY id DESC")
-    fun getListDeleted(isDeleted: Boolean): List<Task>
+    @Query("SELECT * FROM task where isChecked = :isChecked ORDER BY id DESC")
+    fun getListDeleted(isChecked: Boolean): List<Task>
 }

@@ -15,8 +15,10 @@ class Task {
     var dateDeleted: String = ""
 
 
-    var isCompleted: Boolean = false
+    // task is completed
+    var isChecked: Boolean = false
     var isDeleted: Boolean = false
+
 
     constructor()
 

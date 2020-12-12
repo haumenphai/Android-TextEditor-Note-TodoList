@@ -83,12 +83,13 @@
     <string name="show_line_number">show line number</string>
     <string name="automatic_capitalization">automatic capitalization</string>
     <string name="todo_list">Todo List</string>
-    <string name="delete_task_completed">Delete tasks completed</string>
+    <string name="hide_task_completed">Hide tasks completed</string>
     <string name="file_name_must_not_empty">Name must not be empty</string>
     <string name="add_task_successfully">Add task successfully</string>
     <string name="name">name</string>
     <string name="describe">describe</string>
     <string name="task_count">Task count:</string>
+    <string name="show_number">Show number</string>
 
 
 </resources>

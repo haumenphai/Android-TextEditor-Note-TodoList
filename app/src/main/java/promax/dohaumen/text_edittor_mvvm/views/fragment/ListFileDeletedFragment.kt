@@ -102,7 +102,6 @@ class ListFileDeletedFragment: Fragment() {
 
     private fun setClickItem() {
         adapter.onClickITem = { fileText ->
-            // todo: problem?
             if (fileText.password != null) {
                 val dialog = DialogAddFile(myActivity)
                 dialog.b.tvTitle.text = getString(R.string.enter_password)

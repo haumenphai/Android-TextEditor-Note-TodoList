@@ -1,21 +1,21 @@
 package promax.dohaumen.text_edittor_mvvm.todo_list.adapter
 
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
+import android.view.animation.AnimationUtils
 import android.widget.CheckBox
-import android.widget.TextView
 import android.widget.Toast
-import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.RecyclerView
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 import promax.dohaumen.text_edittor_mvvm.MyApplication
 import promax.dohaumen.text_edittor_mvvm.R
 import promax.dohaumen.text_edittor_mvvm.databinding.ItemTaskBinding
-import promax.dohaumen.text_edittor_mvvm.helper.getTuVietTat
-import promax.dohaumen.text_edittor_mvvm.models.FileText
+import promax.dohaumen.text_edittor_mvvm.helper.getCurentDate24h
 import promax.dohaumen.text_edittor_mvvm.todo_list.data.Task
-import promax.hmp.dev.heler.StringHelper
-import java.util.*
+import promax.dohaumen.text_edittor_mvvm.todo_list.data.TaskDatabase
+import promax.hmp.dev.utils.TimeDelayUlti
 import kotlin.collections.ArrayList
 
 class TaskAdapter: RecyclerView.Adapter<TaskAdapter.Holder>() {
@@ -27,6 +27,7 @@ class TaskAdapter: RecyclerView.Adapter<TaskAdapter.Holder>() {
     }
 
     fun getList() = listTask
+    var isShowNumber = false
 
 
 
@@ -37,11 +38,35 @@ class TaskAdapter: RecyclerView.Adapter<TaskAdapter.Holder>() {
         return Holder(binding)
     }
 
+    private val animation = AnimationUtils.loadAnimation(MyApplication.context, R.anim.anim_item_task)
+    var playAnimation = false
+
     override fun onBindViewHolder(holder: Holder, position: Int) {
-        holder.binding.task = listTask[position]
+        val task = listTask[position]
+
+        holder.binding.task = task
         holder.binding.stt = "${position+1}"
+        holder.binding.isShowNummber = isShowNumber
         holder.binding.executePendingBindings()
+
+
+
+        if (playAnimation && task.isChecked) {
+            holder.binding.background.startAnimation(animation)
+            TimeDelayUlti.setTime(500).runAfterMilisecond {
+                playAnimation = false
+                CoroutineScope(Dispatchers.IO).launch {
+                    listTask.forEach {
+                        TaskDatabase.get.dao().update(it)
+                    }
+                }
+
+            }
+        }
     }
+
+
+
 
     override fun getItemCount(): Int = listTask.size
 
@@ -52,9 +77,15 @@ class TaskAdapter: RecyclerView.Adapter<TaskAdapter.Holder>() {
                 Toast.makeText(MyApplication.context, listTask[adapterPosition].name, Toast.LENGTH_SHORT).show()
             }
             binding.checkboxComplete.setOnClickListener {
-                // todo: chỉnh sửa phần này!
-                listTask[adapterPosition].isCompleted = (it as CheckBox).isChecked
-                Toast.makeText(MyApplication.context, "hoàn thành nhiệm vụ:\n ${listTask[adapterPosition].name}", Toast.LENGTH_SHORT).show()
+                val task = listTask[adapterPosition]
+                task.isChecked = (it as CheckBox).isChecked
+                if (task.isChecked) {
+                    task.dateCompleted = getCurentDate24h()
+                } else {
+                    task.dateCompleted = ""
+                }
+                // todo start dialog
+
                 notifyDataSetChanged()
             }
         }
