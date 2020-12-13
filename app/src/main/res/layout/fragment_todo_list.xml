@@ -25,8 +25,8 @@
                 app:titleTextColor="@color/white" />
         </com.google.android.material.appbar.AppBarLayout>
 
-        <RelativeLayout
 
+        <RelativeLayout
             android:id="@+id/layout_search"
             android:layout_width="match_parent"
             android:layout_height="?actionBarSize"
@@ -92,5 +92,15 @@
             android:layout_height="wrap_content"
             android:layout_below="@id/layout_mess"
             tools:listitem="@layout/item_task" />
+
+        <include
+            android:id="@+id/layout_action"
+            android:layout_width="80dp"
+            android:layout_height="wrap_content"
+            layout="@layout/layout_action_task"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            />
+
     </RelativeLayout>
 </layout>

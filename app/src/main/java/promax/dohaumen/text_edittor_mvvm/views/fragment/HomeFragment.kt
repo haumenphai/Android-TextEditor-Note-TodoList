@@ -13,7 +13,7 @@ import androidx.lifecycle.ViewModelProvider
 import promax.dohaumen.text_edittor_mvvm.R
 import promax.dohaumen.text_edittor_mvvm.databinding.FragmentHomeBinding
 import promax.dohaumen.text_edittor_mvvm.viewmodel.HomeFragmentViewModel
-import promax.dohaumen.text_edittor_mvvm.views.activity.MainActivity
+import promax.dohaumen.text_edittor_mvvm.MainActivity
 import promax.dohaumen.text_edittor_mvvm.views.dialog.DialogAddFile
 import promax.dohaumen.text_edittor_mvvm.views.dialog.DialogSettingEditView
 import promax.hmp.dev.utils.HandleUI

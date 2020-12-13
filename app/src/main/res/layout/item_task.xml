@@ -14,14 +14,19 @@
         <variable
             name="isShowNummber"
             type="Boolean" />
+        <variable
+            name="isSelecteMode"
+            type="Boolean" />
     </data>
 
     <RelativeLayout
         android:id="@+id/background"
-        promax:customBackground="@{task.checked}"
         tools:background="@drawable/rippler_item_brow"
         android:layout_width="match_parent"
         android:layout_height="45dp"
+        promax:isCompleted="@{task.checked}"
+        promax:isSelectd="@{task.selected}"
+        promax:isSelectedMode="@{isSelecteMode}"
         >
 
         <RelativeLayout

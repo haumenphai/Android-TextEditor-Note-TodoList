@@ -89,5 +89,14 @@
     <string name="not_found">Không tìm thấy</string>
     <string name="back">quay về</string>
     <string name="view_task">Xem nhiệm vụ</string>
+    <string name="change">Chỉnh sửa</string>
+    <string name="no_task_completed">Không có nhiệm vụ hoàn thành để ẩn</string>
+    <string name="no_task_select">Không có nhiệm vụ được chọn</string>
+    <string name="delete_task">Xóa Nhiệm Vụ</string>
+    <string name="task">nhiệm vụ</string>
+    <string name="only_once_task_can_be_selected">Chỉ được chọn một nhiệm vụ để chỉnh sửa</string>
+    <string name="only_one_file_can_be_selected">Chỉ được chọn một file</string>
+    <string name="edit_task_successfully">Chỉnh sửa thành công</string>
+    <string name="edit">Chỉnh sửa</string>
 
 </resources>

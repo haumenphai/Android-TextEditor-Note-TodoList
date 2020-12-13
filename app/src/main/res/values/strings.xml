@@ -97,6 +97,15 @@
     <string name="not_found">Not found</string>
     <string name="back">back</string>
     <string name="view_task">View task</string>
+    <string name="no_task_completed">No task completed</string>
+    <string name="change">Edit</string>
+    <string name="no_task_select">No task is selected</string>
+    <string name="delete_task">Delete Task</string>
+    <string name="task">task</string>
+    <string name="only_one_file_can_be_selected">Only one file can be selected</string>
+    <string name="only_once_task_can_be_selected">Only one task can be seleted to edit</string>
+    <string name="edit_task_successfully">Edit successfully</string>
+    <string name="edit">Edit</string>
 
 
 </resources>

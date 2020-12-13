@@ -16,7 +16,7 @@ import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.material.snackbar.Snackbar
 import kotlinx.coroutines.launch
-import promax.dohaumen.text_edittor_mvvm.views.activity.MainActivity
+import promax.dohaumen.text_edittor_mvvm.MainActivity
 import promax.dohaumen.text_edittor_mvvm.R
 import promax.dohaumen.text_edittor_mvvm.views.activity.ViewFileActivity
 import promax.dohaumen.text_edittor_mvvm.adapter.FileTextAdapter

@@ -12,8 +12,7 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.fragment.app.Fragment
 import kotlinx.android.synthetic.main.fragment_setting.*
-import promax.dohaumen.text_edittor_mvvm.views.activity.MainActivity
-import promax.dohaumen.text_edittor_mvvm.databinding.FragmentListFileBinding
+import promax.dohaumen.text_edittor_mvvm.MainActivity
 import promax.dohaumen.text_edittor_mvvm.databinding.FragmentSettingBinding
 import promax.dohaumen.text_edittor_mvvm.views.activity.ViewListFileDeteledActivity
 import java.lang.Exception

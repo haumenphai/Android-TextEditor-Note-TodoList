@@ -23,4 +23,15 @@ class AddTaskViewModel: ViewModel() {
             onSuccess(getString(R.string.add_task_successfully))
         }
     }
+
+    fun editTask(task: Task , name: String, describe: String, onFailure:(mess: String) -> Unit, onSuccess:(mess: String) -> Unit) {
+        if (name.trim() == "") {
+            onFailure(getString(R.string.file_name_must_not_empty))
+        } else {
+            task.name = name
+            task.describe = describe
+            TaskDatabase.get.dao().update(task)
+            onSuccess(getString(R.string.edit_task_successfully))
+        }
+    }
 }

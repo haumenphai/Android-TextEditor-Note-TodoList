@@ -3,9 +3,10 @@ package promax.dohaumen.text_edittor_mvvm.todo_list.data
 import androidx.room.Entity
 import androidx.room.Ignore
 import androidx.room.PrimaryKey
+import java.io.Serializable
 
 @Entity
-class Task {
+class Task: Serializable {
     @PrimaryKey(autoGenerate = true)
     var id: Int = 0
     var name: String = ""
@@ -15,9 +16,11 @@ class Task {
     var dateDeleted: String = ""
 
 
-    // task is completed
-    var isChecked: Boolean = false
+    var isChecked: Boolean = false  // task is completed
     var isDeleted: Boolean = false
+
+    @Ignore
+    var isSelected = false // select for edit
 
 
     constructor()

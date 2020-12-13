@@ -1,10 +1,9 @@
-package promax.dohaumen.text_edittor_mvvm.views.activity
+package promax.dohaumen.text_edittor_mvvm
 
 import android.os.Bundle
 import android.view.Menu
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
-import promax.dohaumen.text_edittor_mvvm.R
 import promax.dohaumen.text_edittor_mvvm.databinding.ActivityMainBinding
 import promax.dohaumen.text_edittor_mvvm.todo_list.data.Task
 import promax.dohaumen.text_edittor_mvvm.todo_list.data.TaskDatabase

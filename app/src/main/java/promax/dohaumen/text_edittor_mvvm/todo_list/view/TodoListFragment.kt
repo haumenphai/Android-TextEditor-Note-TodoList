@@ -1,17 +1,18 @@
 package promax.dohaumen.text_edittor_mvvm.todo_list.view
 
+import android.app.AlertDialog
 import android.content.Intent
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
 import android.view.*
+import android.widget.Toast
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
+import com.google.android.material.snackbar.Snackbar
 import kotlinx.coroutines.launch
 import promax.dohaumen.text_edittor_mvvm.R
 import promax.dohaumen.text_edittor_mvvm.databinding.FragmentTodoListBinding
@@ -19,7 +20,7 @@ import promax.dohaumen.text_edittor_mvvm.helper.Search
 import promax.dohaumen.text_edittor_mvvm.todo_list.adapter.TaskAdapter
 import promax.dohaumen.text_edittor_mvvm.todo_list.data.TaskDatabase
 import promax.dohaumen.text_edittor_mvvm.todo_list.viewmodel.TodoListViewModel
-import promax.dohaumen.text_edittor_mvvm.views.activity.MainActivity
+import promax.dohaumen.text_edittor_mvvm.MainActivity
 import promax.hmp.dev.utils.HandleUI
 
 
@@ -50,12 +51,15 @@ class TodoListFragment: Fragment() {
         hideView()
         setConfigToolBar()
         setClick()
+        setClickItemRecyclerView()
+        setClickAction()
         return b.root
     }
 
     private fun hideView() {
-        b.progressBar.visibility    = View.GONE
-        b.tvMess.visibility         = View.GONE
+        b.progressBar.visibility        = View.GONE
+        b.tvMess.visibility             = View.GONE
+        b.layoutAction.root.visibility  = View.GONE
     }
 
     lateinit var menu: Menu
@@ -94,8 +98,78 @@ class TodoListFragment: Fragment() {
             HandleUI.hideKeyboardFrom(context, b.editSearch)
             true
         }
-        adapter.onClickItem = { task ->
+
+    }
+
+    private fun setClickItemRecyclerView() {
+        adapter.onClickItem = { task, i ->
             DialogViewTask(mainActivity, task).show()
+        }
+        adapter.onLongClick = { it, i ->
+            b.layoutAction.root.visibility  = View.VISIBLE
+            it.isSelected = !it.isSelected
+            adapter.onClickItem = { it2, i2 ->
+                it2.isSelected = !it2.isSelected
+                adapter.notifyItemChanged(i2)
+            }
+            adapter.setSelectMode(true)
+
+        }
+    }
+
+    private fun setClickAction() {
+        fun cancelAction() {
+            b.layoutAction.root.visibility = View.GONE
+            adapter.getList().forEach {
+                it.isSelected = false
+            }
+            adapter.setSelectMode(false)
+            setClickItemRecyclerView()
+        }
+
+        b.layoutAction.actionCancel.setOnClickListener {
+            cancelAction()
+        }
+        b.layoutAction.actionSelectAll.setOnClickListener {
+            adapter.getList().forEach { task -> task.isSelected = true }
+            adapter.notifyDataSetChanged()
+        }
+        b.layoutAction.actionDelete.setOnClickListener {
+            val listSelected = adapter.getListSelected()
+            if (listSelected.isEmpty()) {
+                Toast.makeText(context, getString(R.string.no_task_select), Toast.LENGTH_SHORT).show()
+            } else {
+                AlertDialog.Builder(context)
+                    .setTitle(R.string.delete_task)
+                    .setMessage("${getString(R.string.delete)} ${listSelected.size} ${getString(R.string.task)} ?")
+                    .setPositiveButton(R.string.btn_ok) { d,i ->
+                        listSelected.forEach {
+                            TaskDatabase.get.dao().delete(it)
+                        }
+                        Snackbar.make(b.recyclerView, R.string.deleted, 3000)
+                            .setAction(R.string.undo) {
+                                listSelected.forEach {
+                                    TaskDatabase.get.dao().insert(it)
+                                }
+                            }.show()
+
+                    }.setNegativeButton(R.string.btn_cancel) { d,i->
+
+                    }.show()
+            }
+        }
+        b.layoutAction.actionRename.setOnClickListener {
+            val listSelected = adapter.getListSelected()
+            val itemSelected = listSelected[0]
+            if (listSelected.size != 1) {
+                Toast.makeText(context, R.string.only_once_task_can_be_selected, Toast.LENGTH_SHORT).show()
+            } else {
+                val intent = Intent(mainActivity, AddTaskActivity::class.java)
+                intent.action = "edit task"
+                intent.putExtra("task", itemSelected)
+                startActivity(intent)
+                cancelAction()
+            }
         }
     }
 
@@ -109,7 +183,7 @@ class TodoListFragment: Fragment() {
                 HandleUI.showKeyboard(context)
             }
             R.id.menu_hide_task_completed -> {
-                adapter.playAnimation = true
+                adapter.hideTaskCompleted()
                 adapter.notifyDataSetChanged()
             }
             R.id.menu_add_task -> {
