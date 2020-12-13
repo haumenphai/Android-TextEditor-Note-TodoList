@@ -3,11 +3,14 @@ package promax.dohaumen.text_edittor_mvvm.todo_list.data
 import androidx.lifecycle.LiveData
 import androidx.room.*
 import androidx.sqlite.db.SupportSQLiteDatabase
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 import promax.dohaumen.text_edittor_mvvm.MyApplication.Companion.context
 
 @Database(entities = [Task::class], version = 3)
-abstract class TaskDatabase: RoomDatabase() {
-    abstract fun dao() : TaskDao
+abstract class TaskDatabase : RoomDatabase() {
+    abstract fun dao(): TaskDao
 
     companion object {
         val get: TaskDatabase by lazy {
@@ -20,11 +23,18 @@ abstract class TaskDatabase: RoomDatabase() {
         val roomCallback = object : RoomDatabase.Callback() {
             override fun onCreate(db: SupportSQLiteDatabase) {
                 super.onCreate(db)
-//                val task1 = Task("My task", "This is info app text editor.\nDeveloper: haumenphai\nFacebook: Màu Bay")
-//                task1.id = 0
-//                db.execSQL("INSERT INTO task " +
-//                        "(id, name, describe, dateCreated, dateCompleted, dateDeleted, isChecked, isDeleted)" +
-//                        " VALUES (${task1.id}, ${task1.name}, ${task1.describe}, '', '', '', '', '')")
+                val task1 = Task(
+                    "Info",
+                    "App text editor.\nDeveloper: Trịnh Đức Độ\nFacebook: Màu Bay\nGithub: haumenphai"
+                )
+                task1.dateCreated = "13/12/2020"
+                val task2 = Task("welcome", "")
+                task2.dateCreated = "13/12/2020"
+
+                CoroutineScope(Dispatchers.IO).launch {
+                    get.dao().insert(task1)
+                    get.dao().insert(task2)
+                }
             }
         }
     }

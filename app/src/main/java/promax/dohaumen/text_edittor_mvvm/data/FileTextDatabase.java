@@ -44,10 +44,8 @@ public abstract class FileTextDatabase extends RoomDatabase {
 
         @Override
         protected Void doInBackground(Void... voids) {
-            dao.insert(new FileText("Hello", "123","2/2/2020"));
-            dao.insert(new FileText("Ghi chu", "123","2/2/2020"));
-            dao.insert(new FileText("dohaumen", "123","2/2/2020"));
-            dao.insert(new FileText("hey", "123","2/2/2020"));
+            dao.insert(new FileText("Text editor note", "welcome","default"));
+
             return null;
         }
 
