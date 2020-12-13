@@ -10,10 +10,8 @@ import android.widget.Toast
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
-import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.material.snackbar.Snackbar
-import kotlinx.coroutines.launch
 import promax.dohaumen.text_edittor_mvvm.R
 import promax.dohaumen.text_edittor_mvvm.databinding.FragmentTodoListBinding
 import promax.dohaumen.text_edittor_mvvm.helper.Search
@@ -26,7 +24,7 @@ import promax.hmp.dev.utils.HandleUI
 
 
 class TodoListFragment: Fragment() {
-    private lateinit var mainActivity: MainActivity
+    private val mainActivity: MainActivity by lazy { activity as MainActivity }
     private lateinit var b: FragmentTodoListBinding
     private val viewModel: TodoListViewModel by lazy { ViewModelProvider(this).get(TodoListViewModel::class.java) }
     private val adapter: TaskAdapter = TaskAdapter()
@@ -38,7 +36,6 @@ class TodoListFragment: Fragment() {
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         b = DataBindingUtil.inflate(inflater, R.layout.fragment_todo_list, container, false)
-        mainActivity = activity as MainActivity
 
 
         b.recyclerView.layoutManager = LinearLayoutManager(context)
@@ -55,7 +52,7 @@ class TodoListFragment: Fragment() {
         hideView()
         setConfigToolBar()
         setClick()
-        setClickItemRecyclerView()
+        setCallBackAdapter()
         setClickAction()
         return b.root
     }
@@ -106,7 +103,7 @@ class TodoListFragment: Fragment() {
 
     }
 
-    private fun setClickItemRecyclerView() {
+    private fun setCallBackAdapter() {
         adapter.onClickItem = { task, i ->
             DialogViewTask(mainActivity, task).show()
         }
@@ -118,7 +115,14 @@ class TodoListFragment: Fragment() {
                 adapter.notifyItemChanged(i2)
             }
             adapter.setSelectMode(true)
+        }
 
+        adapter.onPreUpdateTaskCompleted = {
+            b.progressBar.visibility = View.VISIBLE
+        }
+        adapter.onCompletedUpdateTaskCompleted = { taskCompletedCount ->
+            b.progressBar.visibility = View.GONE
+            Toast.makeText(context, "${getString(R.string.completed)} ${taskCompletedCount} ${getString(R.string.task)}", Toast.LENGTH_SHORT).show()
         }
     }
 
@@ -129,7 +133,7 @@ class TodoListFragment: Fragment() {
                 it.isSelected = false
             }
             adapter.setSelectMode(false)
-            setClickItemRecyclerView()
+            setCallBackAdapter()
         }
 
         b.layoutAction.actionCancel.setOnClickListener {
@@ -230,19 +234,17 @@ class TodoListFragment: Fragment() {
 
     private fun searchTask() {
         val key = b.editSearch.text.toString()
-        lifecycleScope.launch {
-            Search.searchTask(viewModel.listTask, key, onPreSearch = {
-                b.progressBar.visibility = View.VISIBLE
-                b.tvMess.visibility = View.GONE
-            }, onComplete = { result ->
-                adapter.setList(result)
-                if (result.isEmpty()) {
-                    b.tvMess.visibility = View.VISIBLE
-                    b.tvMess.setText(getString(R.string.not_found))
-                }
-                b.progressBar.visibility = View.GONE
-            })
-        }
+        Search.searchTask(viewModel.listTask, key, onPreSearch = {
+            b.progressBar.visibility = View.VISIBLE
+            b.tvMess.visibility = View.GONE
+        }, onComplete = { result ->
+            adapter.setList(result)
+            if (result.isEmpty()) {
+                b.tvMess.visibility = View.VISIBLE
+                b.tvMess.setText(getString(R.string.not_found))
+            }
+            b.progressBar.visibility = View.GONE
+        })
     }
 
     override fun onStop() {

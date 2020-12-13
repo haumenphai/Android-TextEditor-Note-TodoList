@@ -106,6 +106,7 @@
     <string name="only_once_task_can_be_selected">Only one task can be seleted to edit</string>
     <string name="edit_task_successfully">Edit successfully</string>
     <string name="edit">Edit</string>
+    <string name="completed">completed</string>
 
 
 </resources>

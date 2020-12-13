@@ -346,22 +346,6 @@ class ListFileFragment() : Fragment() {
         }
     }
 
-    private fun searchFileText() {
-        val key = b.editSearch.text.toString()
-        lifecycleScope.launch {
-            Search.searchFileText(viewModel.getListFileText().value!!, key, onPreSearch = {
-                b.progressBar.visibility = View.VISIBLE
-                b.tvMess.visibility = View.GONE
-            }, onComplete = { result ->
-                adapter.setList(result)
-                if (result.isEmpty()) {
-                    b.tvMess.visibility = View.VISIBLE
-                    b.tvMess.setText(getString(R.string.not_found))
-                }
-                b.progressBar.visibility = View.GONE
-            })
-        }
-    }
 
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
@@ -405,5 +389,21 @@ class ListFileFragment() : Fragment() {
         intent.putExtra("fileText", fileText)
         startActivity(intent)
     }
+
+    private fun searchFileText() {
+        val key = b.editSearch.text.toString()
+        Search.searchFileText(viewModel.getListFileText().value!!, key, onPreSearch = {
+            b.progressBar.visibility = View.VISIBLE
+            b.tvMess.visibility = View.GONE
+        }, onComplete = { result ->
+            adapter.setList(result)
+            if (result.isEmpty()) {
+                b.tvMess.visibility = View.VISIBLE
+                b.tvMess.setText(getString(R.string.not_found))
+            }
+            b.progressBar.visibility = View.GONE
+        })
+    }
+
 
 }

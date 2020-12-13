@@ -2,15 +2,20 @@ package promax.dohaumen.text_edittor_mvvm
 
 import android.os.Bundle
 import android.view.Menu
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.lifecycleScope
+import kotlinx.coroutines.*
 import promax.dohaumen.text_edittor_mvvm.databinding.ActivityMainBinding
 import promax.dohaumen.text_edittor_mvvm.todo_list.data.Task
 import promax.dohaumen.text_edittor_mvvm.todo_list.data.TaskDatabase
+import promax.dohaumen.text_edittor_mvvm.todo_list.data.TaskResposity
 import promax.dohaumen.text_edittor_mvvm.views.fragment.HomeFragment
 import promax.dohaumen.text_edittor_mvvm.views.fragment.ListFileFragment
 import promax.dohaumen.text_edittor_mvvm.views.fragment.SettingFragment
 import promax.dohaumen.text_edittor_mvvm.todo_list.view.TodoListFragment
+import java.util.*
 
 
 class MainActivity : AppCompatActivity() {
@@ -29,10 +34,13 @@ class MainActivity : AppCompatActivity() {
 
         // for test todo_list
 //        TaskDatabase.get.dao().deleteAll()
-//        for (i in 1..100) {
+//        for (i in 1..1000) {
 //            val task = Task("nhiem vu: $i","")
-//            TaskDatabase.get.dao().insert(task)
+//            GlobalScope.launch(Dispatchers.Main) {
+//                TaskResposity.insert(task)
+//            }
 //        }
+
 
     }
 

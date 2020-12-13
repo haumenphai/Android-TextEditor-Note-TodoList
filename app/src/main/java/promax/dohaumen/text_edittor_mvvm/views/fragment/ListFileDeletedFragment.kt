@@ -78,9 +78,7 @@ class ListFileDeletedFragment: Fragment() {
             }
 
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
-                lifecycleScope.launch {
-                    searchFileText()
-                }
+                searchFileText()
             }
 
             override fun afterTextChanged(s: Editable?) {
@@ -222,22 +220,7 @@ class ListFileDeletedFragment: Fragment() {
 
     }
 
-    private fun searchFileText() {
-        val key = b.editSearch.text.toString()
-        lifecycleScope.launch {
-            Search.searchFileText(viewModel.getListFileText().value!!, key, onPreSearch = {
-                b.progressBar.visibility = View.VISIBLE
-                b.tvMess.visibility = View.GONE
-            }, onComplete = { result ->
-                adapter.setList(result)
-                if (result.isEmpty()) {
-                    b.tvMess.visibility = View.VISIBLE
-                    b.tvMess.setText(getString(R.string.not_found))
-                }
-                b.progressBar.visibility = View.GONE
-            })
-        }
-    }
+
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
         inflater.inflate(R.menu.list_fragment_menu, menu)
@@ -263,5 +246,20 @@ class ListFileDeletedFragment: Fragment() {
         intent.setAction("Action view file read-only")
         intent.putExtra("fileText", fileText)
         startActivity(intent)
+    }
+
+    private fun searchFileText() {
+        val key = b.editSearch.text.toString()
+        Search.searchFileText(viewModel.getListFileText().value!!, key, onPreSearch = {
+            b.progressBar.visibility = View.VISIBLE
+            b.tvMess.visibility = View.GONE
+        }, onComplete = { result ->
+            adapter.setList(result)
+            if (result.isEmpty()) {
+                b.tvMess.visibility = View.VISIBLE
+                b.tvMess.setText(getString(R.string.not_found))
+            }
+            b.progressBar.visibility = View.GONE
+        })
     }
 }

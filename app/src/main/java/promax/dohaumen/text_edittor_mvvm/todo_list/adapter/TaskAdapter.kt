@@ -17,6 +17,7 @@ import promax.dohaumen.text_edittor_mvvm.databinding.ItemTaskBinding
 import promax.dohaumen.text_edittor_mvvm.helper.getCurentDate24h
 import promax.dohaumen.text_edittor_mvvm.todo_list.data.Task
 import promax.dohaumen.text_edittor_mvvm.todo_list.data.TaskDatabase
+import promax.dohaumen.text_edittor_mvvm.todo_list.data.TaskResposity
 import promax.hmp.dev.utils.TimeDelayUlti
 import kotlin.collections.ArrayList
 open class TaskAdapter: RecyclerView.Adapter<TaskAdapter.Holder>() {
@@ -30,6 +31,7 @@ open class TaskAdapter: RecyclerView.Adapter<TaskAdapter.Holder>() {
 
     fun getList() = listTask
     fun getListSelected() = listTask.filter { task -> task.isSelected }
+    fun getListCompleted() = listTask.filter { task -> task.isChecked }
     var isShowNumber = false
 
 
@@ -59,6 +61,9 @@ open class TaskAdapter: RecyclerView.Adapter<TaskAdapter.Holder>() {
         notifyDataSetChanged()
     }
 
+    lateinit var onPreUpdateTaskCompleted: () -> Unit
+    lateinit var onCompletedUpdateTaskCompleted: (taskCount: Int) -> Unit
+
 
 
     override fun onBindViewHolder(holder: Holder, position: Int) {
@@ -76,12 +81,13 @@ open class TaskAdapter: RecyclerView.Adapter<TaskAdapter.Holder>() {
 
         if (hideTaskCompleted && task.isChecked) {
             holder.binding.background.startAnimation(animation)
+            onPreUpdateTaskCompleted()
             TimeDelayUlti.setTime(500).runAfterMilisecond {
                 hideTaskCompleted = false
-                CoroutineScope(Dispatchers.IO).launch {
-                    listTask.forEach {
-                        TaskDatabase.get.dao().update(it)
-                    }
+                CoroutineScope(Dispatchers.Main).launch {
+                    val listComplete = getListCompleted()
+                    TaskResposity.updateList(listComplete)
+                    onCompletedUpdateTaskCompleted(listComplete.size)
                 }
             }
         }
