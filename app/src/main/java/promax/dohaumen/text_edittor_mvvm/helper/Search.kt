@@ -1,5 +1,6 @@
 package promax.dohaumen.text_edittor_mvvm.helper
 
+import promax.dohaumen.text_edittor_mvvm.models.FileText
 import promax.dohaumen.text_edittor_mvvm.todo_list.data.Task
 import promax.hmp.dev.heler.StringHelper
 import java.util.*
@@ -41,5 +42,40 @@ object Search {
         }.filter(keySearch)
     }
 
+
+    fun searchFileText(listInput: List<FileText>, keySearch: String, onPreSearch:() -> Unit, onComplete: (list: List<FileText>) -> Unit) {
+        onPreSearch()
+        if (keySearch.trim() == "") {
+            onComplete(listInput)
+            return
+        }
+
+        object : android.widget.Filter() {
+            override fun performFiltering(constraint: CharSequence?): FilterResults {
+                val results = FilterResults()
+                val FilteredArrList: ArrayList<FileText> = ArrayList()
+                val c1 = constraint.toString().toLowerCase(Locale.ROOT)
+
+                listInput.forEach {
+                    val fileName: String = it.name
+                    if (fileName == c1
+                        || getTuVietTat(fileName).contains(c1)
+                        || fileName.contains(c1)
+                        || StringHelper.loaiBoDauTiengViet(fileName).contains(c1)
+                    ) {
+                        FilteredArrList.add(it)
+                    }
+                }
+                results.count = FilteredArrList.size
+                results.values = FilteredArrList
+                return results
+            }
+
+            override fun publishResults(constraint: CharSequence?, results: FilterResults?) {
+                val list: List<FileText> = results!!.values as List<FileText>
+                onComplete(list)
+            }
+        }.filter(keySearch)
+    }
 
 }

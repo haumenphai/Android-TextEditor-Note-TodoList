@@ -32,6 +32,8 @@
             android:layout_marginLeft="10dp"
             android:background="@drawable/bg_edit_search"
             android:layout_centerVertical="true"
+            android:inputType="text"
+            android:imeOptions="actionSearch"
             />
         <ImageView
             android:id="@+id/img_search_close"
@@ -58,12 +60,33 @@
         android:textColor="@color/black"
         />
 
+    <ProgressBar
+        android:id="@+id/progress_bar"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_below="@id/appbar_layout_2"
+        android:progressTint="@color/black"
+        android:translationZ="10dp" />
+
+
+    <TextView
+        android:id="@+id/tv_mess"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/appbar_layout_2"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="10dp"
+        android:textColor="@color/black"
+        android:textSize="16sp"
+        tools:text="Not found" />
+
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recycler_view"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         tools:listitem="@layout/item_file_text"
-        android:layout_below="@id/appbar_layout_2"
+        android:layout_below="@id/tv_mess"
         />
 
     <include

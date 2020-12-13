@@ -21,27 +21,19 @@ import promax.hmp.dev.utils.TimeDelayUlti
 
 
 class HomeFragment: Fragment() {
-    lateinit var b: FragmentHomeBinding
-    lateinit var mainActivity: MainActivity
-    lateinit var viewModel: HomeFragmentViewModel
-    var menu: Menu? = null
+    private lateinit var b: FragmentHomeBinding
+    private val mainActivity: MainActivity by lazy { activity as MainActivity }
+    private val viewModel: HomeFragmentViewModel by lazy { ViewModelProvider(this).get(HomeFragmentViewModel::class.java) }
+    private var menu: Menu? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setHasOptionsMenu(true)
     }
 
-    override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View {
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         b = FragmentHomeBinding.inflate(inflater, container, false)
-        mainActivity = activity as MainActivity
         setConfigToolBar()
-
-
-        viewModel = ViewModelProvider(this).get(HomeFragmentViewModel::class.java)
 
         return b.root
     }

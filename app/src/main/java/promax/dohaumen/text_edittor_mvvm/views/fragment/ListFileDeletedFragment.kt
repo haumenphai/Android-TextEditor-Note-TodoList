@@ -18,8 +18,8 @@ import kotlinx.coroutines.launch
 import promax.dohaumen.text_edittor_mvvm.R
 import promax.dohaumen.text_edittor_mvvm.adapter.FileTextAdapter
 import promax.dohaumen.text_edittor_mvvm.databinding.FragmentListFileDeletedBinding
+import promax.dohaumen.text_edittor_mvvm.helper.Search
 import promax.dohaumen.text_edittor_mvvm.helper.demSoTu
-import promax.dohaumen.text_edittor_mvvm.helper.searchFileText
 import promax.dohaumen.text_edittor_mvvm.models.FileText
 import promax.dohaumen.text_edittor_mvvm.viewmodel.ListFileDeletedFragmentViewModel
 import promax.dohaumen.text_edittor_mvvm.views.activity.ViewFileActivity
@@ -28,10 +28,10 @@ import promax.dohaumen.text_edittor_mvvm.views.dialog.DialogAddFile
 import promax.hmp.dev.utils.HandleUI
 
 class ListFileDeletedFragment: Fragment() {
-    lateinit var b: FragmentListFileDeletedBinding
-    lateinit var myActivity: ViewListFileDeteledActivity
-    lateinit var viewModel: ListFileDeletedFragmentViewModel
-    var adapter = FileTextAdapter()
+    private lateinit var b: FragmentListFileDeletedBinding
+    private val myActivity: ViewListFileDeteledActivity by lazy { activity as ViewListFileDeteledActivity }
+    private val viewModel: ListFileDeletedFragmentViewModel by lazy { ViewModelProvider(this).get(ListFileDeletedFragmentViewModel::class.java) }
+    private var adapter = FileTextAdapter()
 
 
 
@@ -42,17 +42,20 @@ class ListFileDeletedFragment: Fragment() {
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         b = FragmentListFileDeletedBinding.inflate(inflater, container, false)
-        b.layoutAction.root.visibility = View.GONE
-
-        myActivity = activity as ViewListFileDeteledActivity
-        viewModel = ViewModelProvider(this).get(ListFileDeletedFragmentViewModel::class.java)
-
+        hideView()
         setConfigToolBar()
         initRecyclerView()
         setClickItem()
         setClickAction()
 
         return b.root
+    }
+
+    private fun hideView() {
+        b.layoutAction.root.visibility = View.GONE
+        b.layoutSearch.visibility = View.GONE
+        b.tvMess.visibility = View.GONE
+        b.progressBar.visibility = View.GONE
     }
 
     private fun setConfigToolBar() {
@@ -63,7 +66,6 @@ class ListFileDeletedFragment: Fragment() {
             myActivity.onBackPressed()
         }
 
-        b.layoutSearch.visibility = View.GONE
         b.imgSearchClose.setOnClickListener {
             b.layoutSearch.visibility = View.GONE
             b.toolBar2.visibility = View.VISIBLE
@@ -77,13 +79,17 @@ class ListFileDeletedFragment: Fragment() {
 
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
                 lifecycleScope.launch {
-                    adapter.setList(searchFileText(viewModel.getListFileText().value!!, b.editSearch.text.toString()))
+                    searchFileText()
                 }
             }
 
             override fun afterTextChanged(s: Editable?) {
             }
         })
+        b.editSearch.setOnEditorActionListener { v, actionId, event ->
+            searchFileText()
+            true
+        }
     }
 
 
@@ -214,6 +220,23 @@ class ListFileDeletedFragment: Fragment() {
 
 
 
+    }
+
+    private fun searchFileText() {
+        val key = b.editSearch.text.toString()
+        lifecycleScope.launch {
+            Search.searchFileText(viewModel.getListFileText().value!!, key, onPreSearch = {
+                b.progressBar.visibility = View.VISIBLE
+                b.tvMess.visibility = View.GONE
+            }, onComplete = { result ->
+                adapter.setList(result)
+                if (result.isEmpty()) {
+                    b.tvMess.visibility = View.VISIBLE
+                    b.tvMess.setText(getString(R.string.not_found))
+                }
+                b.progressBar.visibility = View.GONE
+            })
+        }
     }
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {

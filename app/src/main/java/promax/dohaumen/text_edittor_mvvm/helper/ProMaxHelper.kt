@@ -94,23 +94,6 @@ fun isStoragePermissionGranted(activity: Activity): Boolean {
 }
 
 
-suspend fun searchFileText(list: List<FileText>, keySearch: String): List<FileText> {
-    val result = ArrayList<FileText>()
-
-    for (i in 0..list.size-1) {
-        val fileName = list[i].name.toLowerCase(Locale.ROOT)
-
-        if (fileName == keySearch || getTuVietTat(fileName).contains(keySearch) || fileName.contains(
-                keySearch
-            )
-            || StringHelper.loaiBoDauTiengViet(fileName).contains(keySearch)
-        ) {
-            result.add(list[i])
-        }
-    }
-    return result
-}
-
 
 
 suspend fun testCroutine(): String {

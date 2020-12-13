@@ -18,12 +18,11 @@ import promax.dohaumen.text_edittor_mvvm.views.activity.ViewListFileDeteledActiv
 import java.lang.Exception
 
 class SettingFragment: Fragment() {
-    lateinit var b: FragmentSettingBinding
-    lateinit var mainActivity: MainActivity
+    private lateinit var b: FragmentSettingBinding
+    private val mainActivity: MainActivity by lazy { activity as MainActivity }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         b = FragmentSettingBinding.inflate(inflater, container, false)
-        mainActivity = activity as MainActivity
 
         return b.root
     }

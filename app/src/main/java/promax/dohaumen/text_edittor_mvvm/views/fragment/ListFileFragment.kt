@@ -21,8 +21,8 @@ import promax.dohaumen.text_edittor_mvvm.R
 import promax.dohaumen.text_edittor_mvvm.views.activity.ViewFileActivity
 import promax.dohaumen.text_edittor_mvvm.adapter.FileTextAdapter
 import promax.dohaumen.text_edittor_mvvm.databinding.FragmentListFileBinding
+import promax.dohaumen.text_edittor_mvvm.helper.Search
 import promax.dohaumen.text_edittor_mvvm.helper.demSoTu
-import promax.dohaumen.text_edittor_mvvm.helper.searchFileText
 import promax.dohaumen.text_edittor_mvvm.models.FileText
 import promax.dohaumen.text_edittor_mvvm.viewmodel.ListFileFragmentViewModel
 import promax.dohaumen.text_edittor_mvvm.views.dialog.DialogAddFile
@@ -30,10 +30,10 @@ import promax.hmp.dev.utils.HandleUI
 import promax.hmp.dev.views.DialogAddNewFile2
 
 class ListFileFragment() : Fragment() {
-    lateinit var b: FragmentListFileBinding
-    lateinit var mainActivity: MainActivity
-    lateinit var viewModel: ListFileFragmentViewModel
-    var adapter = FileTextAdapter()
+    private lateinit var b: FragmentListFileBinding
+    private val mainActivity: MainActivity by lazy { activity as MainActivity }
+    private val viewModel: ListFileFragmentViewModel by lazy { ViewModelProvider(this).get(ListFileFragmentViewModel::class.java) }
+    private val adapter = FileTextAdapter()
 
 
 
@@ -44,11 +44,9 @@ class ListFileFragment() : Fragment() {
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         b = FragmentListFileBinding.inflate(inflater, container, false)
-        b.layoutAction.root.visibility = View.GONE
 
-        mainActivity = activity as MainActivity
-        viewModel = ViewModelProvider(this).get(ListFileFragmentViewModel::class.java)
 
+        hideView()
         setConfigToolBar()
         initRecyclerView()
         setClickItem()
@@ -56,6 +54,14 @@ class ListFileFragment() : Fragment() {
 
         return b.root
     }
+    private fun hideView() {
+        b.layoutAction.root.visibility = View.GONE
+        b.layoutSearch.visibility = View.GONE
+        b.tvMess.visibility = View.GONE
+        b.progressBar.visibility = View.GONE
+    }
+
+
 
     private fun setConfigToolBar() {
         mainActivity.setSupportActionBar(b.toolBar2)
@@ -63,7 +69,7 @@ class ListFileFragment() : Fragment() {
         b.toolBar2.setTitleTextColor(Color.WHITE)
         b.toolBar2.inflateMenu(R.menu.list_fragment_menu)
 
-        b.layoutSearch.visibility = View.GONE
+
         b.imgSearchClose.setOnClickListener {
             b.layoutSearch.visibility = View.GONE
             b.toolBar2.visibility = View.VISIBLE
@@ -74,21 +80,24 @@ class ListFileFragment() : Fragment() {
         b.editSearch.addTextChangedListener(object : TextWatcher {
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
             }
+            override fun afterTextChanged(s: Editable?) {
+            }
 
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
                 lifecycleScope.launch {
-                    adapter.setList(searchFileText(viewModel.getListFileText().value!!, b.editSearch.text.toString()))
+                    searchFileText()
                 }
             }
-
-            override fun afterTextChanged(s: Editable?) {
-            }
         })
+        b.editSearch.setOnEditorActionListener { v, actionId, event ->
+            searchFileText()
+            true
+        }
     }
 
 
 
-    fun initRecyclerView() {
+    private fun initRecyclerView() {
         b.recyclerView.layoutManager = LinearLayoutManager(mainActivity)
         b.recyclerView.adapter = adapter
 
@@ -99,7 +108,7 @@ class ListFileFragment() : Fragment() {
     }
 
 
-    fun setClickItem() {
+    private fun setClickItem() {
         adapter.onClickITem = { fileText ->
             if (fileText.password != null) {
                 val dialog = DialogAddFile(mainActivity)
@@ -148,7 +157,7 @@ class ListFileFragment() : Fragment() {
         }
     }
 
-    fun setClickAction() {
+    private fun setClickAction() {
         fun cancelAction() {
             b.layoutAction.root.visibility = View.GONE
             setClickItem()
@@ -337,6 +346,22 @@ class ListFileFragment() : Fragment() {
         }
     }
 
+    private fun searchFileText() {
+        val key = b.editSearch.text.toString()
+        lifecycleScope.launch {
+            Search.searchFileText(viewModel.getListFileText().value!!, key, onPreSearch = {
+                b.progressBar.visibility = View.VISIBLE
+                b.tvMess.visibility = View.GONE
+            }, onComplete = { result ->
+                adapter.setList(result)
+                if (result.isEmpty()) {
+                    b.tvMess.visibility = View.VISIBLE
+                    b.tvMess.setText(getString(R.string.not_found))
+                }
+                b.progressBar.visibility = View.GONE
+            })
+        }
+    }
 
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
