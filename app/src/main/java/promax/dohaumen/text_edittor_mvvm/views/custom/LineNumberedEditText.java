@@ -10,7 +10,7 @@ import android.util.AttributeSet;
 import android.widget.EditText;
 
 import promax.dohaumen.text_edittor_mvvm.helper.TimeHelperKt;
-
+// No use
 public class LineNumberedEditText extends EditText
 {
     private final Context context;
