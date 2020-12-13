@@ -13,9 +13,8 @@ object DataTodoListFragment {
     }
 
     fun isShowNumber() = sharedPreferences.getBoolean("show_nummber", isShowNumber)
-    fun setShowNumber(isShow: Boolean) {
-        sharedPreferences.edit().putBoolean("show_nummber", isShow).apply()
-    }
+    fun setShowNumber(isShow: Boolean) = sharedPreferences.edit().putBoolean("show_nummber", isShow).apply()
+
 
 
 }
