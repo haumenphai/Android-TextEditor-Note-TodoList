@@ -52,8 +52,6 @@ class ViewFileActivity : AppCompatActivity() {
                 setTextLineCount()
             }
         })
-        b.tvLineNumber.movementMethod = object : ScrollingMovementMethod() {}
-        b.editViewFile.movementMethod = object : ScrollingMovementMethod() {}
 
     }
 
@@ -144,7 +142,7 @@ class ViewFileActivity : AppCompatActivity() {
 
 
 
-    var menu: Menu? = null
+    private var menu: Menu? = null
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
         menuInflater.inflate(R.menu.activity_view_file_menu, menu)
         this.menu = menu
