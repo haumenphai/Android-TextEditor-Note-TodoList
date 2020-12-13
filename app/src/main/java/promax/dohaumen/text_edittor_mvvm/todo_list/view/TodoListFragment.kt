@@ -21,6 +21,7 @@ import promax.dohaumen.text_edittor_mvvm.todo_list.adapter.TaskAdapter
 import promax.dohaumen.text_edittor_mvvm.todo_list.data.TaskDatabase
 import promax.dohaumen.text_edittor_mvvm.todo_list.viewmodel.TodoListViewModel
 import promax.dohaumen.text_edittor_mvvm.MainActivity
+import promax.dohaumen.text_edittor_mvvm.todo_list.data.Task
 import promax.hmp.dev.utils.HandleUI
 
 
@@ -46,6 +47,9 @@ class TodoListFragment: Fragment() {
 
         viewModel.tasks.observe(viewLifecycleOwner, {
             adapter.setList(it)
+        })
+        viewModel.allTasks.observe(viewLifecycleOwner, {
+            viewModel.listTask = it as MutableList<Task>
         })
 
         hideView()
@@ -84,6 +88,7 @@ class TodoListFragment: Fragment() {
             b.layoutSearch.visibility = View.GONE
             HandleUI.hideKeyboardFrom(context, b.editSearch)
             adapter.setList(viewModel.tasks.value!!)
+            b.tvMess.visibility = View.GONE
         }
         b.editSearch.addTextChangedListener(object : TextWatcher {
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
@@ -226,7 +231,7 @@ class TodoListFragment: Fragment() {
     private fun searchTask() {
         val key = b.editSearch.text.toString()
         lifecycleScope.launch {
-            Search.searchTask(viewModel.allTasks, key, onPreSearch = {
+            Search.searchTask(viewModel.listTask, key, onPreSearch = {
                 b.progressBar.visibility = View.VISIBLE
                 b.tvMess.visibility = View.GONE
             }, onComplete = { result ->

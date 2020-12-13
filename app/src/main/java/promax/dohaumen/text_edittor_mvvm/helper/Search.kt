@@ -1,5 +1,6 @@
 package promax.dohaumen.text_edittor_mvvm.helper
 
+import android.widget.Filter
 import promax.dohaumen.text_edittor_mvvm.models.FileText
 import promax.dohaumen.text_edittor_mvvm.todo_list.data.Task
 import promax.hmp.dev.heler.StringHelper
@@ -14,14 +15,14 @@ object Search {
             return
         }
 
-        object : android.widget.Filter() {
+        object : Filter() {
             override fun performFiltering(constraint: CharSequence?): FilterResults {
                 val results = FilterResults()
                 val FilteredArrList: ArrayList<Task> = ArrayList()
                 val c1 = constraint.toString().toLowerCase(Locale.ROOT)
 
                 listInput.forEach {
-                    val fileName: String = it.name
+                    val fileName: String = it.name.toLowerCase(Locale.ROOT)
                     if (fileName == c1
                         || getTuVietTat(fileName).contains(c1)
                         || fileName.contains(c1)
@@ -39,7 +40,7 @@ object Search {
                 val list: List<Task> = results!!.values as List<Task>
                 onComplete(list)
             }
-        }.filter(keySearch)
+        }.filter(keySearch.toLowerCase(Locale.ROOT))
     }
 
 
@@ -50,14 +51,14 @@ object Search {
             return
         }
 
-        object : android.widget.Filter() {
+        object : Filter() {
             override fun performFiltering(constraint: CharSequence?): FilterResults {
                 val results = FilterResults()
                 val FilteredArrList: ArrayList<FileText> = ArrayList()
                 val c1 = constraint.toString().toLowerCase(Locale.ROOT)
 
                 listInput.forEach {
-                    val fileName: String = it.name
+                    val fileName: String = it.name.toLowerCase(Locale.ROOT)
                     if (fileName == c1
                         || getTuVietTat(fileName).contains(c1)
                         || fileName.contains(c1)
@@ -75,7 +76,7 @@ object Search {
                 val list: List<FileText> = results!!.values as List<FileText>
                 onComplete(list)
             }
-        }.filter(keySearch)
+        }.filter(keySearch.toLowerCase(Locale.ROOT))
     }
 
 }
