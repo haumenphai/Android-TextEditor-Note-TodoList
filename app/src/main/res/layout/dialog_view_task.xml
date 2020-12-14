@@ -2,9 +2,9 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="330dp"
     android:layout_height="wrap_content"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_gravity="center"
-    android:padding="10dp"
-    >
+    android:padding="10dp">
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
@@ -18,7 +18,7 @@
                 android:textStyle="bold"
                 android:textSize="17sp"
                 android:layout_centerHorizontal="true"
-                android:text="Task"
+                android:text="@string/Task"
                 android:textColor="@color/black"
                 />
             <TextView
@@ -28,7 +28,7 @@
                 android:layout_height="wrap_content"
                 android:textColor="@color/black"
                 android:textSize="16sp"
-                android:text="Hoan thanh app todo list fjjsd jncbcnsoan thanh"
+                tools:text="Hoan thanh app todo list fjjsd jncbcnsoan thanh"
                 />
             <TextView
                 android:id="@+id/tv_task_describe"
@@ -36,7 +36,7 @@
                 android:layout_height="wrap_content"
                 android:textSize="14sp"
                 android:layout_below="@id/tv_task_name"
-                android:text="Hoan thanh app todo list.\nHoan thanh"
+                tools:text="Hoan thanh app todo list.\nHoan thanh"
                 />
 
             <View
@@ -53,7 +53,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_below="@id/line1"
-                android:text="Data created: 20/20/2020"
+                tools:text="Data created: 20/20/2020"
                 android:textSize="12sp"
                 android:layout_marginTop="5dp"
                 />
@@ -62,7 +62,7 @@
                 android:layout_below="@id/tv_date_created"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Data completed: 20/20/2020"
+                tools:text="Data completed: 20/20/2020"
                 android:textSize="12sp"
                 android:layout_marginTop="5dp"
                 />
@@ -71,17 +71,18 @@
                 android:layout_below="@id/tv_date_completed"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Data deleted: 20/20/2020"
+                tools:text="Data deleted: 20/20/2020"
                 android:textSize="12sp"
                 android:layout_marginTop="5dp"
                 />
             <Button
+                android:visibility="gone"
                 android:id="@+id/btn_ok"
                 android:layout_width="wrap_content"
                 android:layout_height="30dp"
                 android:background="@drawable/bg_button"
                 android:layout_below="@id/tv_date_deleted"
-                android:layout_alignParentRight="true"
+                android:layout_alignParentEnd="true"
                 android:text="@string/btn_ok"
                 android:layout_marginTop="10dp"
                 />

@@ -41,7 +41,7 @@ class HomeFragment: Fragment() {
     private fun setConfigToolBar() {
         mainActivity.setSupportActionBar(b.toolBar)
         b.appbarLayout.outlineProvider = null
-        mainActivity.supportActionBar!!.title = "Text Editor"
+        mainActivity.supportActionBar!!.title = getString(R.string.note)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {

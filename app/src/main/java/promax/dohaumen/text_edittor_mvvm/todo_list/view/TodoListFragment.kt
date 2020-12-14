@@ -38,6 +38,7 @@ class TodoListFragment: Fragment() {
         b = DataBindingUtil.inflate(inflater, R.layout.fragment_todo_list, container, false)
 
 
+
         b.recyclerView.layoutManager = LinearLayoutManager(context)
         b.recyclerView.adapter = adapter
         b.lifecycleOwner = this
@@ -84,8 +85,12 @@ class TodoListFragment: Fragment() {
             b.editSearch.setText("")
             b.layoutSearch.visibility = View.GONE
             HandleUI.hideKeyboardFrom(context, b.editSearch)
+            adapter.checkBoxEnable = true
             adapter.setList(viewModel.tasks.value!!)
             b.tvMess.visibility = View.GONE
+            menu.findItem(R.id.menu_view_task).isChecked = true
+            menu.findItem(R.id.menu_view_task_completed).isChecked = false
+            menu.findItem(R.id.menu_view_all_task).isChecked = false
         }
         b.editSearch.addTextChangedListener(object : TextWatcher {
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}

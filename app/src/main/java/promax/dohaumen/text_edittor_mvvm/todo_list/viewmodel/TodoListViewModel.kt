@@ -13,7 +13,7 @@ import promax.dohaumen.text_edittor_mvvm.todo_list.data.TaskResposity
 
 class TodoListViewModel: ViewModel() {
     val tasks: LiveData<List<Task>> by lazy {
-        TaskDatabase.get.dao().getLiveData()
+        TaskDatabase.get.dao().getLiveData(false)
     }
 
     val allTasks: LiveData<List<Task>> by lazy {

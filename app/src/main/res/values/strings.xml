@@ -107,6 +107,9 @@
     <string name="edit_task_successfully">Edit successfully</string>
     <string name="edit">Edit</string>
     <string name="completed">completed</string>
+    <string name="note">Note</string>
+    <string name="Notes">Notes</string>
+    <string name="Task" translatable="false">Task</string>
 
 
 </resources>

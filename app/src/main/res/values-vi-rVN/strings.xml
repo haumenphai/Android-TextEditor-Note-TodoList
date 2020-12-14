@@ -98,5 +98,8 @@
     <string name="only_one_file_can_be_selected">Chỉ được chọn một file</string>
     <string name="edit_task_successfully">Chỉnh sửa thành công</string>
     <string name="edit">Chỉnh sửa</string>
+    <string name="completed">hoàn thành</string>
+    <string name="note">Ghi Chú</string>
+    <string name="Notes">Ghi chú</string>
 
 </resources>
