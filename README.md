@@ -7,7 +7,8 @@
 <br/>
 <p align="left">
   
-  <img src="img/s1.png" alt="" width= "40%">
+  <img src="img/s1.png" alt="" width= "40%">     <div style="width: 50px;"></div>
+
   <img src="img/s2.png" alt="" width= "40%">
   <img src="img/s3.png" alt="" width= "40%">
   <img src="img/s4.png" alt="" width= "40%">
