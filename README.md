@@ -11,5 +11,8 @@
   <img src="img/s2.png" alt="" width= "40%">
   <img src="img/s3.png" alt="" width= "40%">
   <img src="img/s4.png" alt="" width= "40%">
+  <img src="img/s5.png" alt="" width= "40%">
+  <img src="img/s6.png" alt="" width= "40%">
+  <img src="img/s7.png" alt="" width= "40%">
   
 </p>
