@@ -1,7 +1,15 @@
-# Text_Edittor_Android
-Text editor, note, todo-list
-language: English, Tiếng Việt
-![Alt text](relative/path/to/s1.png?raw=true "Title1")
-![Alt text](relative/path/to/s2.pngg?raw=true "Title2")
-![Alt text](relative/path/to/s3.png?raw=true "Title3")
-![Alt text](relative/path/to/s4.png?raw=true "Title4")
+<h2>Text editor, note, todo-list</h2>
+<h2>language: English, Tiếng Việt</h2>
+
+
+<br/>
+
+<br/>
+<p align="left">
+  
+  <img src="img/s1.png" alt="" width= "40%">
+  <img src="img/s2.png" alt="" width= "40%">
+  <img src="img/s3.png" alt="" width= "40%">
+  <img src="img/s4.png" alt="" width= "40%">
+  
+</p>
