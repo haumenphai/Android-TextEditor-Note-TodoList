@@ -250,7 +250,7 @@ class ListFileDeletedFragment: Fragment() {
 
     private fun searchFileText() {
         val key = b.editSearch.text.toString()
-        Search.searchFileText(viewModel.getListFileText().value!!, key, onPreSearch = {
+        Search.searchFileTextV2(viewModel.getListFileText().value!!, key, onPreSearch = {
             b.progressBar.visibility = View.VISIBLE
             b.tvMess.visibility = View.GONE
         }, onComplete = { result ->

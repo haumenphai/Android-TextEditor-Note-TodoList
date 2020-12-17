@@ -256,7 +256,7 @@ class TodoListFragment: Fragment() {
     private fun searchTask() {
 
         val key = b.editSearch.text.toString()
-        Search.searchTask(viewModel.listTask, key, onPreSearch = {
+        Search.searchTaskV2(viewModel.listTask, key, onPreSearch = {
             b.progressBar.visibility = View.VISIBLE
             b.tvMess.visibility = View.GONE
         }, onComplete = { result ->
