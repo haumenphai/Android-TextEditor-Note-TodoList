@@ -32,9 +32,9 @@ class MainActivity : AppCompatActivity() {
         b.bottomNav.inflateMenu(R.menu.bottom_nav_main)
 //        b.bottomNav.menu.getItem(1).isVisible = false
 
-        // for test todo_list
+//         for test todo_list
 //        TaskDatabase.get.dao().deleteAll()
-//        for (i in 1..1000) {
+//        for (i in 1..10000) {
 //            val task = Task("nhiem vu: $i","")
 //            GlobalScope.launch(Dispatchers.Main) {
 //                TaskResposity.insert(task)

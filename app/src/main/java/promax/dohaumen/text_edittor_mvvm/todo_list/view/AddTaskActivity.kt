@@ -35,7 +35,7 @@ class AddTaskActivity : AppCompatActivity() {
         }
     }
 
-    fun setClick() {
+    private fun setClick() {
         b.btnCancel.setOnClickListener {
             finish()
         }
@@ -53,7 +53,7 @@ class AddTaskActivity : AppCompatActivity() {
         }
     }
 
-    fun setClick2() {
+    private fun setClick2() {
         b.btnCancel.setOnClickListener {
             finish()
         }

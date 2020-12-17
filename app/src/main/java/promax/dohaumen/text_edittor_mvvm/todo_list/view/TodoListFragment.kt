@@ -10,8 +10,10 @@ import android.widget.Toast
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.material.snackbar.Snackbar
+import kotlinx.coroutines.*
 import promax.dohaumen.text_edittor_mvvm.R
 import promax.dohaumen.text_edittor_mvvm.databinding.FragmentTodoListBinding
 import promax.dohaumen.text_edittor_mvvm.helper.Search
@@ -34,7 +36,7 @@ class TodoListFragment: Fragment() {
         setHasOptionsMenu(true)
     }
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View  {
         b = DataBindingUtil.inflate(inflater, R.layout.fragment_todo_list, container, false)
 
 
@@ -43,12 +45,23 @@ class TodoListFragment: Fragment() {
         b.recyclerView.adapter = adapter
         b.lifecycleOwner = this
 
+//        lifecycleScope.launch(Dispatchers.IO) {
+//            val liveData = viewModel.tasks
+//            withContext(Dispatchers.Main) {
+//                liveData.observe(viewLifecycleOwner, {
+//                    adapter.setList(it)
+//                })
+//            }
+//        }
         viewModel.tasks.observe(viewLifecycleOwner, {
             adapter.setList(it)
         })
+
         viewModel.allTasks.observe(viewLifecycleOwner, {
             viewModel.listTask = it as MutableList<Task>
         })
+
+       
 
         hideView()
         setConfigToolBar()
@@ -62,11 +75,11 @@ class TodoListFragment: Fragment() {
         b.progressBar.visibility        = View.GONE
         b.tvMess.visibility             = View.GONE
         b.layoutAction.root.visibility  = View.GONE
+        b.layoutSearch.visibility = View.GONE
     }
 
     lateinit var menu: Menu
     private fun setConfigToolBar() {
-        b.layoutSearch.visibility = View.GONE
         mainActivity.setSupportActionBar(b.toolBar)
         b.toolBar.inflateMenu(R.menu.todo_list_fragment_menu)
 
@@ -192,6 +205,8 @@ class TodoListFragment: Fragment() {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when(item.itemId) {
             R.id.menu_search -> {
+                adapter.checkBoxEnable = false
+                adapter.setList(viewModel.listTask)
                 b.layoutSearch.visibility = View.VISIBLE
                 b.editSearch.requestFocus()
                 HandleUI.showKeyboard(context)
@@ -214,6 +229,7 @@ class TodoListFragment: Fragment() {
                 menu.findItem(R.id.menu_view_all_task).isChecked = false
                 adapter.setList(viewModel.tasks.value!!)
                 adapter.checkBoxEnable = true
+
                 adapter.notifyDataSetChanged()
             }
             R.id.menu_view_task_completed -> {
@@ -238,6 +254,7 @@ class TodoListFragment: Fragment() {
 
 
     private fun searchTask() {
+
         val key = b.editSearch.text.toString()
         Search.searchTask(viewModel.listTask, key, onPreSearch = {
             b.progressBar.visibility = View.VISIBLE

@@ -49,7 +49,7 @@ class ViewFileActivity : AppCompatActivity() {
             override fun afterTextChanged(s: Editable?) {}
 
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
-                setTextLineCount()
+                setTextLineNumber(b.tvLineNumber, b.editViewFile)
             }
         })
 
@@ -111,7 +111,7 @@ class ViewFileActivity : AppCompatActivity() {
             viewModel.fileText = fileText
             supportActionBar!!.title = viewModel.fileText?.name
             TimeDelayUlti.setTime(100).runAfterMilisecond {
-                setTextLineCount()
+                setTextLineNumber(b.tvLineNumber, b.editViewFile)
             }
         }
 
@@ -121,7 +121,7 @@ class ViewFileActivity : AppCompatActivity() {
             b.editViewFile.setText(contentFile)
             supportActionBar!!.title = File(intent.data!!.path).name
             TimeDelayUlti.setTime(100).runAfterMilisecond {
-                setTextLineCount()
+                setTextLineNumber(b.tvLineNumber, b.editViewFile)
             }
             b.tvLineNumber.visibility = View.VISIBLE // mở từ file trong storage sẽ luôn luôn hiển thị line number
         }
@@ -133,7 +133,7 @@ class ViewFileActivity : AppCompatActivity() {
             viewModel.fileText = fileText
             supportActionBar!!.title = viewModel.fileText?.name
             TimeDelayUlti.setTime(100).runAfterMilisecond {
-                setTextLineCount()
+                setTextLineNumber(b.tvLineNumber, b.editViewFile)
             }
         }
     }
@@ -284,29 +284,5 @@ class ViewFileActivity : AppCompatActivity() {
         }
     }
 
-    private fun setTextLineCount() {
-        b.tvLineNumber.text = ""
-        val lineCount: Int = b.editViewFile.lineCount
-        var lineNumber = 1
-        var textLine = ""
-
-        for (i in 0 until lineCount) {
-            if (i == 0) {
-                textLine += lineNumber.toString()
-                ++lineNumber
-            } else if (b.editViewFile.text.toString().get(b.editViewFile.layout.getLineStart(i) - 1) == '\n'
-            ) {
-                textLine += lineNumber.toString()
-                ++lineNumber
-            }
-            textLine += "\n"
-
-        }
-        try {
-            textLine = textLine.substring(0, textLine.length - 1)
-        } catch (e: Exception){}
-        b.tvLineNumber.text = textLine
-
-    }
 
 }

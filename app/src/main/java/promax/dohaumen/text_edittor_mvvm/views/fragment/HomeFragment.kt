@@ -14,6 +14,7 @@ import promax.dohaumen.text_edittor_mvvm.R
 import promax.dohaumen.text_edittor_mvvm.databinding.FragmentHomeBinding
 import promax.dohaumen.text_edittor_mvvm.viewmodel.HomeFragmentViewModel
 import promax.dohaumen.text_edittor_mvvm.MainActivity
+import promax.dohaumen.text_edittor_mvvm.helper.setTextLineNumber
 import promax.dohaumen.text_edittor_mvvm.views.dialog.DialogAddFile
 import promax.dohaumen.text_edittor_mvvm.views.dialog.DialogSettingEditView
 import promax.hmp.dev.utils.HandleUI
@@ -49,7 +50,7 @@ class HomeFragment: Fragment() {
         viewModel.getTextTemp().observeForever {
             b.editHome.setText(it)
             TimeDelayUlti.setTime(100).runAfterMilisecond {
-                setTextLineCount()
+                setTextLineNumber(b.tvLineNumber, b.editHome)
             }
         }
         viewModel.isEditTextEnable().observeForever { isEditHometEnable ->
@@ -92,36 +93,10 @@ class HomeFragment: Fragment() {
             override fun afterTextChanged(s: Editable?) {}
 
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
-                setTextLineCount()
+                setTextLineNumber(b.tvLineNumber, b.editHome)
             }
         })
 
-
-    }
-
-    private fun setTextLineCount() {
-        b.tvLineNumber.text = ""
-        val lineCount: Int = b.editHome.lineCount
-        var lineNumber = 1
-        var textLine = ""
-
-        for (i in 0 until lineCount) {
-            if (i == 0) {
-                textLine += lineNumber.toString()
-                ++lineNumber
-            } else if (b.editHome.text.toString()
-                    .get(b.editHome.layout.getLineStart(i) - 1) == '\n'
-            ) {
-                textLine += lineNumber.toString()
-                ++lineNumber
-            }
-            textLine += "\n"
-
-        }
-        try {
-            textLine = textLine.substring(0, textLine.length - 1)
-        } catch (e: Exception) {}
-        b.tvLineNumber.text = textLine
 
     }
 
