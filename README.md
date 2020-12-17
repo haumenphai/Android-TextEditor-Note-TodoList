@@ -1,11 +1,9 @@
 <h2>Text editor, note, todo-list</h2>
 <h2>language: English, Tiếng Việt</h2>
-
-
+<a href="https://drive.google.com/drive/folders/1jtq003DiaYD4CFYWQNwCYBa0k53OV0UT?usp=sharing">Dowload: apk (google driver)</a>
 <br/>
-
 <br/>
-    <a href="https://drive.google.com/drive/folders/1jtq003DiaYD4CFYWQNwCYBa0k53OV0UT?usp=sharing">Dowload: apk (google driver)</a>
+    
 
 <p align="left">
   
