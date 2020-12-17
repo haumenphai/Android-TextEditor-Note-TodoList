@@ -7,7 +7,9 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
 import kotlinx.coroutines.*
+import promax.dohaumen.text_edittor_mvvm.data.FileTextDatabase
 import promax.dohaumen.text_edittor_mvvm.databinding.ActivityMainBinding
+import promax.dohaumen.text_edittor_mvvm.models.FileText
 import promax.dohaumen.text_edittor_mvvm.todo_list.data.Task
 import promax.dohaumen.text_edittor_mvvm.todo_list.data.TaskDatabase
 import promax.dohaumen.text_edittor_mvvm.todo_list.data.TaskResposity
