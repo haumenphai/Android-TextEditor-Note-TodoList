@@ -4,9 +4,9 @@ language: English, Tiếng Việt
 <br/>
 <p align="left">
   
-  <img src="img/s1.png" alt="" width= "50%">
-  <img src="img/s2.png" alt="" width= "50%">
-  <img src="img/s3.png" alt="" width= "50%">
-  <img src="img/s4.png" alt="" width= "50%">
+  <img src="img/s1.png" alt="" width= "30%">
+  <img src="img/s2.png" alt="" width= "30%">
+  <img src="img/s3.png" alt="" width= "30%">
+  <img src="img/s4.png" alt="" width= "30%">
   
 </p>
