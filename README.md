@@ -1,6 +1,6 @@
 # Text_Edittor_Android
-    <h2>Text editor, note, todo-list</h2>
-        <h2>language: English, Tiếng Việt</h2>
+<h2>Text editor, note, todo-list</h2>
+<h2>language: English, Tiếng Việt</h2>
 
 
 <br/>
