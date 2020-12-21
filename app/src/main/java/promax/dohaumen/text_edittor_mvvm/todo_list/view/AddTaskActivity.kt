@@ -10,6 +10,8 @@ import promax.dohaumen.text_edittor_mvvm.R
 import promax.dohaumen.text_edittor_mvvm.databinding.ActivityAddTaskBinding
 import promax.dohaumen.text_edittor_mvvm.todo_list.data.Task
 import promax.dohaumen.text_edittor_mvvm.todo_list.viewmodel.AddTaskViewModel
+import promax.hmp.dev.utils.HandleUI
+
 @SuppressLint("SetTextI18n")
 class AddTaskActivity : AppCompatActivity() {
     val b: ActivityAddTaskBinding by lazy { ActivityAddTaskBinding.inflate(layoutInflater) }
@@ -20,12 +22,13 @@ class AddTaskActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(b.root)
 
+        HandleUI.showKeyboard(this)
         if (intent.action != null && intent.action == "edit task") {
             b.tvTitle.setText(R.string.edit)
             b.tvTaskCount.visibility = View.GONE
             task = intent.getSerializableExtra("task") as Task?
-            b.editName.setText(task?.name)
-            b.editDescribe.setText(task?.describe)
+            b.editName.setText(task!!.name)
+            b.editDescribe.setText(task!!.describe)
             setClick2()
         } else {
             setClick()
