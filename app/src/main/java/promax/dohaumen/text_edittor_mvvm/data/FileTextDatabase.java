@@ -9,6 +9,7 @@ import androidx.room.Room;
 import androidx.room.RoomDatabase;
 import androidx.sqlite.db.SupportSQLiteDatabase;
 
+import kotlin.jvm.Volatile;
 import promax.dohaumen.text_edittor_mvvm.MyApplication;
 import promax.dohaumen.text_edittor_mvvm.models.FileText;
 
@@ -16,9 +17,9 @@ import promax.dohaumen.text_edittor_mvvm.models.FileText;
 public abstract class FileTextDatabase extends RoomDatabase {
     public abstract FileTextDao dao();
 
-    private static FileTextDatabase INSTANCE;
+    private volatile static FileTextDatabase INSTANCE;
 
-    public static FileTextDatabase getINSTANCE() {
+    public synchronized static FileTextDatabase getINSTANCE() {
         if (INSTANCE == null) {
             INSTANCE = Room.databaseBuilder(MyApplication.Companion.getContext(), FileTextDatabase.class, "database_text")
                     .allowMainThreadQueries()

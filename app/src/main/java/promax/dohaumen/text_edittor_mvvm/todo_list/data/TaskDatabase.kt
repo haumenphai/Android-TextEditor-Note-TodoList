@@ -14,11 +14,13 @@ abstract class TaskDatabase : RoomDatabase() {
 
     companion object {
         val get: TaskDatabase by lazy {
-            Room.databaseBuilder(context, TaskDatabase::class.java, "task_database")
-                .allowMainThreadQueries()
-                .addCallback(roomCallback)
-                .fallbackToDestructiveMigration()
-                .build()
+            synchronized(this) {
+                Room.databaseBuilder(context, TaskDatabase::class.java, "task_database")
+                    .allowMainThreadQueries()
+                    .addCallback(roomCallback)
+                    .fallbackToDestructiveMigration()
+                    .build()
+            }
         }
         val roomCallback = object : RoomDatabase.Callback() {
             override fun onCreate(db: SupportSQLiteDatabase) {

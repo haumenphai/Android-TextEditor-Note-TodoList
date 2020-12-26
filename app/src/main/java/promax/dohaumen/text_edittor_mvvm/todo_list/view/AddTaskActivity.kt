@@ -40,6 +40,7 @@ class AddTaskActivity : AppCompatActivity() {
 
     private fun setClick() {
         b.btnCancel.setOnClickListener {
+            HandleUI.hideKeyboardFrom(this, b.btnCancel)
             finish()
         }
         b.btnOk.setOnClickListener {
