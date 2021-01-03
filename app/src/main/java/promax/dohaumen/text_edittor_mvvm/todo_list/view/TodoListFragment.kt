@@ -22,6 +22,11 @@ import promax.dohaumen.text_edittor_mvvm.todo_list.data.TaskDatabase
 import promax.dohaumen.text_edittor_mvvm.todo_list.viewmodel.TodoListViewModel
 import promax.dohaumen.text_edittor_mvvm.MainActivity
 import promax.dohaumen.text_edittor_mvvm.todo_list.data.Task
+import promax.dohaumen.text_edittor_mvvm.todo_list.viewmodel.TodoListViewModel.*
+import promax.dohaumen.text_edittor_mvvm.todo_list.viewmodel.TodoListViewModel.Companion.VIEW_ALL_TASK
+import promax.dohaumen.text_edittor_mvvm.todo_list.viewmodel.TodoListViewModel.Companion.VIEW_TASK
+import promax.dohaumen.text_edittor_mvvm.todo_list.viewmodel.TodoListViewModel.Companion.VIEW_TASK_COMPLETED
+import promax.hmp.dev.heler.StringHelper
 import promax.hmp.dev.utils.HandleUI
 
 
@@ -39,27 +44,19 @@ class TodoListFragment: Fragment() {
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View  {
         b = DataBindingUtil.inflate(inflater, R.layout.fragment_todo_list, container, false)
 
-
-
         b.recyclerView.layoutManager = LinearLayoutManager(context)
         b.recyclerView.adapter = adapter
         b.lifecycleOwner = this
 
-//        lifecycleScope.launch(Dispatchers.IO) {
-//            val liveData = viewModel.tasks
-//            withContext(Dispatchers.Main) {
-//                liveData.observe(viewLifecycleOwner, {
-//                    adapter.setList(it)
-//                })
-//            }
-//        }
-        viewModel.tasks.observe(viewLifecycleOwner, {
+        viewModel.tasks.observe(viewLifecycleOwner) {
             adapter.setList(it)
-        })
+        }
 
-        viewModel.allTasks.observe(viewLifecycleOwner, {
+        viewModel.allTasks.observe(viewLifecycleOwner) {
             viewModel.listTask = it as MutableList<Task>
-        })
+        }
+
+
 
        
 
@@ -147,10 +144,7 @@ class TodoListFragment: Fragment() {
     private fun setClickAction() {
         fun cancelAction() {
             b.layoutAction.root.visibility = View.GONE
-            adapter.getList().forEach {
-                it.isSelected = false
-            }
-            adapter.setSelectMode(false)
+            viewModel.cancelAction(adapter)
             setCallBackAdapter()
         }
 
@@ -229,8 +223,8 @@ class TodoListFragment: Fragment() {
                 menu.findItem(R.id.menu_view_all_task).isChecked = false
                 adapter.setList(viewModel.tasks.value!!)
                 adapter.checkBoxEnable = true
-
                 adapter.notifyDataSetChanged()
+                viewModel.setViewTypeTask(VIEW_TASK)
             }
             R.id.menu_view_task_completed -> {
                 item.isChecked = true
@@ -239,6 +233,8 @@ class TodoListFragment: Fragment() {
                 adapter.setList(TaskDatabase.get.dao().getList(true))
                 adapter.checkBoxEnable = false
                 adapter.notifyDataSetChanged()
+                viewModel.setViewTypeTask(VIEW_TASK_COMPLETED)
+
             }
             R.id.menu_view_all_task -> {
                 item.isChecked = true
@@ -247,6 +243,8 @@ class TodoListFragment: Fragment() {
                 adapter.setList(TaskDatabase.get.dao().getList())
                 adapter.checkBoxEnable = false
                 adapter.notifyDataSetChanged()
+                viewModel.setViewTypeTask(VIEW_ALL_TASK)
+
             }
         }
         return super.onOptionsItemSelected(item)
@@ -254,7 +252,6 @@ class TodoListFragment: Fragment() {
 
 
     private fun searchTask() {
-
         val key = b.editSearch.text.toString()
         Search.searchTaskV2(viewModel.listTask, key, onPreSearch = {
             b.progressBar.visibility = View.VISIBLE
