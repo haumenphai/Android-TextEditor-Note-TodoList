@@ -25,6 +25,7 @@ fun getCurentDate24h(): String {
     val date = Date()
     val simpleDateFormat = SimpleDateFormat("[E] dd/MM/yyyy k:mm:ss")
     return  simpleDateFormat.format(date)
+
 }
 
 
